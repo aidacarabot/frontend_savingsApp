@@ -14,9 +14,10 @@ const AppRouter = () => {
       <Navbar />
       <main className="main-content">
         <Routes>
-          <Route path="/overview" element={<Overview />} />
+          <Route path="/" element={<LoginRegister />} />
           <Route path="/login" element={<LoginRegister />} />
           <Route path="/register" element={<LoginRegister />} />
+          <Route path="/overview" element={<Overview />} />
           <Route path="/user" element={<User />} />
           <Route path="/transactions" element={<Transactions />} />
           <Route path="/goals" element={<Goals />} />
