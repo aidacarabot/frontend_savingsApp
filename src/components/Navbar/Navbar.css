@@ -1,0 +1,36 @@
+nav {
+  width: 15vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  border-right: #E9E9E9 solid 1px;
+}
+
+nav > ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+}
+
+nav > ul > li > a {
+  color: rgb(52, 50, 50);
+  font-weight: 200;
+  padding: 30px 10px;
+}
+
+nav a:hover {
+  color: black ;
+  font-weight: 400;
+}
+
+nav a:active,
+nav a:focus {
+  color: black;
+  font-weight: bold;
+}
+
+.nav-icon {
+  margin-right: 10px;
+}
