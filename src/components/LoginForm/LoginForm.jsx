@@ -25,6 +25,7 @@ const LoginForm = () => {
       // Verifica que la respuesta tenga el token
       if (response && response.token) {
         localStorage.setItem('token', response.token); // Guarda el token en localStorage
+        localStorage.setItem('user_id', response.user._id); 
         showSuccessMessage('Login successful');
 
         // Redirigir a la página protegida (por ejemplo, el dashboard)
