@@ -25,7 +25,7 @@ const Navbar = () => {
   }, [responseData, userName]);
 
    if (loading) return <Loader />;
-  if (error) return <div>Error: {error.message}</div>;
+  if (error) return <div>Error: {error.message}</div>; //! Ver que hacer con esto
 
   return (
     <nav>
