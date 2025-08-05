@@ -1,19 +1,20 @@
 import './ProfilePictureEdit.css';
 import useProfilePicChange from '../../hooks/useProfilePicChange';
-import Loader from '../Loader/Loader'; // Importar el componente Loader
+import Loader from '../Loader/Loader';
+import { FaCamera } from 'react-icons/fa';
 
 const ProfilePictureEdit = () => {
   const { imageSrc, handleImageChange, isLoading } = useProfilePicChange();
 
   return (
     <>
-      {isLoading ? ( // Mostrar solo el loader mientras se carga la imagen
+      {isLoading ? (
         <Loader />
       ) : (
         <div className="profile-pic">
           <img src={imageSrc} id="output" alt="Profile" />
           <label className="-label" htmlFor="file">
-            <span className="glyphicon glyphicon-camera"></span> //! poner icono de camara
+            <span className="icon-camera"><FaCamera /></span>
             <span>Change Image</span>
           </label>
           <input id="file" type="file" onChange={handleImageChange} />

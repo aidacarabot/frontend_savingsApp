@@ -1,0 +1,47 @@
+.expected-expenses-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.name {
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.age {
+  font-weight: 300;
+  margin-top: 10px;
+}
+
+.monthly-salary {
+  font-weight: 700;
+  margin-top: 30px;
+  font-size: 18px;
+  background-color: black;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.expected-monthly-expenses {
+  margin-top: 50px;
+  margin-bottom: 20px;
+}
+
+.expected-expenses-list > li {
+  font-weight: 500;
+}
+
+.total-expected-expenses {
+  font-weight: 700;
+  margin-top: 20px;
+  font-size: 18px;
+  background-color: black;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+

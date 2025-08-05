@@ -13,6 +13,18 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* ! USER PAGE */
+.user-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100svh;
+  width: 80svw;
+  text-align: center;
+  margin: 30px;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
