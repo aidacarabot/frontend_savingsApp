@@ -1,8 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { fetchData } from '../utils/api/fetchData';
 
-// watchField: campo a observar en la respuesta (ej: 'name')
-// localStorageKey: clave de localStorage a actualizar (ej: 'user_name')
 const useApiFetch = (
   endpoint,
   method = 'GET',
@@ -15,8 +13,8 @@ const useApiFetch = (
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const userId = localStorage.getItem('user_id');  // Obtener el user_id desde el localStorage
-  const token = localStorage.getItem('token');  // Obtener el token desde el localStorage
+  const userId = localStorage.getItem('user_id'); 
+  const token = localStorage.getItem('token');
 
   // --- refetch function ---
   const fetchDataFromApi = useCallback(async () => {

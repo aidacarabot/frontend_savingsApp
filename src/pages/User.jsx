@@ -1,8 +1,8 @@
 import useApiFetch from '../hooks/useApiFetch';
 import useCalculateAge from "../hooks/useCalculateAge";
 import useProfileEditor from "../hooks/useProfileEditor";
-import useImageEditor from "../hooks/useImageEditor";
 import Loader from "../components/Loader/Loader";
+import ProfilePictureEdit from '../components/ProfilePictureEdit/ProfilePictureEdit';
 
 const User = () => {
   const { responseData, loading, error, refetch } = useApiFetch('/users', 'GET'); 
@@ -16,12 +16,6 @@ const User = () => {
     handleSave
   } = useProfileEditor(responseData, refetch);
 
-  const {
-    isEditingPicture,
-    setIsEditingPicture,
-    handleImageChange
-  } = useImageEditor(setEditedProfile);
-
   const age = useCalculateAge(responseData?.birthDate);
 
   const expenses = responseData?.monthlyExpectedExpenses || {};
@@ -32,18 +26,7 @@ const User = () => {
 
   return (
     <div className='user-container'>
-      <img 
-        src={isEditingProfile ? editedProfile.profilePicture : responseData?.profilePicture || '/assets/default-profile.png'} 
-        alt="Profile"
-        className="user-picture"
-        onMouseEnter={() => setIsEditingPicture(true)}
-        onMouseLeave={() => setIsEditingPicture(false)}
-      />
-      {isEditingPicture && isEditingProfile && (
-        <input type="file" onChange={handleImageChange} />
-      )}
-      {isEditingPicture && <span>Edit</span>}
-      
+     <ProfilePictureEdit />
       <p>{responseData?.name}</p>
       <p>Age: {age}</p>
       <p>
@@ -107,6 +90,7 @@ const User = () => {
           </button>
         )}
       </div>
+      
     </div>
   );
 };
