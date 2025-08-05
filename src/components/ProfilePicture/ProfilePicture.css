@@ -1,0 +1,7 @@
+.profile-picture {
+  object-fit: cover;
+  width: var(--circle-size);
+  height: var(--circle-size);
+  box-shadow: var(--shadow);
+  border-radius: var(--radius);
+}

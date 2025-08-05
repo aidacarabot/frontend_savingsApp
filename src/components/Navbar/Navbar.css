@@ -1,11 +1,30 @@
 nav {
-  width: 15svw;
+  width: 20svw;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   font-size: 16px;
   border-right: #E9E9E9 solid 1px;
+}
+
+.navbar-user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  list-style: none;
+  margin-bottom: 100px;
+}
+
+.navbar-user-info > ul > li > a {
+  color: rgb(52, 50, 50);
+  font-weight: 400;
+}
+
+.username {
+  font-weight: 800;
+  font-size: 18px;
+  margin: 10px;
 }
 
 nav > ul {
