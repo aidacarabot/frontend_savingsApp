@@ -100,8 +100,8 @@
 
 .dots {
   display: flex;
-  align-items: center; /* Centra verticalmente */
-  justify-content: center; /* Centra horizontalmente */
-  width: 100%; /* Asegúrate de que ocupe todo el espacio disponible */
-  text-align: center; /* Centra el texto */
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
 }

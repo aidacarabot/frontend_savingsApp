@@ -1,4 +1,4 @@
-const useTransactionImage = (type, category) => {
+const getTransactionImage = (type, category) => {
   if (type === 'Income') {
     return '/assets/income.png'; // Imagen por defecto para "Income"
   }
@@ -40,4 +40,4 @@ const useTransactionImage = (type, category) => {
   return '/assets/default.png'; // Imagen por defecto si no se cumple ninguna condición
 };
 
-export default useTransactionImage;
+export default getTransactionImage;

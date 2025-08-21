@@ -3,7 +3,8 @@ import './TransactionBox.css';
 import { fetchData } from '../../utils/api/fetchData';
 import Loader from '../Loader/Loader';
 import DropDown from '../DropDown/DropDown';
-import useTransactionImage from '../../hooks/useTransactionImage'; // Importa el hook
+import getTransactionImage from '../../utils/getTransactionImage';
+
 
 const TransactionBox = () => {
   const [transactions, setTransactions] = useState([]);
@@ -46,7 +47,7 @@ const TransactionBox = () => {
           >
             <div className="transaction-category-div">
               <img
-                src={useTransactionImage(transaction.type, transaction.category)}
+                src={getTransactionImage(transaction.type, transaction.category)} // Usar la función normal
                 alt={`${transaction.type} - ${transaction.category}`}
                 className="transaction-image"
               />
