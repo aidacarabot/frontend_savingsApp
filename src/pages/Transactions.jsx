@@ -7,6 +7,7 @@ import TransactionBox from "../components/TransactionBox/TransactionBox";
 
 const Transactions = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
+  const [refresh, setRefresh] = useState(false);
 
   //? Función para abrir el formulario
   const handleOpenForm = () => {
@@ -16,6 +17,11 @@ const Transactions = () => {
   //? Función para cerrar el formulario
   const handleCloseForm = () => {
     setIsFormVisible(false);
+  };
+
+  // Toggle usado para forzar refresco de TransactionBox cuando se añade una transacción
+  const handleTransactionAdded = () => {
+    setRefresh((prev) => !prev);
   };
 
   return (
@@ -30,14 +36,16 @@ const Transactions = () => {
       {isFormVisible && (
         <IncomeExpenseForm
           onClose={handleCloseForm}
+      onTransactionAdded={handleTransactionAdded}
         />
       )}
 
       <TransactionsFilter />
 
       <div className='transaction-list'>
-      <TransactionBox />
+    <TransactionBox refresh={refresh} />
       </div>
+      
     </div>
   )
 }

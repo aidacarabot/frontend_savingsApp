@@ -1,6 +1,27 @@
+import { fetchData } from '../../utils/api/fetchData';
 import './DropDown.css';
 
-const DropDown = () => {
+const DropDown = ({ transactionId, onDelete }) => {
+  //? Función para eliminar transaction
+  const handleDelete = async () => {
+    console.log('Transaction ID received in DropDown:', transactionId); // Depura el ID recibido
+
+    if (!transactionId) {
+      console.error('Transaction ID is undefined');
+      return;
+    }
+
+    try {
+      await fetchData(`/transactions/${transactionId}`, 'DELETE');
+      console.log('Transaction deleted successfully');
+      if (onDelete) {
+        onDelete(transactionId); // Notifica a TransactionBox para actualizar el estado
+      }
+    } catch (error) {
+      console.error('Error deleting transaction:', error);
+    }
+  };
+
   return (
     <div className="select">
       <div className="selected">
@@ -30,6 +51,7 @@ const DropDown = () => {
             id="option-delete"
             name="option"
             type="radio"
+            onClick={handleDelete}
           />
           <label className="option" htmlFor="option-delete" data-txt="Delete"></label>
         </div>

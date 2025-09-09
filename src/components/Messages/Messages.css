@@ -1,0 +1,23 @@
+.success-message,
+.error-message {
+  position: fixed; /* Cambiado a fixed para que se posicione relativo al viewport */
+  top: 50%; /* Centrado verticalmente */
+  left: 50%; /* Centrado horizontalmente */
+  transform: translate(-50%, -50%); /* Ajuste para centrar completamente */
+  z-index: 9999; /* Asegúrate de que esté encima de todo */
+  padding: 20px 30px;
+  border-radius: 8px;
+  font-size: 18px;
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border: 3px solid black;
+}
+
+.success-message {
+  background-color: #4caf50; /* Verde para éxito */
+}
+
+.error-message {
+  background-color: #f44336; /* Rojo para error */
+}

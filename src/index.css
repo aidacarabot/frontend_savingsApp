@@ -13,6 +13,15 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.main-content {
+  flex-grow: 1; /* Ocupa el espacio restante */
+  height: 100vh; /* Asegura que ocupe toda la altura del viewport */
+  overflow-y: auto; /* Permite el desplazamiento vertical si el contenido excede */
+  overflow-x: hidden; /* Evita el desplazamiento horizontal */
+  padding: 20px; /* Opcional: agrega un poco de espacio interno */
+  box-sizing: border-box; /* Asegura que el padding no afecte el tamaño total */
+}
+
 /* ! USER PAGE */
 .user-container {
   display: flex;
@@ -44,7 +53,9 @@ a:hover {
 }
 
 #root {
-  display: flex;
+  display: flex; /* Contenedor principal como flexbox */
+  min-height: 100vh; /* Asegura que ocupe toda la altura del viewport */
+  overflow: hidden; /* Evita que el contenido desborde el viewport */
 }
 
 

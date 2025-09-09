@@ -4,9 +4,10 @@ import { fetchData } from '../../utils/api/fetchData';
 import Loader from '../Loader/Loader';
 import DropDown from '../DropDown/DropDown';
 import getTransactionImage from '../../utils/getTransactionImage';
+import { ErrorMessage } from '../Messages/Messages';
 
 
-const TransactionBox = () => {
+const TransactionBox = ({ refresh }) => {
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -26,28 +27,37 @@ const TransactionBox = () => {
 
   //? useEffect para cargar las transacciones al montar el componente
   useEffect(() => {
-    fetchTransactions();
-  }, []);
+    // cada vez que cambia `refresh` (o al montar), volvemos a pedir las transacciones
+    setLoading(true);
+  fetchTransactions();
+  }, [refresh]);
+
+  //? Función para eliminar una transacción del estado local
+  const handleDeleteTransaction = (transactionId) => {
+    setTransactions((prevTransactions) =>
+      prevTransactions.filter((transaction) => transaction._id !== transactionId) // Cambia a transaction.id si el backend usa id
+    );
+  };
 
   if (loading) {
     return <Loader />;
   }
 
   if (error) {
-    return <p>{error}</p>; //! CREAR MENSAJE DE ERROR
+    return <ErrorMessage text="Transactions are currently unavailable. Get in touch with support." duration={5000} />;
   }
 
   return (
     <div className="transaction-box">
       {transactions.length > 0 ? (
-        transactions.map((transaction, index) => (
+        transactions.map((transaction) => (
           <div
-            key={transaction.id || `transaction-${index}`} // Usa el id o un fallback único
+            key={transaction._id} // Cambia a transaction._id si el backend usa _id
             className="transaction-item"
           >
             <div className="transaction-category-div">
               <img
-                src={getTransactionImage(transaction.type, transaction.category)} // Usar la función normal
+                src={getTransactionImage(transaction.type, transaction.category)}
                 alt={`${transaction.type} - ${transaction.category}`}
                 className="transaction-image"
               />
@@ -80,12 +90,15 @@ const TransactionBox = () => {
                 {transaction.type === 'Income' ? '+' : transaction.type === 'Expense' ? '-' : ''}
                 ${transaction.amount.toFixed(2)}
               </p>
-              <DropDown />
+              <DropDown
+                transactionId={transaction._id} // Cambia a transaction.id si el backend usa id
+                onDelete={handleDeleteTransaction}
+              />
             </div>
           </div>
         ))
       ) : (
-        <p>No transactions yet created.</p> //! crear message error
+        <ErrorMessage text="No transactions yet created." duration={5000} />
       )}
     </div>
   );
