@@ -2,27 +2,14 @@ import { useForm } from 'react-hook-form';
 import './IncomeExpenseForm.css';
 import Button from '../Button/Button';
 import { fetchData } from '../../utils/api/fetchData';
+import { CATEGORIES } from '../../utils/constants';
 
 const IncomeExpenseForm = ({ onClose, onTransactionAdded }) => {
   const { register, handleSubmit, watch, reset } = useForm();
   const type = watch('type'); // Observa el campo 'type' para cambios
 
   // Definimos las categorías como un array
-  const categories = [
-    'Home 🏠',
-    'Transportation 🚗',
-    'Groceries 🛒',
-    'Health 🏥',
-    'Entertainment 🎭',
-    'Travel ✈️',
-    'Subscriptions 💳',
-    'Shopping 🛍️',
-    'Education 📚',
-    'Gifts 🎁',
-    'Debt 🏦',
-    'Leisure 🍸',
-    'Other ❓',
-  ];
+  const categories = CATEGORIES;
 
   //? Función para manejar el envío del formulario
   const handleFormSubmit = async (data) => {

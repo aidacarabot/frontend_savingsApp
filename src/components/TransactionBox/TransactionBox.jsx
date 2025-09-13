@@ -7,7 +7,7 @@ import getTransactionImage from '../../utils/getTransactionImage';
 import { ErrorMessage } from '../Messages/Messages';
 
 
-const TransactionBox = ({ refresh }) => {
+const TransactionBox = ({ refresh, view = 'All', filters = {} }) => {
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -29,8 +29,48 @@ const TransactionBox = ({ refresh }) => {
   useEffect(() => {
     // cada vez que cambia `refresh` (o al montar), volvemos a pedir las transacciones
     setLoading(true);
-  fetchTransactions();
+    fetchTransactions();
   }, [refresh]);
+
+  //? Filtrado aplicado en cliente
+    const applyFilters = (items) => {
+    return items.filter((tx) => {
+      // view filter
+      if (view === 'Expenses' && tx.type !== 'Expense') return false;
+      if (view === 'Income' && tx.type !== 'Income') return false;
+
+      // date range filter
+      if (filters.dateFrom) {
+        const txDate = new Date(tx.date).setHours(0,0,0,0);
+        const from = new Date(filters.dateFrom).setHours(0,0,0,0);
+        if (txDate < from) return false;
+      }
+      if (filters.dateTo) {
+        const txDate = new Date(tx.date).setHours(0,0,0,0);
+        const to = new Date(filters.dateTo).setHours(0,0,0,0);
+        if (txDate > to) return false;
+      }
+
+      // price range filter (aplica tanto a Income como Expense cuando se define)
+      if (filters.priceMin != null) {
+        if (Number(tx.amount) < Number(filters.priceMin)) return false;
+      }
+      if (filters.priceMax != null) {
+        if (Number(tx.amount) > Number(filters.priceMax)) return false;
+      }
+
+      // category filter (solo aplica para expenses; si backend guarda null para income)
+      if (filters.category) {
+        if (!tx.category) return false;
+        if (tx.category !== filters.category) return false;
+      }
+
+      return true;
+    });
+  };
+
+  const filteredTransactions = applyFilters(transactions);
+
 
   //? Función para eliminar una transacción del estado local
   const handleDeleteTransaction = (transactionId) => {
@@ -49,10 +89,10 @@ const TransactionBox = ({ refresh }) => {
 
   return (
     <div className="transaction-box">
-      {transactions.length > 0 ? (
-        transactions.map((transaction) => (
+      {filteredTransactions.length > 0 ? (
+        filteredTransactions.map((transaction) => (
           <div
-            key={transaction._id} // Cambia a transaction._id si el backend usa _id
+            key={transaction._id}
             className="transaction-item"
           >
             <div className="transaction-category-div">

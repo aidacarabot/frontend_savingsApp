@@ -8,6 +8,8 @@ import TransactionBox from "../components/TransactionBox/TransactionBox";
 const Transactions = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [refresh, setRefresh] = useState(false);
+  const [view, setView] = useState('All'); // 'All' | 'Expenses' | 'Income'
+  const [filters, setFilters] = useState({}); // recibirá { dateFrom, dateTo, priceMin, priceMax, category }
 
   //? Función para abrir el formulario
   const handleOpenForm = () => {
@@ -28,22 +30,22 @@ const Transactions = () => {
     <div className='transactions-container'>
       <h2>Transactions</h2>
       <div className='transaction-type-view'>
-        <Button text="All" />
-        <Button text="Expenses"/>
-        <Button text="Income"/>
+        <Button text="All" onClick={() => setView('All')} />
+        <Button text="Expenses" onClick={() => setView('Expenses')} />
+        <Button text="Income" onClick={() => setView('Income')} />
       </div>
       <Button text="+ Add New Transaction" onClick={handleOpenForm} />
       {isFormVisible && (
         <IncomeExpenseForm
           onClose={handleCloseForm}
-      onTransactionAdded={handleTransactionAdded}
+          onTransactionAdded={handleTransactionAdded}
         />
       )}
 
-      <TransactionsFilter />
+      <TransactionsFilter view={view} onChange={setFilters} />
 
       <div className='transaction-list'>
-    <TransactionBox refresh={refresh} />
+    <TransactionBox refresh={refresh} view={view} filters={filters} />
       </div>
       
     </div>

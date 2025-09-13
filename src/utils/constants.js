@@ -1,0 +1,15 @@
+export const CATEGORIES = [
+  'Home 🏠',
+  'Transportation 🚗',
+  'Groceries 🛒',
+  'Health 🏥',
+  'Entertainment 🎭',
+  'Travel ✈️',
+  'Subscriptions 💳',
+  'Shopping 🛍️',
+  'Education 📚',
+  'Gifts 🎁',
+  'Debt 🏦',
+  'Leisure 🍸',
+  'Other ❓',
+];
