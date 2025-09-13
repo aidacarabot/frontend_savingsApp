@@ -3,11 +3,37 @@ import './IncomeExpenseForm.css';
 import Button from '../Button/Button';
 import { fetchData } from '../../utils/api/fetchData';
 import { CATEGORIES } from '../../utils/constants';
+import { useEffect } from 'react';
 
-const IncomeExpenseForm = ({ onClose, onTransactionAdded }) => {
-  const { register, handleSubmit, watch, reset } = useForm();
+const IncomeExpenseForm = ({ onClose, onTransactionAdded, initialData = null, onTransactionUpdated }) => {
+  const { register, handleSubmit, watch, reset, setValue } = useForm({
+    defaultValues: initialData
+      ? {
+          type: initialData.type || '',
+          title: initialData.name || '',
+          price: initialData.amount != null ? String(initialData.amount) : '',
+          date: initialData.date ? initialData.date.slice(0,10) : '', // YYYY-MM-DD
+          category: initialData.category || '',
+        }
+      : undefined,
+  });
+
   const type = watch('type'); // Observa el campo 'type' para cambios
 
+  // Si initialData cambia después del montaje, reseteamos via useEffect (evita llamadas sincronas a setValue)
+  useEffect(() => {
+    if (initialData) {
+      setValue('type', initialData.type || '');
+      setValue('title', initialData.name || '');
+      setValue('price', initialData.amount != null ? String(initialData.amount) : '');
+      setValue('date', initialData.date ? initialData.date.slice(0,10) : '');
+      setValue('category', initialData.category || '');
+    } else {
+      // si no hay initialData, limpiamos el formulario
+      reset();
+    }
+  }, [initialData, setValue, reset]);
+  
   // Definimos las categorías como un array
   const categories = CATEGORIES;
 
@@ -23,18 +49,21 @@ const IncomeExpenseForm = ({ onClose, onTransactionAdded }) => {
         category: data.category || null, // Si no hay categoría, enviamos null
       };
 
-      // Llamada al backend usando fetchData
-      const response = await fetchData('/transactions', 'POST', payload);
-      console.log('Transaction saved:', response);
+      if (initialData && initialData._id) {
+        // modo edición -> PUT
+        const response = await fetchData(`/transactions/${initialData._id}`, 'PUT', payload);
+        if (onTransactionUpdated) onTransactionUpdated(response);
+      } else {
+        // modo creación -> POST
+        await fetchData('/transactions', 'POST', payload); // no necesitamos la variable response aquí
+        if (onTransactionAdded) onTransactionAdded();
+      }
 
-  // Reseteamos el formulario después de enviarlo
-  reset();
+      // Reseteamos el formulario después de enviarlo (solo si no es edición)
+      if (!initialData) reset();
 
-  // Notificar al padre que se añadió una transacción para que refresque la lista
-  if (onTransactionAdded) onTransactionAdded();
-
-  // Opcional: Cierra el formulario después de guardar
-  if (onClose) onClose();
+      // Opcional: Cierra el formulario después de guardar
+      if (onClose) onClose();
     } catch (error) {
       console.error('Error saving transaction:', error);
     }
@@ -101,7 +130,7 @@ const IncomeExpenseForm = ({ onClose, onTransactionAdded }) => {
           />
         </div>
 
-        <Button text="Submit" type="submit" />
+        <Button text={initialData ? 'Save' : 'Submit'} type="submit" />
       </form>
     </div>
   );

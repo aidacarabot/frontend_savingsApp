@@ -5,12 +5,18 @@ import Loader from '../Loader/Loader';
 import DropDown from '../DropDown/DropDown';
 import getTransactionImage from '../../utils/getTransactionImage';
 import { ErrorMessage } from '../Messages/Messages';
-
+import AreYouSure from '../AreYouSure/AreYouSure';
+import IncomeExpenseForm from '../IncomeExpenseForm/IncomeExpenseForm';
 
 const TransactionBox = ({ refresh, view = 'All', filters = {} }) => {
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  //? estados para confirmación y edición
+  const [deleteCandidateId, setDeleteCandidateId] = useState(null);
+  const [showAreYouSure, setShowAreYouSure] = useState(false);
+  const [editingTransaction, setEditingTransaction] = useState(null);
 
   //? Función para obtener las transacciones
   const fetchTransactions = async () => {
@@ -32,8 +38,54 @@ const TransactionBox = ({ refresh, view = 'All', filters = {} }) => {
     fetchTransactions();
   }, [refresh]);
 
+  //? peticiones de dropDown
+  const handleDeleteRequest = (transactionId) => {
+    setDeleteCandidateId(transactionId);
+    setShowAreYouSure(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!deleteCandidateId) {
+      setShowAreYouSure(false);
+      return;
+    }
+    try {
+      await fetchData(`/transactions/${deleteCandidateId}`, 'DELETE');
+      setTransactions((prev) => prev.filter((t) => t._id !== deleteCandidateId));
+    } catch (err) {
+      console.error('Error deleting transaction:', err);
+    } finally {
+      setShowAreYouSure(false);
+      setDeleteCandidateId(null);
+    }
+  };
+
+  const handleCancelDelete = () => {
+    setShowAreYouSure(false);
+    setDeleteCandidateId(null);
+  };
+
+  const handleEditRequest = (transactionId) => {
+    const tx = transactions.find((t) => t._id === transactionId);
+    if (tx) {
+      setEditingTransaction(tx);
+    }
+  };
+
+  const handleEditClose = () => {
+    setEditingTransaction(null);
+  };
+
+  const handleTransactionUpdated = (updatedTx) => {
+    // actualizar en la lista local
+    setTransactions((prev) =>
+      prev.map((t) => (t._id === updatedTx._id ? updatedTx : t))
+    );
+    setEditingTransaction(null);
+  };
+
   //? Filtrado aplicado en cliente
-    const applyFilters = (items) => {
+  const applyFilters = (items) => {
     return items.filter((tx) => {
       // view filter
       if (view === 'Expenses' && tx.type !== 'Expense') return false;
@@ -71,14 +123,6 @@ const TransactionBox = ({ refresh, view = 'All', filters = {} }) => {
 
   const filteredTransactions = applyFilters(transactions);
 
-
-  //? Función para eliminar una transacción del estado local
-  const handleDeleteTransaction = (transactionId) => {
-    setTransactions((prevTransactions) =>
-      prevTransactions.filter((transaction) => transaction._id !== transactionId) // Cambia a transaction.id si el backend usa id
-    );
-  };
-
   if (loading) {
     return <Loader />;
   }
@@ -89,6 +133,22 @@ const TransactionBox = ({ refresh, view = 'All', filters = {} }) => {
 
   return (
     <div className="transaction-box">
+      {showAreYouSure && (
+        <AreYouSure
+          message="Are you sure you want to delete this transaction?"
+          onConfirm={handleConfirmDelete}
+          onCancel={handleCancelDelete}
+        />
+      )}
+
+      {editingTransaction && (
+        <IncomeExpenseForm
+          initialData={editingTransaction}
+          onClose={handleEditClose}
+          onTransactionUpdated={handleTransactionUpdated}
+        />
+      )}
+
       {filteredTransactions.length > 0 ? (
         filteredTransactions.map((transaction) => (
           <div
@@ -131,8 +191,9 @@ const TransactionBox = ({ refresh, view = 'All', filters = {} }) => {
                 ${transaction.amount.toFixed(2)}
               </p>
               <DropDown
-                transactionId={transaction._id} // Cambia a transaction.id si el backend usa id
-                onDelete={handleDeleteTransaction}
+                transactionId={transaction._id}
+                onDeleteRequest={handleDeleteRequest}
+                onEditRequest={handleEditRequest}
               />
             </div>
           </div>

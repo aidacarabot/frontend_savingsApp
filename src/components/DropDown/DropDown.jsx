@@ -1,30 +1,40 @@
-import { fetchData } from '../../utils/api/fetchData';
+import { useState, useEffect, useRef } from 'react';
 import './DropDown.css';
 
-const DropDown = ({ transactionId, onDelete }) => {
-  //? Función para eliminar transaction
-  const handleDelete = async () => {
-    console.log('Transaction ID received in DropDown:', transactionId); // Depura el ID recibido
+const DropDown = ({ transactionId, onDeleteRequest, onEditRequest }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const rootRef = useRef(null);
 
-    if (!transactionId) {
-      console.error('Transaction ID is undefined');
-      return;
-    }
-
-    try {
-      await fetchData(`/transactions/${transactionId}`, 'DELETE');
-      console.log('Transaction deleted successfully');
-      if (onDelete) {
-        onDelete(transactionId); // Notifica a TransactionBox para actualizar el estado
-      }
-    } catch (error) {
-      console.error('Error deleting transaction:', error);
-    }
+  const toggle = (e) => {
+    e.stopPropagation();
+    setIsOpen((v) => !v);
   };
 
+  const handleEdit = (e) => {
+    e.stopPropagation();
+    if (onEditRequest) onEditRequest(transactionId);
+    setIsOpen(false);
+  };
+
+  const handleDeleteRequest = (e) => {
+    e.stopPropagation();
+    if (onDeleteRequest) onDeleteRequest(transactionId);
+    setIsOpen(false);
+  };
+
+  useEffect(() => {
+    const onDocClick = (e) => {
+      if (rootRef.current && !rootRef.current.contains(e.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('click', onDocClick);
+    return () => document.removeEventListener('click', onDocClick);
+  }, []);
+
   return (
-    <div className="select">
-      <div className="selected">
+    <div className="select" ref={rootRef}>
+      <div className="selected" onClick={toggle} role="button" tabIndex={0}>
         <span className="dots">...</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -37,23 +47,13 @@ const DropDown = ({ transactionId, onDelete }) => {
           ></path>
         </svg>
       </div>
-      <div className="options">
-        <div title="option-edit">
-          <input
-            id="option-edit"
-            name="option"
-            type="radio"
-          />
-          <label className="option" htmlFor="option-edit" data-txt="Edit"></label>
+
+      <div className={`options ${isOpen ? 'open' : ''}`} style={{ display: isOpen ? 'block' : 'none' }}>
+        <div title="option-edit" onClick={handleEdit} style={{ cursor: 'pointer' }}>
+          <label className="option" data-txt="Edit" aria-hidden="true"></label>
         </div>
-        <div title="option-delete">
-          <input
-            id="option-delete"
-            name="option"
-            type="radio"
-            onClick={handleDelete}
-          />
-          <label className="option" htmlFor="option-delete" data-txt="Delete"></label>
+        <div title="option-delete" onClick={handleDeleteRequest} style={{ cursor: 'pointer' }}>
+          <label className="option" data-txt="Delete" aria-hidden="true"></label>
         </div>
       </div>
     </div>
