@@ -76,6 +76,10 @@ const GoalForm = ({ onClose, onGoalAdded }) => {
               min: { value: 0.01, message: 'Amount must be greater than zero' }
             })}
             placeholder="Enter Amount"
+            onChange={(e) => {
+              setLastUpdatedField('totalGoal');
+              register('totalGoal').onChange(e);
+            }}
           />
         </div>
 
@@ -121,9 +125,9 @@ const GoalForm = ({ onClose, onGoalAdded }) => {
             <div className="info-item">
               <span className="info-label">Monthly Savings Needed:</span>
               <span className="info-value">
-                ${totalGoal && totalGoal > 0 
-                  ? calculatedData.monthlySavingsNeeded.toFixed(2) 
-                  : '0.00'
+                {totalGoal && totalGoal > 0 && calculatedData.monthlySavingsNeeded > 0
+                  ? `$${calculatedData.monthlySavingsNeeded.toFixed(2)}`
+                  : ''
                 }
               </span>
             </div>
@@ -133,7 +137,7 @@ const GoalForm = ({ onClose, onGoalAdded }) => {
               <span className="info-value">
                 {totalGoal && totalGoal > 0 && calculatedData.calculatedCompletionDate 
                   ? new Date(calculatedData.calculatedCompletionDate).toLocaleDateString()
-                  : 'Not calculated'
+                  : ''
                 }
               </span>
             </div>
@@ -141,9 +145,9 @@ const GoalForm = ({ onClose, onGoalAdded }) => {
             <div className="info-item">
               <span className="info-label">Age at goal completion:</span>
               <span className="info-value">
-                {calculatedData.ageAtCompletion > 0
+                {totalGoal && totalGoal > 0 && calculatedData.ageAtCompletion > 0
                   ? `${calculatedData.ageAtCompletion} years`
-                  : `${currentAge || 0} years`
+                  : ''
                 }
               </span>
             </div>

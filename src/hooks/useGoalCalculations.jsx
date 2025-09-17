@@ -22,30 +22,41 @@ export const useGoalCalculations = (totalGoal, completionDate, monthlyContributi
       currentAge
     );
 
-    // Auto-completar campos basado en cálculos
+    // Auto-completar campos solo cuando es necesario
     if (totalGoal && totalGoal > 0) {
-      if (completionDate && lastUpdatedField === 'completionDate' && newData.monthlySavingsNeeded > 0) {
-        if (!monthlyContribution || Math.abs(newData.monthlySavingsNeeded - parseFloat(monthlyContribution || 0)) > 1) {
+      // Actualizar monthly contribution si es necesario
+      if (newData.shouldUpdateMonthly && newData.monthlySavingsNeeded > 0) {
+        const currentMonthly = parseFloat(monthlyContribution || 0);
+        if (Math.abs(newData.monthlySavingsNeeded - currentMonthly) > 0.01) {
           setIsCalculating(true);
           setValue('monthlyContribution', newData.monthlySavingsNeeded.toFixed(2), { shouldDirty: false });
-          setTimeout(() => setIsCalculating(false), 50);
+          setTimeout(() => setIsCalculating(false), 100);
         }
-      } else if (monthlyContribution && monthlyContribution > 0 && lastUpdatedField === 'monthlyContribution' && newData.calculatedCompletionDate) {
+      }
+      
+      // Actualizar completion date si es necesario
+      if (newData.shouldUpdateDate && newData.calculatedCompletionDate) {
         if (newData.calculatedCompletionDate !== completionDate) {
           setIsCalculating(true);
           setValue('completionDate', newData.calculatedCompletionDate, { shouldDirty: false });
-          setTimeout(() => setIsCalculating(false), 50);
+          setTimeout(() => setIsCalculating(false), 100);
         }
       }
     }
 
-    setCalculatedData(newData);
+    // Siempre actualizar los datos calculados para mostrar en el summary
+    setCalculatedData({
+      monthlySavingsNeeded: newData.monthlySavingsNeeded,
+      calculatedCompletionDate: newData.calculatedCompletionDate,
+      ageAtCompletion: newData.ageAtCompletion
+    });
 
+    // Reset lastUpdatedField después de procesar
     if (lastUpdatedField) {
-      const timer = setTimeout(() => setLastUpdatedField(null), 200);
+      const timer = setTimeout(() => setLastUpdatedField(null), 150);
       return () => clearTimeout(timer);
     }
-  }, [totalGoal, completionDate, monthlyContribution, setValue, userData?.birthDate, currentAge, lastUpdatedField, isCalculating]);
+  }, [totalGoal, completionDate, monthlyContribution, setValue, userData, currentAge, lastUpdatedField, isCalculating]);
 
   return {
     calculatedData,

@@ -35,7 +35,9 @@ export const calculateGoalData = (
     return {
       monthlySavingsNeeded: 0,
       calculatedCompletionDate: '',
-      ageAtCompletion: currentAge || 0
+      ageAtCompletion: currentAge || 0,
+      shouldUpdateMonthly: false,
+      shouldUpdateDate: false
     };
   }
 
@@ -44,31 +46,35 @@ export const calculateGoalData = (
   let calculatedMonthly = 0;
   let calculatedDate = '';
   let ageAtGoal = currentAge || 0;
+  let shouldUpdateMonthly = false;
+  let shouldUpdateDate = false;
 
-  if (completionDate && lastUpdatedField === 'completionDate') {
-    // Usuario cambió la fecha, calcular monthly contribution
+  // Priorizar cálculos basado en el último campo actualizado
+  if (completionDate && (lastUpdatedField === 'completionDate' || lastUpdatedField === 'totalGoal')) {
+    // Calcular monthly contribution basado en fecha
     const targetDate = new Date(completionDate);
     if (targetDate > currentDate) {
       const monthsToGoal = calculateMonthsBetween(currentDate, targetDate);
       calculatedMonthly = targetAmount / monthsToGoal;
       calculatedDate = completionDate;
       ageAtGoal = userData?.birthDate ? calculateAgeAtDate(userData.birthDate, targetDate, currentAge) : currentAge || 0;
+      shouldUpdateMonthly = lastUpdatedField !== 'monthlyContribution';
     }
-  } else if (monthlyContribution && monthlyContribution > 0 && lastUpdatedField === 'monthlyContribution') {
-    // Usuario cambió la contribución mensual, calcular fecha
+  } else if (monthlyContribution && monthlyContribution > 0 && (lastUpdatedField === 'monthlyContribution' || lastUpdatedField === 'totalGoal')) {
+    // Calcular fecha basado en contribución mensual
     const monthly = parseFloat(monthlyContribution);
     if (monthly > 0) {
       const monthsNeeded = Math.ceil(targetAmount / monthly);
-      // Limitar a un máximo razonable de años (ej: 50 años)
-      if (monthsNeeded <= 600) { // 50 años * 12 meses
+      if (monthsNeeded <= 600) { // Límite de 50 años
         const calculatedDateObj = addMonthsToDate(currentDate, monthsNeeded);
         calculatedDate = calculatedDateObj.toISOString().split('T')[0];
         calculatedMonthly = monthly;
         ageAtGoal = userData?.birthDate ? calculateAgeAtDate(userData.birthDate, calculatedDateObj, currentAge) : currentAge || 0;
+        shouldUpdateDate = lastUpdatedField !== 'completionDate';
       }
     }
   } else if (completionDate && monthlyContribution && monthlyContribution > 0) {
-    // Ambos campos tienen valores, mostrar la información
+    // Ambos campos tienen valores - solo mostrar información
     const targetDate = new Date(completionDate);
     const monthly = parseFloat(monthlyContribution);
     
@@ -82,6 +88,8 @@ export const calculateGoalData = (
   return {
     monthlySavingsNeeded: calculatedMonthly,
     calculatedCompletionDate: calculatedDate,
-    ageAtCompletion: ageAtGoal
+    ageAtCompletion: ageAtGoal,
+    shouldUpdateMonthly,
+    shouldUpdateDate
   };
 };
