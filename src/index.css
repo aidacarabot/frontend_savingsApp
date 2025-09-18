@@ -100,3 +100,12 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* ! GOALS */
+.goals-container {
+display: flex;
+flex-direction: column;
+width: 80vw;
+padding: 50px;
+gap: 20px;
+}

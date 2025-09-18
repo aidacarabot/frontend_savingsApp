@@ -1,6 +1,6 @@
 //! FUNCION DE UTILIDAD PARA LAS PETICIONES HTTP AL BACKEND
-
-const BASE_URL = "https://backend-savings-app.vercel.app/api/v1"; 
+const BASE_URL = "http://localhost:3000/api/v1"; 
+//const BASE_URL = "https://backend-savings-app.vercel.app/api/v1"; 
 
 // Función reutilizable para hacer peticiones HTTP al backend
 export const fetchData = async (endpoint, method = "GET", data = null, headers = {}) => {
