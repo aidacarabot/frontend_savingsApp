@@ -109,3 +109,13 @@ width: 80vw;
 padding: 50px;
 gap: 20px;
 }
+
+/* ! OVERVIEW */
+
+.overview-container {
+  display: flex;
+  flex-direction: column;
+  width: 80vw;
+  padding: 50px;
+  gap: 20px;
+}
