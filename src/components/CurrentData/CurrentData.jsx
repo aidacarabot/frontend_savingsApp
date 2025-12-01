@@ -8,9 +8,13 @@ const CurrentData = () => {
   const currentDate = useCurrentDate();
   const { viewBy } = useFinancialContext();
   const { 
+    totalBalance,
+    available,
+    assignedToGoals,
     savings, 
     income, 
     expenses, 
+    balanceComparison,
     savingsComparison,
     incomeComparison, 
     expensesComparison, 
@@ -43,10 +47,9 @@ const CurrentData = () => {
     }
   };
 
-  const ComparisonBadge = ({ comparison, label }) => {
+  const ComparisonBadge = ({ comparison, label, isExpense = false }) => {
     if (!comparison) return null;
 
-    // Si no hay datos para comparar
     if (comparison.noData) {
       return (
         <div className="comparison-badge no-data">
@@ -58,11 +61,25 @@ const CurrentData = () => {
     const percentage = Math.abs(comparison.percentage).toFixed(1);
     const isPositive = comparison.isPositive;
 
+    let triangle = '▲';
+    if (isExpense) {
+      triangle = isPositive ? '▼' : '▲';
+    } else {
+      triangle = isPositive ? '▲' : '▼';
+    }
+
     return (
-      <div className={`comparison-badge ${isPositive ? 'positive' : 'negative'}`}>
-        <span className="triangle">{isPositive ? '▲' : '▼'}</span>
-        <span className="percentage">{percentage}%</span>
-        <span className="comparison-label">{label}</span>
+      <div className="comparison-container">
+        <div className={`comparison-badge ${isPositive ? 'positive' : 'negative'}`}>
+          <span className="triangle">{triangle}</span>
+          <span className="percentage">{percentage}%</span>
+          <span className="comparison-label">{label}</span>
+        </div>
+        {comparison.previousValue !== undefined && (
+          <div className="previous-value">
+            Previous: {formatCurrency(comparison.previousValue)}
+          </div>
+        )}
       </div>
     );
   };
@@ -94,10 +111,29 @@ const CurrentData = () => {
       </div>
       
       <div className="financial-data">
+        <div id="balance-section" className="data-card">
+          <h3>💰 Total Balance</h3>
+          <p className="amount">{formatCurrency(totalBalance)}</p>
+          <div className="balance-details">
+            <div className="balance-item">
+              <span className="label">Available:</span>
+              <span className="value">{formatCurrency(available)}</span>
+            </div>
+            <div className="balance-item">
+              <span className="label">In Goals:</span>
+              <span className="value">{formatCurrency(assignedToGoals)}</span>
+            </div>
+          </div>
+          <ComparisonBadge 
+            comparison={balanceComparison} 
+            label={getComparisonText()} 
+          />
+        </div>
+
         <div id="savings-section" className="data-card">
-          <h3>💰 Your Savings</h3>
+          <h3>🎯 Your Savings</h3>
           <p className="amount">{formatCurrency(savings)}</p>
-          <small>Available</small>
+          <small>{getPeriodText()}</small>
           <ComparisonBadge 
             comparison={savingsComparison} 
             label={getComparisonText()} 
@@ -120,7 +156,8 @@ const CurrentData = () => {
           <small>{getPeriodText()}</small>
           <ComparisonBadge 
             comparison={expensesComparison} 
-            label={getComparisonText()} 
+            label={getComparisonText()}
+            isExpense={true}
           />
         </div>
       </div>

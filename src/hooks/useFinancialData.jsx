@@ -12,7 +12,6 @@ export const useFinancialData = () => {
     }
   }, [refreshTrigger, refetch]);
 
-  // Filtrar transacciones según el periodo
   const filterTransactionsByPeriod = (transactions, year, month = null) => {
     if (!transactions || transactions.length === 0) return [];
 
@@ -29,7 +28,6 @@ export const useFinancialData = () => {
     });
   };
 
-  // Calcular totales de un conjunto de transacciones
   const calculateTotals = (transactions) => {
     const income = transactions
       .filter((t) => t.type === 'Income')
@@ -39,10 +37,9 @@ export const useFinancialData = () => {
       .filter((t) => t.type === 'Expense')
       .reduce((sum, t) => sum + t.amount, 0);
 
-    return { income, expenses, savings: income - expenses };
+    return { income, expenses, balance: income - expenses };
   };
 
-  // Calcular cambio porcentual
   const calculatePercentageChange = (current, previous) => {
     if (previous === 0) return current > 0 ? 100 : 0;
     return ((current - previous) / previous) * 100;
@@ -51,9 +48,13 @@ export const useFinancialData = () => {
   const financialData = useMemo(() => {
     if (!userData || !userData.transactions) {
       return { 
+        totalBalance: 0,
+        available: 0,
+        assignedToGoals: 0,
         savings: 0, 
         income: 0, 
         expenses: 0,
+        balanceComparison: null,
         savingsComparison: null,
         incomeComparison: null,
         expensesComparison: null,
@@ -68,6 +69,7 @@ export const useFinancialData = () => {
 
     let currentTransactions = [];
     let previousTransactions = [];
+    let balanceComparison = null;
     let savingsComparison = null;
     let incomeComparison = null;
     let expensesComparison = null;
@@ -110,10 +112,8 @@ export const useFinancialData = () => {
       }
     }
 
-    // Calcular totales del periodo actual
     const currentTotals = calculateTotals(currentTransactions);
 
-    // Calcular Savings acumulado total (All-Time)
     const allTimeIncome = userData.transactions
       .filter((t) => t.type === 'Income')
       .reduce((sum, t) => sum + t.amount, 0);
@@ -122,41 +122,54 @@ export const useFinancialData = () => {
       .filter((t) => t.type === 'Expense')
       .reduce((sum, t) => sum + t.amount, 0);
 
-    const savings = allTimeIncome - allTimeExpenses;
+    const totalBalance = allTimeIncome - allTimeExpenses;
 
-    // Calcular comparaciones (si no es All-Time y hay datos previos)
+    const assignedToGoals = userData.goals
+      ? userData.goals.reduce((sum, goal) => sum + (goal.monthlyContribution || 0), 0)
+      : 0;
+
+    const available = totalBalance - assignedToGoals;
+
+    const savings = currentTotals.balance;
+
     if (viewBy !== 'All-Time') {
       if (previousTransactions.length > 0) {
         const previousTotals = calculateTotals(previousTransactions);
 
-        // Comparación de Savings
-        savingsComparison = {
-          percentage: calculatePercentageChange(
-            currentTotals.savings,
-            previousTotals.savings
-          ),
-          isPositive: currentTotals.savings >= previousTotals.savings
+        balanceComparison = {
+          percentage: calculatePercentageChange(totalBalance, totalBalance - currentTotals.balance),
+          isPositive: currentTotals.balance >= 0,
+          previousValue: totalBalance - currentTotals.balance
         };
 
-        // Comparación de Income
+        savingsComparison = {
+          percentage: calculatePercentageChange(
+            currentTotals.balance,
+            previousTotals.balance
+          ),
+          isPositive: currentTotals.balance >= previousTotals.balance,
+          previousValue: previousTotals.balance
+        };
+
         incomeComparison = {
           percentage: calculatePercentageChange(
             currentTotals.income,
             previousTotals.income
           ),
-          isPositive: currentTotals.income >= previousTotals.income
+          isPositive: currentTotals.income >= previousTotals.income,
+          previousValue: previousTotals.income
         };
 
-        // Comparación de Expenses (MENOS gastos = positivo)
         expensesComparison = {
           percentage: calculatePercentageChange(
             currentTotals.expenses,
             previousTotals.expenses
           ),
-          isPositive: currentTotals.expenses < previousTotals.expenses
+          isPositive: currentTotals.expenses < previousTotals.expenses,
+          previousValue: previousTotals.expenses
         };
       } else {
-        // No hay datos del periodo anterior
+        balanceComparison = { noData: true };
         savingsComparison = { noData: true };
         incomeComparison = { noData: true };
         expensesComparison = { noData: true };
@@ -164,9 +177,13 @@ export const useFinancialData = () => {
     }
 
     return {
+      totalBalance,
+      available,
+      assignedToGoals,
       savings,
       income: currentTotals.income,
       expenses: currentTotals.expenses,
+      balanceComparison,
       savingsComparison,
       incomeComparison,
       expensesComparison,

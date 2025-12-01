@@ -46,8 +46,12 @@
   color: #2c3e50;
 }
 
-#savings-section .amount {
+#balance-section .amount {
   color: #4caf50;
+}
+
+#savings-section .amount {
+  color: #9c27b0;
 }
 
 #income-section .amount {
@@ -66,6 +70,41 @@
   margin-bottom: 0.5rem;
 }
 
+.balance-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  padding: 0.75rem;
+  background: #f9f9f9;
+  border-radius: 6px;
+}
+
+.balance-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+}
+
+.balance-item .label {
+  color: #666;
+  font-weight: 500;
+}
+
+.balance-item .value {
+  color: #333;
+  font-weight: 600;
+}
+
+.comparison-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+}
+
 .comparison-badge {
   display: inline-flex;
   align-items: center;
@@ -74,7 +113,6 @@
   border-radius: 4px;
   font-size: 0.75rem;
   font-weight: 600;
-  margin-top: 0.5rem;
 }
 
 .comparison-badge.positive {
@@ -85,6 +123,12 @@
 .comparison-badge.negative {
   background: #ffebee;
   color: #c62828;
+}
+
+.comparison-badge.no-data {
+  background: #f5f5f5;
+  color: #999;
+  font-weight: 500;
 }
 
 .comparison-badge .triangle {
@@ -98,6 +142,18 @@
 .comparison-badge .comparison-label {
   font-size: 0.7rem;
   opacity: 0.8;
+}
+
+.comparison-badge .no-data-text {
+  font-size: 0.7rem;
+  font-style: italic;
+}
+
+.previous-value {
+  font-size: 0.7rem;
+  color: #999;
+  font-style: italic;
+  margin-top: 0.15rem;
 }
 
 .error-message {
