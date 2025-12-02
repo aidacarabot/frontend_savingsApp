@@ -1,4 +1,5 @@
 import CurrentData from "../components/CurrentData/CurrentData"
+import ExpensesChart from "../components/ExpensesChart/ExpensesChart"
 import SavingsChart from "../components/SavingsChart/SavingsChart"
 import ViewBy from "../components/ViewBy/ViewBy"
 import { FinancialProvider } from "../context/FinancialContext"
@@ -11,6 +12,7 @@ const Overview = () => {
         <ViewBy />
         <CurrentData />
         <SavingsChart />
+        <ExpensesChart />
       </div>
     </FinancialProvider>
   )
