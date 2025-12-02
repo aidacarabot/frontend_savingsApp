@@ -17,23 +17,121 @@ const SavingsChart = () => {
     }).format(value);
   };
 
+  // Formatear el título del tooltip según el periodo
+  const formatTooltipTitle = (name) => {
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const currentMonth = now.getMonth();
+    
+    switch (viewBy) {
+      case 'Month': {
+        // name es el día (número)
+        const date = new Date(currentYear, currentMonth, parseInt(name));
+        return date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+      }
+      
+      case 'Year': {
+        // name es el mes abreviado (Jan, Feb, etc.)
+        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const monthIndex = monthNames.indexOf(name);
+        const date = new Date(currentYear, monthIndex, 1);
+        return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+      }
+      
+      case 'All-Time': {
+        // name es el año
+        return name;
+      }
+      
+      default:
+        return name;
+    }
+  };
+
+  // Formatear el título del periodo anterior en el tooltip
+  const formatPreviousPeriodLabel = (name) => {
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const currentMonth = now.getMonth();
+    
+    switch (viewBy) {
+      case 'Month': {
+        // name es el día (número)
+        const previousMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+        const previousYear = currentMonth === 0 ? currentYear - 1 : currentYear;
+        const date = new Date(previousYear, previousMonth, parseInt(name));
+        return date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+      }
+      
+      case 'Year': {
+        // name es el mes abreviado (Jan, Feb, etc.)
+        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const monthIndex = monthNames.indexOf(name);
+        const date = new Date(currentYear - 1, monthIndex, 1);
+        return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+      }
+      
+      default:
+        return name;
+    }
+  };
+
+  // Obtener nombres de los periodos para la leyenda
+  const getLegendNames = () => {
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const currentMonth = now.getMonth();
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    
+    switch (viewBy) {
+      case 'Month': {
+        const previousMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+        const previousYear = currentMonth === 0 ? currentYear - 1 : currentYear;
+        return {
+          current: `${monthNames[currentMonth]} ${currentYear}`,
+          previous: `${monthNames[previousMonth]} ${previousYear}`
+        };
+      }
+      
+      case 'Year': {
+        return {
+          current: `${currentYear}`,
+          previous: `${currentYear - 1}`
+        };
+      }
+      
+      case 'All-Time': {
+        return {
+          current: 'Balance',
+          previous: ''
+        };
+      }
+      
+      default:
+        return {
+          current: 'Current Period',
+          previous: 'Previous Period'
+        };
+    }
+  };
+
   // Tooltip personalizado con detalle del periodo
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
       return (
         <div className="custom-tooltip">
-          <p className="tooltip-title">{`${getPeriodLabel()}: ${data.name}`}</p>
+          <p className="tooltip-title">{formatTooltipTitle(data.name)}</p>
           
           <div className="tooltip-section">
-            <p className="tooltip-label">Accumulated Balance:</p>
+            <p className="tooltip-label">Total Balance:</p>
             <p className="tooltip-value balance">{formatCurrency(data.balance)}</p>
           </div>
 
           <div className="tooltip-divider"></div>
 
           <div className="tooltip-section">
-            <p className="tooltip-label">Period Details:</p>
+            <p className="tooltip-label">Details:</p>
             <p className="tooltip-detail income">
               Income: <span>{formatCurrency(data.periodIncome)}</span>
             </p>
@@ -49,7 +147,7 @@ const SavingsChart = () => {
             <>
               <div className="tooltip-divider"></div>
               <div className="tooltip-section">
-                <p className="tooltip-label">Previous Period:</p>
+                <p className="tooltip-label">{formatPreviousPeriodLabel(data.name)} Balance:</p>
                 <p className="tooltip-value previous">{formatCurrency(data.previousBalance)}</p>
               </div>
             </>
@@ -66,15 +164,6 @@ const SavingsChart = () => {
       return `${(value / 1000).toFixed(1)}K`;
     }
     return `${value}`;
-  };
-
-  const getPeriodLabel = () => {
-    switch (viewBy) {
-      case 'Month': return 'Day';
-      case 'Year': return 'Month';
-      case 'All-Time': return 'Year';
-      default: return 'Period';
-    }
   };
 
   if (loading) {
@@ -102,6 +191,8 @@ const SavingsChart = () => {
     );
   }
 
+  const legendNames = getLegendNames();
+
   return (
     <div className="savings-chart-container">
       <h2 className="chart-title">📊 SAVINGS OVER TIME</h2>
@@ -123,18 +214,14 @@ const SavingsChart = () => {
               stroke="#666"
               tickFormatter={formatYAxis}
               style={{ fontSize: '0.875rem' }}
-              domain={[0, 'auto']}
+              domain={[0, 'dataMax + 500']}
+              allowDataOverflow={false}
               label={{ value: '$', angle: 0, position: 'insideTopLeft', style: { fontWeight: 600, fill: '#333' } }}
             />
             <Tooltip content={<CustomTooltip />} />
-            <Legend 
-              wrapperStyle={{ paddingTop: '20px' }}
-              iconType="circle"
-            />
             <Bar 
               dataKey="balance" 
               fill="#4CAF50" 
-              name="Balance"
               radius={[8, 8, 0, 0]}
             />
           </BarChart>
@@ -154,7 +241,8 @@ const SavingsChart = () => {
               stroke="#666"
               tickFormatter={formatYAxis}
               style={{ fontSize: '0.875rem' }}
-              domain={[0, 'auto']}
+              domain={[0, 'dataMax + 500']}
+              allowDataOverflow={false}
               label={{ value: '$', angle: 0, position: 'insideTopLeft', style: { fontWeight: 600, fill: '#333' } }}
             />
             <Tooltip content={<CustomTooltip />} />
@@ -165,14 +253,14 @@ const SavingsChart = () => {
             <Bar 
               dataKey="balance" 
               fill="#4CAF50" 
-              name="Current Period"
+              name={legendNames.current}
               radius={[8, 8, 0, 0]}
             />
             <Line 
               type="monotone" 
               dataKey="previousBalance" 
               stroke="#9E9E9E" 
-              name="Previous Period"
+              name={legendNames.previous}
               strokeWidth={2}
               dot={{ r: 3 }}
               activeDot={{ r: 5 }}

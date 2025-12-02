@@ -112,7 +112,7 @@ const CurrentData = () => {
       
       <div className="financial-data">
         <div id="balance-section" className="data-card">
-          <h3>💰 Total Balance</h3>
+          <h3>💰 Current Balance</h3>
           <p className="amount">{formatCurrency(totalBalance)}</p>
           <div className="balance-details">
             <div className="balance-item">
@@ -132,8 +132,8 @@ const CurrentData = () => {
 
         <div id="savings-section" className="data-card">
           <h3>🎯 Your Savings</h3>
-          <p className="amount">{formatCurrency(savings)}</p>
           <small>{getPeriodText()}</small>
+          <p className="amount">{formatCurrency(savings)}</p>
           <ComparisonBadge 
             comparison={savingsComparison} 
             label={getComparisonText()} 
@@ -142,8 +142,8 @@ const CurrentData = () => {
         
         <div id="income-section" className="data-card">
           <h3>📈 Your Income</h3>
-          <p className="amount">+{formatCurrency(income)}</p>
           <small>{getPeriodText()}</small>
+          <p className="amount">+{formatCurrency(income)}</p>
           <ComparisonBadge 
             comparison={incomeComparison} 
             label={getComparisonText()} 
@@ -152,8 +152,9 @@ const CurrentData = () => {
         
         <div id="expenses-section" className="data-card">
           <h3>📉 Your Expenses</h3>
-          <p className="amount">-{formatCurrency(expenses)}</p>
           <small>{getPeriodText()}</small>
+          <p className="amount">-{formatCurrency(expenses)}</p>
+        
           <ComparisonBadge 
             comparison={expensesComparison} 
             label={getComparisonText()}
