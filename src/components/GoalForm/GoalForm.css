@@ -1,173 +1,352 @@
-/* Overlay para cubrir toda la pantalla */
+/* Overlay moderno con backdrop blur */
 .goal-form-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
 }
 
-/* Contenedor del formulario */
-.goal-form-div {
-  background: white;
-  border-radius: 12px;
-  padding: 24px;
-  max-width: 500px;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Card estilo Revolut */
+.goal-form-card {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 28px 24px;
+  max-width: 560px;
   width: 90%;
   max-height: 90vh;
   overflow-y: auto;
+  overflow-x: visible;
   position: relative;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease-out;
 }
 
-/* Botón de cerrar */
-.close-button {
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Close button minimalista */
+.close-btn {
   position: absolute;
-  top: 16px;
-  right: 16px;
-  background: none;
+  top: 20px;
+  right: 20px;
+  background: #f5f5f5;
   border: none;
-  font-size: 24px;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  border-radius: 50%;
+  font-size: 20px;
+  line-height: 1;
   cursor: pointer;
   color: #666;
-  padding: 4px 8px;
-  border-radius: 4px;
-  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  z-index: 10;
+  padding: 0;
 }
 
-.close-button:hover {
-  background-color: #f0f0f0;
+.close-btn:hover {
+  background: #e0e0e0;
   color: #333;
+  transform: rotate(90deg);
 }
 
-/* Título del formulario */
-.goal-form-div h3 {
-  margin-top: 0;
+/* Header del formulario */
+.form-header {
   margin-bottom: 24px;
-  text-align: center;
-  color: #333;
 }
 
-/* Form styles */
+.form-header h2 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #0a0a0a;
+  margin: 0 0 6px 0;
+  letter-spacing: -0.5px;
+}
+
+.form-header .subtitle {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+  font-weight: 400;
+}
+
+/* Form structure */
 .goal-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
 }
 
-.form-group {
+/* Input groups */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.input-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: #0a0a0a;
+  font-size: 14px;
+  letter-spacing: -0.2px;
+}
+
+.label-icon {
+  font-size: 16px;
+}
+
+/* Modern inputs estilo Revolut */
+.modern-input {
+  padding: 12px 14px;
+  border: 2px solid #e8e8e8;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #0a0a0a;
+  background: #fafafa;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.modern-input:hover {
+  border-color: #d0d0d0;
+  background: #fff;
+}
+
+.modern-input:focus {
+  outline: none;
+  border-color: #0a0a0a;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.05);
+}
+
+.modern-input::placeholder {
+  color: #999;
+  font-weight: 400;
+}
+
+/* Input with prefix (para $) */
+.input-with-prefix {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.input-prefix {
+  position: absolute;
+  left: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #666;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.modern-input.with-prefix {
+  padding-left: 30px;
+}
+
+/* Date input styling */
+.date-input {
+  cursor: pointer;
+}
+
+.date-input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: opacity(0.6);
+}
+
+/* Grid de 3 columnas */
+.calculation-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 650px) {
+  .calculation-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+/* Summary Card estilo Revolut */
+.summary-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 14px;
+  padding: 20px;
+  color: white;
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+}
+
+.summary-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.summary-icon {
+  font-size: 20px;
+}
+
+.summary-header h3 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 650px) {
+  .summary-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .summary-item {
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+  }
+}
+
+.summary-item {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
-.form-group label {
+.summary-label {
+  font-size: 11px;
+  opacity: 0.9;
   font-weight: 500;
-  color: #333;
-  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.form-group input {
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-size: 16px;
-  transition: border-color 0.2s ease;
+.summary-value {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
 }
 
-.form-group input:focus {
-  outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
-}
-
-/* Divider styles */
-.divider {
-  position: relative;
-  margin: 20px 0;
-  text-align: center;
-}
-
-.divider hr {
-  border: none;
-  height: 1px;
-  background-color: #ddd;
-  margin: 0;
-}
-
-.divider h3 {
-  position: absolute;
-  top: -12px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: white;
-  padding: 0 15px;
-  font-size: 16px;
-  color: #666;
-  font-weight: 500;
-  margin: 0;
-}
-
-/* Calculated info styles */
-.calculated-info {
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 20px;
-  border: 1px solid #e9ecef;
-}
-
-.info-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-}
-
-.info-item:last-child {
-  margin-bottom: 0;
-}
-
-.info-label {
-  font-size: 14px;
-  color: #666;
-  font-weight: 500;
-}
-
-.info-value {
-  font-size: 14px;
-  color: #333;
-  font-weight: 600;
-}
-
-/* Submit button */
-.goal-form button[type='submit'] {
-  margin-top: 16px;
-  padding: 12px 24px;
-  background-color: #007bff;
+/* Button override para este formulario */
+.goal-form .btn {
+  padding: 14px;
+  background: #0a0a0a;
   color: white;
   border: none;
-  border-radius: 6px;
-  font-size: 16px;
-  font-weight: 500;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
+  margin-top: 4px;
+  letter-spacing: -0.2px;
+  width: 100%;
 }
 
-.goal-form button[type='submit']:hover {
-  background-color: #0056b3;
+.goal-form .btn:hover {
+  background: #2a2a2a;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
-/* Responsive */
-@media (max-width: 576px) {
-  .goal-form-div {
+.goal-form .btn:active {
+  transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .goal-form-card {
+    padding: 24px;
+    border-radius: 20px;
     width: 95%;
-    margin: 20px;
-    max-height: 85vh;
+  }
+
+  .form-header h2 {
+    font-size: 24px;
+  }
+
+  .form-header .subtitle {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .goal-form-card {
+    width: 96%;
+    padding: 20px;
+    max-height: 92vh;
+  }
+
+  .form-header h2 {
+    font-size: 22px;
+  }
+
+  .form-header .subtitle {
+    font-size: 13px;
+  }
+
+  .close-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 20px;
+    top: 16px;
+    right: 16px;
+  }
+
+  .modern-input {
+    font-size: 15px;
+    padding: 12px 14px;
+  }
+
+  .input-group label {
+    font-size: 13px;
+  }
+
+  .summary-value {
+    font-size: 16px;
   }
 }

@@ -19,6 +19,7 @@ const GoalForm = ({ onClose, onGoalAdded, initialData = null, isEditing = false 
   const totalGoal = watch('totalGoal');
   const completionDate = watch('completionDate');
   const monthlyContribution = watch('monthlyContribution');
+  const ageAtCompletion = watch('ageAtCompletion');
 
   // Hook personalizado para cálculos - solo si no estamos editando o ya se inicializó
   const {
@@ -28,7 +29,8 @@ const GoalForm = ({ onClose, onGoalAdded, initialData = null, isEditing = false 
   } = useGoalCalculations(
     isInitializedRef.current ? totalGoal : null,
     isInitializedRef.current ? completionDate : null, 
-    isInitializedRef.current ? monthlyContribution : null, 
+    isInitializedRef.current ? monthlyContribution : null,
+    isInitializedRef.current ? ageAtCompletion : null,
     setValue, 
     userData, 
     currentAge
@@ -88,13 +90,6 @@ const GoalForm = ({ onClose, onGoalAdded, initialData = null, isEditing = false 
     }
   };
 
-  // Función para cerrar al hacer click en el overlay
-  const handleOverlayClick = (e) => {
-    if (e.target === e.currentTarget) {
-      onClose();
-    }
-  };
-
   // Manejar cambios en los inputs de forma controlada
   const handleFieldChange = (fieldName, event) => {
     if (isInitializedRef.current) {
@@ -104,104 +99,159 @@ const GoalForm = ({ onClose, onGoalAdded, initialData = null, isEditing = false 
   };
 
   return (
-    <div className='goal-form-overlay' onClick={handleOverlayClick}>
-      <div className='goal-form-div'>
-        <button className="close-button" onClick={onClose} type="button">
-          ×
-        </button>
-        <h3>{isEditing ? 'EDIT GOAL' : 'NEW GOAL'}</h3>
+    <div className='goal-form-overlay'>
+      <div className='goal-form-card'>
+        <Button 
+          text="×" 
+          onClick={onClose} 
+          type="button"
+          className="close-btn"
+        />
+        
+        <div className="form-header">
+          <h2>{isEditing ? 'Edit Goal' : 'Create New Goal'}</h2>
+          <p className="subtitle">Define your financial goals and let us help you achieve them</p>
+        </div>
+
         <form className='goal-form' onSubmit={handleSubmit(handleFormSubmit)}>
-          <div className="form-group">
-            <label htmlFor="goal-name">Goal Name:</label>
+          {/* Goal Name */}
+          <div className="input-group">
+            <label htmlFor="goal-name">
+              <span className="label-icon">🎯</span>
+              Goal Name
+            </label>
             <input
               id="goal-name"
               type="text"
               {...register('goalName', { required: 'Goal name is required' })}
-              placeholder="Enter Name"
+              placeholder="e.g., Vacation to Japan"
+              className="modern-input"
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="total-goal">Total Goal ($):</label>
-            <input
-              id="total-goal"
-              type="number"
-              step="0.01"
-              {...register('totalGoal', { 
-                required: 'Total goal amount is required',
-                min: { value: 0.01, message: 'Amount must be greater than zero' }
-              })}
-              placeholder="Enter Amount"
-              onChange={(e) => handleFieldChange('totalGoal', e)}
-            />
+          {/* Total Goal */}
+          <div className="input-group">
+            <label htmlFor="total-goal">
+              <span className="label-icon">💰</span>
+              Target Amount
+            </label>
+            <div className="input-with-prefix">
+              <span className="input-prefix">$</span>
+              <input
+                id="total-goal"
+                type="number"
+                step="0.01"
+                {...register('totalGoal', { 
+                  required: 'Total goal amount is required',
+                  min: { value: 0.01, message: 'Amount must be greater than zero' }
+                })}
+                placeholder="5,000"
+                className="modern-input with-prefix"
+                onChange={(e) => handleFieldChange('totalGoal', e)}
+              />
+            </div>
           </div>
 
-          <div className="form-group">
-            <label htmlFor="completion-date">Completion Date:</label>
-            <input
-              id="completion-date"
-              type="date"
-              {...register('completionDate')}
-              min={new Date().toISOString().split('T')[0]}
-              onChange={(e) => handleFieldChange('completionDate', e)}
-            />
+          {/* Grid de 3 columnas para los campos calculables */}
+          <div className="calculation-grid">
+            <div className="input-group">
+              <label htmlFor="completion-date">
+                <span className="label-icon">📅</span>
+                Target Date
+              </label>
+              <input
+                id="completion-date"
+                type="date"
+                {...register('completionDate')}
+                min={new Date().toISOString().split('T')[0]}
+                className="modern-input date-input"
+                onChange={(e) => handleFieldChange('completionDate', e)}
+              />
+            </div>
+
+            <div className="input-group">
+              <label htmlFor="monthly-contribution">
+                <span className="label-icon">💸</span>
+                Monthly
+              </label>
+              <div className="input-with-prefix">
+                <span className="input-prefix">$</span>
+                <input
+                  id="monthly-contribution"
+                  type="number"
+                  step="0.01"
+                  {...register('monthlyContribution', {
+                    min: { value: 0.01, message: 'Monthly contribution must be greater than zero' }
+                  })}
+                  placeholder="200"
+                  className="modern-input with-prefix"
+                  onChange={(e) => handleFieldChange('monthlyContribution', e)}
+                />
+              </div>
+            </div>
+
+            <div className="input-group">
+              <label htmlFor="age-at-completion">
+                <span className="label-icon">🎂</span>
+                Age
+              </label>
+              <input
+                id="age-at-completion"
+                type="number"
+                {...register('ageAtCompletion', {
+                  min: { value: currentAge, message: `Age must be at least ${currentAge}` }
+                })}
+                placeholder={currentAge ? currentAge.toString() : "25"}
+                className="modern-input"
+                onChange={(e) => handleFieldChange('ageAtCompletion', e)}
+              />
+            </div>
           </div>
 
-          <div className="form-group">
-            <label htmlFor="monthly-contribution">Monthly Contribution ($):</label>
-            <input
-              id="monthly-contribution"
-              type="number"
-              step="0.01"
-              {...register('monthlyContribution', {
-                min: { value: 0.01, message: 'Monthly contribution must be greater than zero' }
-              })}
-              placeholder="Enter Contribution"
-              onChange={(e) => handleFieldChange('monthlyContribution', e)}
-            />
-          </div>
-
-          {/* Goal Summary */}
-          <>
-            <div className="divider">
-              <hr />
+          {/* Summary Card */}
+          <div className="summary-card">
+            <div className="summary-header">
+              <span className="summary-icon">✨</span>
               <h3>Goal Summary</h3>
             </div>
-            
-            <div className="calculated-info">
-              <div className="info-item">
-                <span className="info-label">Monthly Savings Needed:</span>
-                <span className="info-value">
+            <div className="summary-grid">
+              <div className="summary-item">
+                <span className="summary-label">Monthly Needed</span>
+                <span className="summary-value">
                   {totalGoal && totalGoal > 0 && calculatedData.monthlySavingsNeeded > 0
                     ? `$${calculatedData.monthlySavingsNeeded.toFixed(2)}`
-                    : ''
+                    : '—'
                   }
                 </span>
               </div>
-              
-              <div className="info-item">
-                <span className="info-label">Completion Date:</span>
-                <span className="info-value">
+              <div className="summary-item">
+                <span className="summary-label">Target Date</span>
+                <span className="summary-value">
                   {totalGoal && totalGoal > 0 && calculatedData.calculatedCompletionDate 
-                    ? new Date(calculatedData.calculatedCompletionDate).toLocaleDateString()
-                    : ''
+                    ? new Date(calculatedData.calculatedCompletionDate).toLocaleDateString('en-US', { 
+                        month: 'short', 
+                        year: 'numeric' 
+                      })
+                    : '—'
                   }
                 </span>
               </div>
-              
-              <div className="info-item">
-                <span className="info-label">Age at goal completion:</span>
-                <span className="info-value">
+              <div className="summary-item">
+                <span className="summary-label">Your Age</span>
+                <span className="summary-value">
                   {totalGoal && totalGoal > 0 && calculatedData.ageAtCompletion > 0
                     ? `${calculatedData.ageAtCompletion} years`
-                    : ''
+                    : '—'
                   }
                 </span>
               </div>
             </div>
-          </>
+          </div>
 
-          <Button text={isEditing ? "Update Goal" : "Submit"} type="submit" />
+          <Button 
+            text={isEditing ? "Update Goal" : "Create Goal"} 
+            type="submit" 
+          />
         </form>
       </div>
     </div>

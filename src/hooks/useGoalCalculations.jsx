@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { calculateGoalData } from '../utils/calc/goalCalculations';
 
-export const useGoalCalculations = (totalGoal, completionDate, monthlyContribution, setValue, userData, currentAge) => {
+export const useGoalCalculations = (totalGoal, completionDate, monthlyContribution, ageAtCompletion, setValue, userData, currentAge) => {
   const [calculatedData, setCalculatedData] = useState({
     monthlySavingsNeeded: 0,
     calculatedCompletionDate: '',
@@ -16,7 +16,8 @@ export const useGoalCalculations = (totalGoal, completionDate, monthlyContributi
     const newData = calculateGoalData(
       totalGoal, 
       completionDate, 
-      monthlyContribution, 
+      monthlyContribution,
+      ageAtCompletion,
       lastUpdatedField, 
       userData, 
       currentAge
@@ -42,6 +43,16 @@ export const useGoalCalculations = (totalGoal, completionDate, monthlyContributi
           setTimeout(() => setIsCalculating(false), 100);
         }
       }
+
+      // Actualizar age at completion si es necesario
+      if (newData.shouldUpdateAge && newData.ageAtCompletion > 0) {
+        const currentAgeInput = parseFloat(ageAtCompletion || 0);
+        if (newData.ageAtCompletion !== currentAgeInput) {
+          setIsCalculating(true);
+          setValue('ageAtCompletion', newData.ageAtCompletion, { shouldDirty: false });
+          setTimeout(() => setIsCalculating(false), 100);
+        }
+      }
     }
 
     // Siempre actualizar los datos calculados para mostrar en el summary
@@ -56,7 +67,7 @@ export const useGoalCalculations = (totalGoal, completionDate, monthlyContributi
       const timer = setTimeout(() => setLastUpdatedField(null), 150);
       return () => clearTimeout(timer);
     }
-  }, [totalGoal, completionDate, monthlyContribution, setValue, userData, currentAge, lastUpdatedField, isCalculating]);
+  }, [totalGoal, completionDate, monthlyContribution, ageAtCompletion, setValue, userData, currentAge, lastUpdatedField, isCalculating]);
 
   return {
     calculatedData,
