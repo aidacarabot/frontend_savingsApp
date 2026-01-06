@@ -124,8 +124,9 @@ export const useFinancialData = () => {
 
     const totalBalance = allTimeIncome - allTimeExpenses;
 
+    // Calcular el dinero total que está asignado a goals (currentAmount de cada goal)
     const assignedToGoals = userData.goals
-      ? userData.goals.reduce((sum, goal) => sum + (goal.monthlyContribution || 0), 0)
+      ? userData.goals.reduce((sum, goal) => sum + (goal.currentAmount || 0), 0)
       : 0;
 
     const available = totalBalance - assignedToGoals;
