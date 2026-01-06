@@ -2,6 +2,8 @@ import { useState } from "react";
 import Button from "../components/Button/Button";
 import GoalBox from "../components/GoalBox/GoalBox";
 import GoalForm from "../components/GoalForm/GoalForm";
+import GoalsDistribution from "../components/GoalsDistribution/GoalsDistribution";
+import { FinancialProvider } from "../context/FinancialContext";
 
 const Goals = () => {
   const [showGoalForm, setShowGoalForm] = useState(false);
@@ -34,25 +36,28 @@ const Goals = () => {
   };
 
   return (
-    <div className="goals-container">
-      <h2>Goals</h2>
-      <Button text="+ Add New Goal" onClick={handleAddNewGoal} />
-      <GoalBox
-        key={refreshGoals}
-        onGoalUpdated={handleGoalUpdated}
-        onEditGoal={handleEditGoal}
-      />
-
-      {/* Mostrar GoalForm cuando showGoalForm es true */}
-      {showGoalForm && (
-        <GoalForm
-          onClose={handleCloseForm}
-          onGoalAdded={handleGoalAdded}
-          initialData={editingGoal}
-          isEditing={!!editingGoal}
+    <FinancialProvider>
+      <div className="goals-container">
+        <GoalsDistribution />
+        <Button text="+ Add New Goal" onClick={handleAddNewGoal} />
+        <h2>🎯 YOUR GOALS</h2>
+        <GoalBox
+          key={refreshGoals}
+          onGoalUpdated={handleGoalUpdated}
+          onEditGoal={handleEditGoal}
         />
-      )}
-    </div>
+
+        {/* Mostrar GoalForm cuando showGoalForm es true */}
+        {showGoalForm && (
+          <GoalForm
+            onClose={handleCloseForm}
+            onGoalAdded={handleGoalAdded}
+            initialData={editingGoal}
+            isEditing={!!editingGoal}
+          />
+        )}
+      </div>
+    </FinancialProvider>
   );
 };
 
