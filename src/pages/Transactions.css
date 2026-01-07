@@ -1,0 +1,132 @@
+.transactions-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+/* Header Section */
+.transactions-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.header-title-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-icon {
+  font-size: 40px;
+}
+
+.transactions-header h1 {
+  font-size: 36px;
+  font-weight: 800;
+  color: #0a0a0a;
+  margin: 0;
+  letter-spacing: -1.5px;
+}
+
+.btn-add-transaction {
+  padding: 14px 28px !important;
+  background: #0a0a0a !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 14px !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  letter-spacing: -0.3px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.btn-add-transaction:hover {
+  background: #2a2a2a !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Type View Toggle */
+.transaction-type-view {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 28px;
+  background: white;
+  padding: 6px;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.type-btn {
+  flex: 1;
+  padding: 14px 28px;
+  background: transparent;
+  color: #999;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  letter-spacing: -0.3px;
+}
+
+.type-btn:hover {
+  background: #fafafa;
+  color: #333;
+}
+
+.type-btn.active {
+  background: #0a0a0a;
+  color: white;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Transaction List */
+.transaction-list {
+  margin-top: 24px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .transactions-container {
+    padding: 24px 16px;
+  }
+
+  .transactions-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .transactions-header h1 {
+    font-size: 28px;
+  }
+
+  .btn-add-transaction {
+    width: 100%;
+  }
+
+  .transaction-type-view {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .type-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .transactions-header h1 {
+    font-size: 24px;
+  }
+
+  .header-icon {
+    font-size: 28px;
+  }
+}

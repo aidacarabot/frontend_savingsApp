@@ -3,6 +3,7 @@ import Button from "../components/Button/Button"
 import IncomeExpenseForm from "../components/IncomeExpenseForm/IncomeExpenseForm"
 import TransactionsFilter from "../components/TransactionsFilter/TransactionsFilter";
 import TransactionBox from "../components/TransactionBox/TransactionBox";
+import './Transactions.css';
 
 
 const Transactions = () => {
@@ -28,13 +29,35 @@ const Transactions = () => {
 
   return (
     <div className='transactions-container'>
-      <h2>Transactions</h2>
-      <div className='transaction-type-view'>
-        <Button text="All" onClick={() => setView('All')} />
-        <Button text="Expenses" onClick={() => setView('Expenses')} />
-        <Button text="Income" onClick={() => setView('Income')} />
+      <div className="transactions-header">
+        <div className="header-title-section">
+          <span className="header-icon">💳</span>
+          <h1>Transactions</h1>
+        </div>
+        <Button text="+ Add New" onClick={handleOpenForm} className="btn-add-transaction" />
       </div>
-      <Button text="+ Add New Transaction" onClick={handleOpenForm} />
+
+      <div className='transaction-type-view'>
+        <button 
+          className={`type-btn ${view === 'All' ? 'active' : ''}`}
+          onClick={() => setView('All')}
+        >
+          All
+        </button>
+        <button 
+          className={`type-btn ${view === 'Expenses' ? 'active' : ''}`}
+          onClick={() => setView('Expenses')}
+        >
+          💸 Expenses
+        </button>
+        <button 
+          className={`type-btn ${view === 'Income' ? 'active' : ''}`}
+          onClick={() => setView('Income')}
+        >
+          💰 Income
+        </button>
+      </div>
+
       {isFormVisible && (
         <IncomeExpenseForm
           onClose={handleCloseForm}
@@ -45,7 +68,7 @@ const Transactions = () => {
       <TransactionsFilter view={view} onChange={setFilters} />
 
       <div className='transaction-list'>
-    <TransactionBox refresh={refresh} view={view} filters={filters} />
+        <TransactionBox refresh={refresh} view={view} filters={filters} />
       </div>
       
     </div>
