@@ -38,7 +38,7 @@ const Goals = () => {
   return (
     <FinancialProvider>
       <div className="goals-container">
-        <GoalsDistribution />
+        <GoalsDistribution refreshTrigger={refreshGoals} />
         <Button text="+ Add New Goal" onClick={handleAddNewGoal} />
         <h2>🎯 YOUR GOALS</h2>
         <GoalBox

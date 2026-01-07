@@ -1,10 +1,19 @@
+import { useEffect } from 'react';
 import { useFinancialData } from '../../hooks/useFinancialData';
 import useApiFetch from '../../hooks/useApiFetch';
 import './GoalsDistribution.css';
 
-const GoalsDistribution = () => {
-  const { totalBalance, assignedToGoals, available, loading } = useFinancialData();
-  const { responseData: goals, loading: goalsLoading } = useApiFetch('/goals', 'GET');
+const GoalsDistribution = ({ refreshTrigger }) => {
+  const { totalBalance, assignedToGoals, available, loading, refetch: refetchFinancial } = useFinancialData();
+  const { responseData: goals, loading: goalsLoading, refetch: refetchGoals } = useApiFetch('/goals', 'GET');
+
+  // Refetch data when refreshTrigger changes
+  useEffect(() => {
+    if (refreshTrigger !== undefined) {
+      refetchGoals();
+      refetchFinancial();
+    }
+  }, [refreshTrigger, refetchGoals, refetchFinancial]);
 
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('en-US', {

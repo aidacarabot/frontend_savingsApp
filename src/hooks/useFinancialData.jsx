@@ -193,5 +193,5 @@ export const useFinancialData = () => {
     };
   }, [userData, viewBy, loading, error]);
 
-  return financialData;
+  return { ...financialData, refetch };
 };
