@@ -1,30 +1,22 @@
-import { useFinancialContext } from '../../context/FinancialContext';
 import './ViewBy.css';
 
-const ViewBy = () => {
-  const { viewBy, setViewBy, refresh } = useFinancialContext();
-
-  const periods = ['Month', 'Year', 'All-Time'];
-
+const ViewBy = ({ options, currentValue, onChange, label }) => {
   return (
     <div className="view-by-container">
-      <label>View by:</label>
+      {label && <label className="view-by-label">{label}</label>}
       
-      <div className="period-buttons">
-        {periods.map((period) => (
+      <div className="view-by-buttons">
+        {options.map((option) => (
           <button
-            key={period}
-            className={`period-button ${viewBy === period ? 'active' : ''}`}
-            onClick={() => setViewBy(period)}
+            key={option.value}
+            className={`view-by-button ${currentValue === option.value ? 'active' : ''}`}
+            onClick={() => onChange(option.value)}
           >
-            {period}
+            {option.icon && <span className="option-icon">{option.icon}</span>}
+            {option.label}
           </button>
         ))}
       </div>
-
-      <button className="refresh-button" onClick={refresh}>
-        🔄 Refresh
-      </button>
     </div>
   )
 }

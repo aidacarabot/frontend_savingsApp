@@ -3,6 +3,7 @@ import Button from "../components/Button/Button"
 import IncomeExpenseForm from "../components/IncomeExpenseForm/IncomeExpenseForm"
 import TransactionsFilter from "../components/TransactionsFilter/TransactionsFilter";
 import TransactionBox from "../components/TransactionBox/TransactionBox";
+import ViewBy from "../components/ViewBy/ViewBy";
 import './Transactions.css';
 
 
@@ -11,6 +12,12 @@ const Transactions = () => {
   const [refresh, setRefresh] = useState(false);
   const [view, setView] = useState('All'); // 'All' | 'Expenses' | 'Income'
   const [filters, setFilters] = useState({}); // recibirá { dateFrom, dateTo, priceMin, priceMax, category }
+
+  const viewOptions = [
+    { value: 'All', label: 'All' },
+    { value: 'Expenses', label: 'Expenses', icon: '💸' },
+    { value: 'Income', label: 'Income', icon: '💰' }
+  ];
 
   //? Función para abrir el formulario
   const handleOpenForm = () => {
@@ -37,26 +44,11 @@ const Transactions = () => {
         <Button text="+ Add New" onClick={handleOpenForm} className="btn-add-transaction" />
       </div>
 
-      <div className='transaction-type-view'>
-        <button 
-          className={`type-btn ${view === 'All' ? 'active' : ''}`}
-          onClick={() => setView('All')}
-        >
-          All
-        </button>
-        <button 
-          className={`type-btn ${view === 'Expenses' ? 'active' : ''}`}
-          onClick={() => setView('Expenses')}
-        >
-          💸 Expenses
-        </button>
-        <button 
-          className={`type-btn ${view === 'Income' ? 'active' : ''}`}
-          onClick={() => setView('Income')}
-        >
-          💰 Income
-        </button>
-      </div>
+      <ViewBy 
+        options={viewOptions}
+        currentValue={view}
+        onChange={setView}
+      />
 
       {isFormVisible && (
         <IncomeExpenseForm

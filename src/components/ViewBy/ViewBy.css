@@ -1,77 +1,75 @@
 .view-by-container {
   display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem;
-  background: #f9f9f9;
-  border-radius: 8px;
-  margin-bottom: 1rem;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 28px;
 }
 
-.view-by-container label {
+.view-by-label {
   font-weight: 600;
+  color: #333;
+  font-size: 15px;
+  letter-spacing: -0.3px;
+}
+
+.view-by-buttons {
+  display: flex;
+  gap: 8px;
+  background: white;
+  padding: 6px;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.view-by-button {
+  flex: 1;
+  padding: 14px 28px;
+  background: transparent;
+  color: #999;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  letter-spacing: -0.3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.view-by-button:hover {
+  background: #fafafa;
   color: #333;
 }
 
-.period-buttons {
-  display: flex;
-  gap: 0;
-  background: white;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  overflow: hidden;
-}
-
-.period-button {
-  padding: 0.5rem 1.2rem;
-  background: white;
-  color: #333;
-  border: none;
-  border-right: 1px solid #ddd;
-  cursor: pointer;
-  font-size: 0.95rem;
-  font-weight: 500;
-  transition: all 0.2s;
-}
-
-.period-button:last-child {
-  border-right: none;
-}
-
-.period-button:hover {
-  background: #f0f0f0;
-}
-
-.period-button.active {
-  background: #4caf50;
+.view-by-button.active {
+  background: #0a0a0a;
   color: white;
-  font-weight: 600;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
 }
 
-.period-button.active:hover {
-  background: #45a049;
+.option-icon {
+  font-size: 16px;
 }
 
-.refresh-button {
-  padding: 0.5rem 1rem;
-  background: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: 500;
-  transition: background 0.3s;
+/* Estilos para ViewBy en Overview - más compacto */
+.overview-container .view-by-container {
+  margin-bottom: 20px;
   display: flex;
   align-items: center;
-  gap: 0.3rem;
-  margin-left: auto;
 }
 
-.refresh-button:hover {
-  background: #45a049;
+.overview-container .view-by-buttons {
+  max-width: 450px;
+  min-width: 400px;
+  padding: 4px;
+  border-radius: 12px;
 }
 
-.refresh-button:active {
-  transform: scale(0.98);
+.overview-container .view-by-button {
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 10px;
 }
