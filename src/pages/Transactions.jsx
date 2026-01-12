@@ -1,6 +1,7 @@
 import { useState } from "react"
 import Button from "../components/Button/Button"
 import IncomeExpenseForm from "../components/IncomeExpenseForm/IncomeExpenseForm"
+import Title from "../components/Title/Title";
 import TransactionsFilter from "../components/TransactionsFilter/TransactionsFilter";
 import TransactionBox from "../components/TransactionBox/TransactionBox";
 import ViewBy from "../components/ViewBy/ViewBy";
@@ -36,11 +37,8 @@ const Transactions = () => {
 
   return (
     <div className='transactions-container'>
+      <Title icon="💳" title="Transactions" />
       <div className="transactions-header">
-        <div className="header-title-section">
-          <span className="header-icon">💳</span>
-          <h1>Transactions</h1>
-        </div>
         <Button text="+ Add New" onClick={handleOpenForm} className="btn-add-transaction" />
       </div>
 

@@ -58,7 +58,6 @@ a:hover {
   overflow: hidden; /* Evita que el contenido desborde el viewport */
 }
 
-
 body {
   margin: 0;
   display: flex;
@@ -103,11 +102,11 @@ button:focus-visible {
 
 /* ! GOALS */
 .goals-container {
-display: flex;
-flex-direction: column;
-width: 80vw;
-padding: 50px;
-gap: 20px;
+  display: flex;
+  flex-direction: column;
+  width: 80vw;
+  padding: 50px;
+  gap: 20px;
 }
 
 /* ! OVERVIEW */
@@ -118,4 +117,10 @@ gap: 20px;
   width: 80vw;
   padding: 50px;
   gap: 20px;
+}
+
+.charts-wrapper {
+  display: flex;
+  gap: 20px;
+  width: 100%;
 }

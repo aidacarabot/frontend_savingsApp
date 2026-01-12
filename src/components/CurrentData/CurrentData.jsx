@@ -1,11 +1,9 @@
-import { useCurrentDate } from '../../hooks/useCurrentDate';
 import { useFinancialContext } from '../../context/FinancialContext';
 import { useFinancialData } from '../../hooks/useFinancialData';
 import Loader from '../Loader/Loader';
 import './CurrentData.css';
 
 const CurrentData = () => {
-  const currentDate = useCurrentDate();
   const { viewBy } = useFinancialContext();
   const { 
     totalBalance,
@@ -87,7 +85,6 @@ const CurrentData = () => {
   if (loading) {
     return (
       <div className="current-data-container">
-        <div className="date-section">Today is {currentDate}</div>
         <Loader />
       </div>
     );
@@ -96,7 +93,6 @@ const CurrentData = () => {
   if (error) {
     return (
       <div className="current-data-container">
-        <div className="date-section">Today is {currentDate}</div>
         <div className="financial-data">
           <p className="error-message">Error loading financial data. Please try again.</p>
         </div>
@@ -106,10 +102,6 @@ const CurrentData = () => {
 
   return (
     <div className="current-data-container">
-      <div className="date-section">
-        Today is {currentDate}
-      </div>
-      
       <div className="financial-data">
         <div id="balance-section" className="data-card">
           <h3>💰 Current Balance</h3>
