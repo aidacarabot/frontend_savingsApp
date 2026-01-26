@@ -16,7 +16,7 @@
 .title-section h1 {
   font-size: 36px;
   font-weight: 800;
-  color: #0a0a0a;
+  color: var(--color-text-primary);
   margin: 0;
   letter-spacing: -1.5px;
 }

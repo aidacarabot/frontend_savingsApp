@@ -4,4 +4,5 @@
   height: var(--circle-size);
   box-shadow: var(--shadow);
   border-radius: var(--radius);
+  border: 3px solid var(--color-primary);
 }

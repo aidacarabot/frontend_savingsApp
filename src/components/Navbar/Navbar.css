@@ -1,11 +1,12 @@
 nav {
-  width: 20svw; /* Ancho fijo del navbar */
+  width: 15svw; /* Ancho fijo del navbar */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   font-size: 16px;
-  border-right: #e9e9e9 solid 1px;
+  background-color: var(--color-navbar-bg);
+  border-right: var(--color-border) solid 1px;
   height: 100vh; /* Ocupa toda la altura del viewport */
   position: sticky; /* Hace que el navbar sea fijo */
   top: 0; /* Fija el navbar al inicio del viewport */
@@ -21,7 +22,7 @@ nav {
 }
 
 .navbar-user-info > ul > li > a {
-  color: rgb(52, 50, 50);
+  color: var(--color-text-secondary);
   font-weight: 400;
 }
 
@@ -29,6 +30,7 @@ nav {
   font-weight: 800;
   font-size: 18px;
   margin: 10px;
+  color: var(--color-text-primary);
 }
 
 nav > ul {
@@ -40,18 +42,19 @@ nav > ul {
 }
 
 nav > ul > li > a {
-  color: rgb(52, 50, 50);
+  color: var(--color-text-secondary);
   font-weight: 200;
+  transition: var(--transition-fast);
 }
 
 nav a:hover {
-  color: black;
+  color: var(--color-primary);
   font-weight: 400;
 }
 
 nav a:active,
 nav a:focus {
-  color: black;
+  color: var(--color-primary);
   font-weight: bold;
 }
 
@@ -59,10 +62,4 @@ nav a:focus {
   margin-right: 10px;
 }
 
-.user-picture {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-  align-items: center;
-}
+

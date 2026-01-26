@@ -5,7 +5,6 @@ import Title from "../components/Title/Title";
 import TransactionsFilter from "../components/TransactionsFilter/TransactionsFilter";
 import TransactionBox from "../components/TransactionBox/TransactionBox";
 import ViewBy from "../components/ViewBy/ViewBy";
-import './Transactions.css';
 
 
 const Transactions = () => {

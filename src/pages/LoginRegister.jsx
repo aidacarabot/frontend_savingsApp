@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import Button from '../components/Button/Button'
 import LoginForm from '../components/LoginForm/LoginForm'
 import RegisterForm from '../components/RegisterForm/RegisterForm'
 
@@ -13,9 +12,7 @@ const LoginRegister = () => {
 
     return (
       <div className="login-register-page">
-        <h2>{isLogin ? 'Login' : 'Register'}</h2>
-        <Button text={isLogin ? 'Go to Register' : 'Go to Login'} onClick={toggleForm} />
-        {isLogin ? <LoginForm /> : <RegisterForm />}
+        {isLogin ? <LoginForm onToggleForm={toggleForm} /> : <RegisterForm onToggleForm={toggleForm} />}
       </div>
     );
 }

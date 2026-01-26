@@ -216,13 +216,11 @@ const GoalBox = ({ onGoalUpdated, onEditGoal }) => {
                       step="0.01"
                     />
                     {addAmount && parseFloat(addAmount) > 0 && (
-                      <button
+                      <Button
+                        text="✓"
                         onClick={() => handleAddFunds(goal._id, addAmount)}
                         className="btn-add-custom-inline"
-                        title="Add amount"
-                      >
-                        ✓
-                      </button>
+                      />
                     )}
                   </div>
 
@@ -250,13 +248,11 @@ const GoalBox = ({ onGoalUpdated, onEditGoal }) => {
                       step="0.01"
                     />
                     {removeAmount && parseFloat(removeAmount) > 0 && (
-                      <button
+                      <Button
+                        text="✓"
                         onClick={() => handleRemoveFunds(goal._id, removeAmount)}
                         className="btn-remove-custom-inline"
-                        title="Remove amount"
-                      >
-                        ✓
-                      </button>
+                      />
                     )}
                   </div>
                 </div>

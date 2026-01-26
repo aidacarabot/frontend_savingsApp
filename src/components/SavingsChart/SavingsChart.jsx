@@ -203,26 +203,26 @@ const SavingsChart = () => {
             data={current}
             margin={{ top: 20, right: 30, left: 20, bottom: 30 }}
           >
-            <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+            <CartesianGrid strokeDasharray="3 3" stroke="#3a3c41" />
             <XAxis 
               dataKey="name" 
-              stroke="#666"
+              stroke="#e0e0e0"
               style={{ fontSize: '0.875rem' }}
-              label={{ value: xAxisLabel, position: 'insideBottom', offset: -10, style: { fontWeight: 600, fill: '#333' } }}
+              label={{ value: xAxisLabel, position: 'insideBottom', offset: -10, style: { fontWeight: 600, fill: '#ffffff' } }}
             />
             <YAxis 
-              stroke="#666"
+              stroke="#e0e0e0"
               tickFormatter={formatYAxis}
               style={{ fontSize: '0.875rem' }}
               domain={[0, 'dataMax + 500']}
               allowDataOverflow={false}
-              label={{ value: '$', angle: 0, position: 'insideTopLeft', style: { fontWeight: 600, fill: '#333' } }}
+              label={{ value: '$', angle: 0, position: 'insideTopLeft', style: { fontWeight: 600, fill: '#ffffff' } }}
             />
             <Tooltip content={<CustomTooltip />} />
             <Bar 
               dataKey="balance" 
-              fill="#4CAF50" 
-              radius={[8, 8, 0, 0]}
+              fill="#2BEBC8" 
+              radius={[2, 2, 0, 0]}
             />
           </BarChart>
         ) : (
@@ -230,20 +230,20 @@ const SavingsChart = () => {
             data={current}
             margin={{ top: 20, right: 30, left: 20, bottom: 30 }}
           >
-            <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+            <CartesianGrid strokeDasharray="3 3" stroke="#3a3c41" />
             <XAxis 
               dataKey="name" 
-              stroke="#666"
+              stroke="#e0e0e0"
               style={{ fontSize: '0.875rem' }}
-              label={{ value: xAxisLabel, position: 'insideBottom', offset: -10, style: { fontWeight: 600, fill: '#333' } }}
+              label={{ value: xAxisLabel, position: 'insideBottom', offset: -10, style: { fontWeight: 600, fill: '#ffffff' } }}
             />
             <YAxis 
-              stroke="#666"
+              stroke="#e0e0e0"
               tickFormatter={formatYAxis}
               style={{ fontSize: '0.875rem' }}
               domain={[0, 'dataMax + 500']}
               allowDataOverflow={false}
-              label={{ value: '$', angle: 0, position: 'insideTopLeft', style: { fontWeight: 600, fill: '#333' } }}
+              label={{ value: '$', angle: 0, position: 'insideTopLeft', style: { fontWeight: 600, fill: '#ffffff' } }}
             />
             <Tooltip content={<CustomTooltip />} />
             <Legend 
@@ -252,9 +252,9 @@ const SavingsChart = () => {
             />
             <Bar 
               dataKey="balance" 
-              fill="#4CAF50" 
+              fill="#2BEBC8" 
               name={legendNames.current}
-              radius={[8, 8, 0, 0]}
+              radius={[2, 2, 0, 0]}
             />
             <Line 
               type="monotone" 

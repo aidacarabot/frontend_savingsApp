@@ -14,12 +14,27 @@
 }
 
 .main-content {
-  flex-grow: 1; /* Ocupa el espacio restante */
-  height: 100vh; /* Asegura que ocupe toda la altura del viewport */
+  width: 100%;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
   overflow-y: auto; /* Permite el desplazamiento vertical si el contenido excede */
   overflow-x: hidden; /* Evita el desplazamiento horizontal */
-  padding: 20px; /* Opcional: agrega un poco de espacio interno */
   box-sizing: border-box; /* Asegura que el padding no afecte el tamaño total */
+  background-color: var(--color-page-bg);
+}
+
+/*! LOGIN REGISTER */
+.login-register-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background-color: var(--color-page-bg);
 }
 
 /* ! USER PAGE */
@@ -36,11 +51,96 @@
 
 /* ! TRANSACTIONS PAGE */
 .transactions-container {
+  width: 100%;
+  padding: 40px 24px;
+  box-sizing: border-box;
+}
+
+/* Header Section */
+.transactions-header {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  width: 80svw;
-  height: 100%;
+  margin-bottom: 40px;
+  gap: 24px;
+}
+
+.header-title-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-icon {
+  font-size: 40px;
+}
+
+.transactions-header h1 {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  margin: 0;
+  letter-spacing: -1.5px;
+}
+
+.btn-add-transaction {
+  padding: 14px 28px !important;
+  background: var(--color-primary) !important;
+  color: var(--color-navbar-bg) !important;
+  border: none !important;
+  border-radius: var(--radius-md) !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  letter-spacing: -0.3px;
+  box-shadow: var(--shadow-md);
+  max-width: 150px;
+}
+
+.btn-add-transaction:hover {
+  background: transparent !important;
+  border: 2px solid var(--color-primary) !important;
+  color: var(--color-primary) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: var(--shadow-lg) !important;
+}
+
+/* Transaction List */
+.transaction-list {
+  margin-top: 24px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .transactions-container {
+    padding: 24px 16px;
+  }
+
+  .transactions-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .transactions-header h1 {
+    font-size: 28px;
+  }
+
+  .btn-add-transaction {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .transactions-header h1 {
+    font-size: 24px;
+  }
+
+  .header-icon {
+    font-size: 28px;
+  }
 }
 
 a {
@@ -54,8 +154,9 @@ a:hover {
 
 #root {
   display: flex; /* Contenedor principal como flexbox */
-  min-height: 100vh; /* Asegura que ocupe toda la altura del viewport */
+  height: 100vh; /* Asegura que ocupe toda la altura del viewport */
   overflow: hidden; /* Evita que el contenido desborde el viewport */
+  width: 100%;
 }
 
 body {
