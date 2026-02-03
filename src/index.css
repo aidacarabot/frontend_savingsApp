@@ -27,6 +27,27 @@
 }
 
 /*! LOGIN REGISTER */
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding: 14px 16px 14px 48px;
+  font-size: 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background-color: #f9fafb;
+  transition: all 0.2s ease;
+  outline: none;
+  color: #1a1a2e;
+}
+.input-wrapper input::placeholder {
+  color: #9ca3af;
+}
+
 .login-register-page {
   display: flex;
   flex-direction: column;
@@ -35,6 +56,32 @@
   height: 100%;
   width: 100%;
   background-color: var(--color-page-bg);
+}
+
+.input-icon {
+  position: absolute;
+  left: 16px;
+  color: var(--color-input-icon);
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-input-icon);
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  transition: color 0.2s ease;
+}
+
+.toggle-password:hover {
+  color: var(--color-text-tertiary);
 }
 
 /* ! USER PAGE */

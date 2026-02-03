@@ -12,6 +12,9 @@ ol {
 a {
   text-decoration: none;
 }
+button:focus {
+  outline: none;
+}
 
 /* Variables globales de colores */
 #root {
@@ -21,6 +24,7 @@ a {
   --color-text-primary: #ffffff;
   --color-text-secondary: #e0e0e0;
   --color-text-tertiary: #6b7280;
+  --color-input-icon: #9ca3af;
   --color-text-muted: #999999;
   --color-card-bg: #2a2c32;
   --color-border: #3a3c41;

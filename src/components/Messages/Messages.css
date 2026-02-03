@@ -1,23 +1,40 @@
 .success-message,
 .error-message {
-  position: fixed; /* Cambiado a fixed para que se posicione relativo al viewport */
-  top: 50%; /* Centrado verticalmente */
-  left: 50%; /* Centrado horizontalmente */
-  transform: translate(-50%, -50%); /* Ajuste para centrar completamente */
-  z-index: 9999; /* Asegúrate de que esté encima de todo */
-  padding: 20px 30px;
-  border-radius: 8px;
-  font-size: 18px;
-  color: #fff;
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  padding: 16px 24px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #ffffff;
   text-align: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  border: 3px solid black;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(10px);
+  animation: slideDown 0.3s ease-out;
+  min-width: 280px;
+  max-width: 400px;
 }
 
 .success-message {
-  background-color: #4caf50; /* Verde para éxito */
+  background: linear-gradient(135deg, #00d09c 0%, #00b386 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .error-message {
-  background-color: #f44336; /* Rojo para error */
+  background: linear-gradient(135deg, #ff4757 0%, #ff3838 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
 }

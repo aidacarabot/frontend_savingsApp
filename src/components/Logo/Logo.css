@@ -16,9 +16,16 @@
   font-size: 24px;
   font-weight: 700;
 }
+.logo-icon:hover {
+  cursor: default;
+}
 
 .logo-text {
   font-size: 24px;
   font-weight: 600;
   color: var(--color-text-primary);
+}
+
+.logo-text:hover {
+  cursor: default;
 }
