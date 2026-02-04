@@ -162,7 +162,7 @@ const RegisterForm = ({ onToggleForm }) => {
         </form>
 
         <p className="login-text">
-          Already have an account? <button onClick={onToggleForm} className="login-link">Log in</button>
+          Already have an account? <button type="button" onClick={onToggleForm} className="login-link">Log in</button>
         </p>
       </div>
     </div>

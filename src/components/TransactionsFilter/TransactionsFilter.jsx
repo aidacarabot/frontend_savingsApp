@@ -10,7 +10,6 @@ const TransactionsFilter = ({ view = 'All', onChange = () => {} }) => {
   const [priceMax, setPriceMax] = useState('');
   const [category, setCategory] = useState('');
 
-  // Resetea filtros cuando cambia la view
   useEffect(() => {
     setDateFrom('');
     setDateTo('');
@@ -20,7 +19,6 @@ const TransactionsFilter = ({ view = 'All', onChange = () => {} }) => {
     onChange({});
   }, [view, onChange]);
 
-  // Emitir cambios al padre
   useEffect(() => {
     const payload = {
       dateFrom: dateFrom || null,
@@ -32,7 +30,6 @@ const TransactionsFilter = ({ view = 'All', onChange = () => {} }) => {
     onChange(payload);
   }, [dateFrom, dateTo, priceMin, priceMax, category, onChange]);
 
-  // Determina si hay algún filtro activo (usa comparación con '' para incluir 0)
   const isAnyFilterActive = useMemo(() => {
     return (
       dateFrom !== '' ||
@@ -54,48 +51,45 @@ const TransactionsFilter = ({ view = 'All', onChange = () => {} }) => {
 
   return (
     <div className="transactions-filter">
-      <div className="filter-header">
-        {isAnyFilterActive && (
-          <Button text="Reset Filters" onClick={handleReset} />
-        )}
-      </div>
+      {isAnyFilterActive && (
+        <div className="filter-header">
+          <Button text="Clear" onClick={handleReset} />
+        </div>
+      )}
 
-      {/* Date range aparece en todas las views (All, Expenses, Income) */}
       <div className="filter-row">
-        <label>Date from</label>
+        <label>From</label>
         <input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} />
-        <label>to</label>
+        <label>To</label>
         <input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} />
       </div>
 
-      {/* Price range para Expenses e Income */}
       {(view === 'Expenses' || view === 'Income') && (
         <div className="filter-row">
-          <label>Price min</label>
+          <label>Min</label>
           <input
             type="number"
             step="0.01"
             value={priceMin}
             onChange={(e) => setPriceMin(e.target.value)}
-            placeholder="0.00"
+            placeholder="0"
           />
-          <label>max</label>
+          <label>Max</label>
           <input
             type="number"
             step="0.01"
             value={priceMax}
             onChange={(e) => setPriceMax(e.target.value)}
-            placeholder="0.00"
+            placeholder="0"
           />
         </div>
       )}
 
-      {/* Category selector solo para Expenses */}
       {view === 'Expenses' && (
         <div className="filter-row">
           <label>Category</label>
           <select value={category} onChange={(e) => setCategory(e.target.value)}>
-            <option value="">All categories</option>
+            <option value="">All</option>
             {CATEGORIES.map((cat) => (
               <option key={cat} value={cat}>
                 {cat}

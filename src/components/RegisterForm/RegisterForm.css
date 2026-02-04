@@ -2,9 +2,7 @@
   max-width: 640px;
   margin: 0 auto;
   padding: 40px 20px;
-  font-family:
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
-    'Cantarell', sans-serif;
+  font-family: var(--font-primary);
 }
 
 .register-form-header {
@@ -78,7 +76,6 @@
   cursor: pointer;
   font-size: 14px;
   padding: 0;
-  font-family: inherit;
 }
 
 .login-link:hover {

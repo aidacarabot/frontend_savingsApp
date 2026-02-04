@@ -11,6 +11,7 @@ nav {
   position: sticky; /* Hace que el navbar sea fijo */
   top: 0; /* Fija el navbar al inicio del viewport */
   overflow: hidden; /* Evita que el contenido del navbar desborde */
+  font-family: var(--font-primary);
 }
 
 .logo {

@@ -104,7 +104,7 @@ const LoginForm = ({ onToggleForm }) => {
         </form>
 
         <p className="signup-text">
-          Don't you have an account? <button onClick={onToggleForm} className="signup-link">Sign Up</button>
+          Don't you have an account? <button type="button" onClick={onToggleForm} className="signup-link">Sign Up</button>
         </p>
       </div>
     </div>

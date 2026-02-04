@@ -256,7 +256,6 @@
   color: white;
   background: rgba(255, 255, 255, 0.25);
   transition: all 0.2s ease;
-  font-family: inherit;
   text-align: center;
 }
 
@@ -277,10 +276,6 @@
 .allocation-input-inline::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
-}
-
-.allocation-input-inline {
-  -moz-appearance: textfield;
 }
 
 /* Inline action buttons - circular icon style */

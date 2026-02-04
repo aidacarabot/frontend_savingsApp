@@ -1,5 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Tomorrow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -96,97 +97,115 @@
   margin: 30px;
 }
 
+/* ! GOALS */
+.goals-container {
+  display: flex;
+  flex-direction: column;
+  width: 80vw;
+  padding: 50px;
+  gap: 20px;
+}
+
+/* ! OVERVIEW */
+
+.overview-container {
+  display: flex;
+  flex-direction: column;
+  width: 80vw;
+  padding: 50px;
+  gap: 20px;
+}
+
+.charts-wrapper {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+}
+
 /* ! TRANSACTIONS PAGE */
 .transactions-container {
   width: 100%;
-  padding: 40px 24px;
-  box-sizing: border-box;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 24px;
 }
 
-/* Header Section */
 .transactions-header {
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 40px;
-  gap: 24px;
-}
-
-.header-title-section {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.header-icon {
-  font-size: 40px;
-}
-
-.transactions-header h1 {
-  font-size: 36px;
-  font-weight: 800;
-  color: var(--color-text-primary);
-  margin: 0;
-  letter-spacing: -1.5px;
+  margin-bottom: 20px;
 }
 
 .btn-add-transaction {
-  padding: 14px 28px !important;
-  background: var(--color-primary) !important;
-  color: var(--color-navbar-bg) !important;
-  border: none !important;
-  border-radius: var(--radius-md) !important;
-  font-size: 15px !important;
-  font-weight: 700 !important;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  font-size: 24px;
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: #0a0a0a;
+  color: white;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s ease;
   cursor: pointer;
-  transition: var(--transition-fast);
-  letter-spacing: -0.3px;
-  box-shadow: var(--shadow-md);
-  max-width: 150px;
 }
 
 .btn-add-transaction:hover {
-  background: transparent !important;
-  border: 2px solid var(--color-primary) !important;
-  color: var(--color-primary) !important;
-  transform: translateY(-2px) !important;
-  box-shadow: var(--shadow-lg) !important;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Transaction List */
-.transaction-list {
-  margin-top: 24px;
+.transactions-filter-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: white;
+  border: 1.5px solid #e8e8e8;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 16px;
+  width: fit-content;
+  font-family: var(--font-secondary);
 }
 
-/* Responsive */
+.filter-toggle:hover {
+  border-color: #0a0a0a;
+  color: #0a0a0a;
+  background: #fafafa;
+}
+
+.filter-toggle span:first-child {
+  font-size: 16px;
+}
+
 @media (max-width: 768px) {
   .transactions-container {
-    padding: 24px 16px;
+    padding: 16px;
   }
 
   .transactions-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-  }
-
-  .transactions-header h1 {
-    font-size: 28px;
+    margin-bottom: 16px;
   }
 
   .btn-add-transaction {
+    width: 44px;
+    height: 44px;
+    font-size: 22px;
+  }
+
+  .filter-toggle {
     width: 100%;
-  }
-}
-
-@media (max-width: 480px) {
-  .transactions-header h1 {
-    font-size: 24px;
-  }
-
-  .header-icon {
-    font-size: 28px;
+    justify-content: center;
   }
 }
 
@@ -222,7 +241,6 @@ button {
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
-  font-family: inherit;
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
@@ -246,29 +264,4 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
-
-/* ! GOALS */
-.goals-container {
-  display: flex;
-  flex-direction: column;
-  width: 80vw;
-  padding: 50px;
-  gap: 20px;
-}
-
-/* ! OVERVIEW */
-
-.overview-container {
-  display: flex;
-  flex-direction: column;
-  width: 80vw;
-  padding: 50px;
-  gap: 20px;
-}
-
-.charts-wrapper {
-  display: flex;
-  gap: 20px;
-  width: 100%;
 }

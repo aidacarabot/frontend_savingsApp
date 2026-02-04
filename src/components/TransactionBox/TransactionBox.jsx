@@ -87,11 +87,9 @@ const TransactionBox = ({ refresh, view = 'All', filters = {} }) => {
   //? Filtrado aplicado en cliente
   const applyFilters = (items) => {
     return items.filter((tx) => {
-      // view filter
       if (view === 'Expenses' && tx.type !== 'Expense') return false;
       if (view === 'Income' && tx.type !== 'Income') return false;
 
-      // date range filter
       if (filters.dateFrom) {
         const txDate = new Date(tx.date).setHours(0,0,0,0);
         const from = new Date(filters.dateFrom).setHours(0,0,0,0);
@@ -103,7 +101,6 @@ const TransactionBox = ({ refresh, view = 'All', filters = {} }) => {
         if (txDate > to) return false;
       }
 
-      // price range filter (aplica tanto a Income como Expense cuando se define)
       if (filters.priceMin != null) {
         if (Number(tx.amount) < Number(filters.priceMin)) return false;
       }
@@ -111,7 +108,6 @@ const TransactionBox = ({ refresh, view = 'All', filters = {} }) => {
         if (Number(tx.amount) > Number(filters.priceMax)) return false;
       }
 
-      // category filter (solo aplica para expenses; si backend guarda null para income)
       if (filters.category) {
         if (!tx.category) return false;
         if (tx.category !== filters.category) return false;
@@ -122,6 +118,25 @@ const TransactionBox = ({ refresh, view = 'All', filters = {} }) => {
   };
 
   const filteredTransactions = applyFilters(transactions);
+
+  //? Agrupar transacciones por fecha
+  const groupByDate = (items) => {
+    const grouped = {};
+    items.forEach((tx) => {
+      const date = new Date(tx.date).toLocaleDateString('en-US', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      });
+      if (!grouped[date]) {
+        grouped[date] = [];
+      }
+      grouped[date].push(tx);
+    });
+    return grouped;
+  };
+
+  const groupedTransactions = groupByDate(filteredTransactions);
 
   if (loading) {
     return <Loader />;
@@ -150,56 +165,38 @@ const TransactionBox = ({ refresh, view = 'All', filters = {} }) => {
       )}
 
       {filteredTransactions.length > 0 ? (
-        filteredTransactions.map((transaction) => (
-          <div
-            key={transaction._id}
-            className="transaction-item"
-          >
-            <div className="transaction-category-div">
-              <img
-                src={getTransactionImage(transaction.type, transaction.category)}
-                alt={`${transaction.type} - ${transaction.category}`}
-                className="transaction-image"
-              />
-              {transaction.category ? (
-                <p className="transaction-category">Expense - {transaction.category}</p>
-              ) : (
-                <p className="transaction-category">{transaction.type}</p>
-              )}
-            </div>
-            <div className="transaction-details-div">
-              <h3 className="transaction-name">{transaction.name}</h3>
-              <p className="transaction-date">
-                {new Date(transaction.date).toLocaleDateString('en-US', {
-                  day: '2-digit',
-                  month: 'long',
-                  year: 'numeric',
-                })}
-              </p>
-            </div>
-            <div className="transaction-amount-div">
-              <p
-                className={
-                  transaction.type === 'Income'
-                    ? 'income-amount'
-                    : transaction.type === 'Expense'
-                    ? 'expense-amount'
-                    : ''
-                }
-              >
-                {transaction.type === 'Income' ? '+' : transaction.type === 'Expense' ? '-' : ''}
-                ${transaction.amount.toFixed(2)}
-              </p>
-              <DropDown
-                transactionId={transaction._id}
-                onDeleteRequest={handleDeleteRequest}
-                onEditRequest={handleEditRequest}
-              />
-            </div>
+        Object.keys(groupedTransactions).map((date) => (
+          <div key={date} className="transaction-group">
+            <div className="transaction-date-header">{date}</div>
+            {groupedTransactions[date].map((transaction) => (
+              <div key={transaction._id} className="transaction-item">
+                <img
+                  src={getTransactionImage(transaction.type, transaction.category)}
+                  alt=""
+                  className="transaction-image"
+                />
+                <div className="transaction-details">
+                  <h3 className="transaction-name">{transaction.name}</h3>
+                  <p className="transaction-category">
+                    {transaction.category || transaction.type}
+                  </p>
+                </div>
+                <div className="transaction-right">
+                  <p className={transaction.type === 'Income' ? 'income-amount' : 'expense-amount'}>
+                    {transaction.type === 'Income' ? '+' : '-'}${transaction.amount.toFixed(2)}
+                  </p>
+                  <DropDown
+                    transactionId={transaction._id}
+                    onDeleteRequest={handleDeleteRequest}
+                    onEditRequest={handleEditRequest}
+                  />
+                </div>
+              </div>
+            ))}
           </div>
         ))
       ) : (
-        <ErrorMessage text="No transactions yet created." duration={5000} />
+        <ErrorMessage text="No transactions yet." duration={5000} />
       )}
     </div>
   );
