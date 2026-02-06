@@ -18,7 +18,7 @@
 .data-card {
   padding: 1.5rem;
   border-radius: 8px;
-  background: white;
+  background: #1a1a1a;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
   transition: transform 0.2s, box-shadow 0.2s;
@@ -26,7 +26,6 @@
 }
 
 .data-card:hover {
-  transform: translateY(-4px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
@@ -47,19 +46,19 @@
 }
 
 #balance-section .amount {
-  color: #4caf50;
+  color: #818CF8;
 }
 
 #savings-section .amount {
-  color: #9c27b0;
+  color: #28edc8;
 }
 
 #income-section .amount {
-  color: #2196f3;
+  color: #38BDF8;
 }
 
 #expenses-section .amount {
-  color: #f44336;
+  color: #FCD34D;
 }
 
 .data-card small {

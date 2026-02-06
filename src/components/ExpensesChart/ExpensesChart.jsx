@@ -56,6 +56,7 @@ const ExpensesChart = () => {
           fontSize="32"
           fontWeight="700"
           fill="#1a1a1a"
+          className="center-total-amount"
         >
           {formatCurrency(totalExpenses)}
         </text>
@@ -115,7 +116,7 @@ const ExpensesChart = () => {
   if (!expensesData || expensesData.length === 0) {
     return (
       <div className="expenses-chart-container">
-        <h2 className="chart-title">📊 EXPENSES BY CATEGORY</h2>
+        <h2 className="chart-title">📊 CATEGORY BREAKDOWN</h2>
         <p className="no-data-message">No expenses for this period</p>
       </div>
     );
@@ -123,7 +124,7 @@ const ExpensesChart = () => {
 
   return (
     <div className="expenses-chart-container">
-      <h2 className="chart-title">📊 EXPENSES BY CATEGORY</h2>
+      <h2 className="chart-title">📊 CATEGORY BREAKDOWN</h2>
       <p className="period-label">{periodLabel}</p>
 
       <ResponsiveContainer width="100%" height={400}>
@@ -134,10 +135,12 @@ const ExpensesChart = () => {
             cy="50%"
             labelLine={false}
             outerRadius={120}
-            innerRadius={85}
+            innerRadius={105}
             fill="#8884d8"
             dataKey="value"
-            paddingAngle={2}
+            paddingAngle={3}
+            cornerRadius={6}
+            stroke="none"
           >
             {expensesData.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />

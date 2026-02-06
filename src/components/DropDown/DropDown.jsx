@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { Ellipsis, Pencil, Trash2 } from 'lucide-react';
 import './DropDown.css';
 
 const DropDown = ({ transactionId, onDeleteRequest, onEditRequest }) => {
@@ -33,29 +34,23 @@ const DropDown = ({ transactionId, onDeleteRequest, onEditRequest }) => {
   }, []);
 
   return (
-    <div className="select" ref={rootRef}>
-      <div className="selected" onClick={toggle} role="button" tabIndex={0}>
-        <span className="dots">...</span>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          height="1em"
-          viewBox="0 0 512 512"
-          className="arrow"
-        >
-          <path
-            d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
-          ></path>
-        </svg>
-      </div>
+    <div className="dropdown-container" ref={rootRef}>
+      <button className="dropdown-trigger" onClick={toggle} aria-label="Options">
+        <Ellipsis size={20} />
+      </button>
 
-      <div className={`options ${isOpen ? 'open' : ''}`} style={{ display: isOpen ? 'block' : 'none' }}>
-        <div title="option-edit" onClick={handleEdit} style={{ cursor: 'pointer' }}>
-          <label className="option" data-txt="Edit" aria-hidden="true"></label>
+      {isOpen && (
+        <div className="dropdown-menu">
+          <button className="dropdown-item edit" onClick={handleEdit}>
+            <Pencil size={16} />
+            <span>Edit</span>
+          </button>
+          <button className="dropdown-item delete" onClick={handleDeleteRequest}>
+            <Trash2 size={16} />
+            <span>Delete</span>
+          </button>
         </div>
-        <div title="option-delete" onClick={handleDeleteRequest} style={{ cursor: 'pointer' }}>
-          <label className="option" data-txt="Delete" aria-hidden="true"></label>
-        </div>
-      </div>
+      )}
     </div>
   );
 };

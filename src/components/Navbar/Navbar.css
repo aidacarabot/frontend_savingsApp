@@ -1,12 +1,11 @@
 nav {
-  width: 15svw; /* Ancho fijo del navbar */
+  width: 20svw; /* Ancho fijo del navbar */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   font-size: 16px;
-  background-color: var(--color-navbar-bg);
-  border-right: var(--color-border) solid 1px;
+  background-color: #191919;
   height: 100svh; /* Ocupa toda la altura del viewport */
   position: sticky; /* Hace que el navbar sea fijo */
   top: 0; /* Fija el navbar al inicio del viewport */

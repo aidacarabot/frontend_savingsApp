@@ -19,6 +19,7 @@ button:focus {
 /* Variables globales de colores */
 #root {
   --color-navbar-bg: #000000;
+  --color-pro: #191919;
   --color-page-bg: #2a2c32;
   --color-primary: #2bebc8;
   --color-text-primary: #ffffff;
@@ -30,12 +31,6 @@ button:focus {
   --color-border: #3a3c41;
   --color-hover: #343638;
   --color-shadow: rgba(0, 0, 0, 0.3);
-
-  /* Colores para estados */
-  --color-success: #4caf50;
-  --color-income: #2196f3;
-  --color-expense: #f44336;
-  --color-warning: #ff9800;
 
   /* Fonts */
   --font-primary: 'Google Sans', sans-serif;
@@ -55,13 +50,4 @@ button:focus {
   --radius-md: 12px;
   --radius-lg: 16px;
   --radius-full: 50%;
-}
-
-/* Estilos base del body */
-body {
-  background-color: var(--color-page-bg);
-  color: var(--color-text-primary);
-  font-family: 'Tomorrow', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }

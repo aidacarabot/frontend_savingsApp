@@ -1,12 +1,10 @@
 .savings-chart-container {
   padding: 2rem;
-  background: var(--color-card-bg);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-md);
+  background: #1a1a1a;
+  border-radius: 16px;
   margin: 0;
   flex: 1;
   min-width: 0;
-  border: 1px solid var(--color-border);
 }
 
 .chart-title {
@@ -19,7 +17,7 @@
 }
 
 .custom-tooltip {
-  background: rgba(42, 44, 49, 0.98);
+  background: rgb(42, 44, 49);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   padding: 1rem;

@@ -3,8 +3,13 @@ import './TransactionBox.css';
 import { fetchData } from '../../utils/api/fetchData';
 import Loader from '../Loader/Loader';
 import DropDown from '../DropDown/DropDown';
-import getTransactionImage from '../../utils/getTransactionImage';
+import { CATEGORY_STYLES } from '../../utils/constants';
 import { ErrorMessage } from '../Messages/Messages';
+import { 
+  House, Car, ShoppingCart, HeartPulse, Drama, Plane, 
+  Rss, ShoppingBag, GraduationCap, Gift, Landmark, Beer, 
+  Coins, Wallet, TrendingUp, User, ChartNoAxesCombined 
+} from 'lucide-react';
 import AreYouSure from '../AreYouSure/AreYouSure';
 import IncomeExpenseForm from '../IncomeExpenseForm/IncomeExpenseForm';
 
@@ -119,13 +124,31 @@ const TransactionBox = ({ refresh, view = 'All', filters = {} }) => {
 
   const filteredTransactions = applyFilters(transactions);
 
+  //? Función para obtener el estilo de la categoría
+  const getCategoryStyle = (transaction) => {
+    const key = transaction.category || transaction.type;
+    return CATEGORY_STYLES[key] || CATEGORY_STYLES['Other ❓'];
+  };
+
+  //? Mapa de iconos
+  const iconMap = {
+    House, Car, ShoppingCart, HeartPulse, Drama, Plane,
+    Rss, ShoppingBag, GraduationCap, Gift, Landmark, Beer,
+    Coins, Wallet, TrendingUp, User, ChartNoAxesCombined
+  };
+
+  //? Función para obtener el componente de icono
+  const getIconComponent = (iconName) => {
+    return iconMap[iconName] || Coins;
+  };
+
   //? Agrupar transacciones por fecha
   const groupByDate = (items) => {
     const grouped = {};
     items.forEach((tx) => {
       const date = new Date(tx.date).toLocaleDateString('en-US', {
         day: 'numeric',
-        month: 'long',
+        month: 'short',
         year: 'numeric',
       });
       if (!grouped[date]) {
@@ -168,13 +191,16 @@ const TransactionBox = ({ refresh, view = 'All', filters = {} }) => {
         Object.keys(groupedTransactions).map((date) => (
           <div key={date} className="transaction-group">
             <div className="transaction-date-header">{date}</div>
-            {groupedTransactions[date].map((transaction) => (
+            {groupedTransactions[date].map((transaction) => {
+              const style = getCategoryStyle(transaction);
+              const IconComponent = getIconComponent(style.icon);
+              return (
               <div key={transaction._id} className="transaction-item">
-                <img
-                  src={getTransactionImage(transaction.type, transaction.category)}
-                  alt=""
-                  className="transaction-image"
-                />
+                <div className="transaction-icon-wrapper">
+                  <div className="transaction-icon-circle" style={{ backgroundColor: style.color }}>
+                    <IconComponent className="transaction-icon" strokeWidth={2} />
+                  </div>
+                </div>
                 <div className="transaction-details">
                   <h3 className="transaction-name">{transaction.name}</h3>
                   <p className="transaction-category">
@@ -183,7 +209,7 @@ const TransactionBox = ({ refresh, view = 'All', filters = {} }) => {
                 </div>
                 <div className="transaction-right">
                   <p className={transaction.type === 'Income' ? 'income-amount' : 'expense-amount'}>
-                    {transaction.type === 'Income' ? '+' : '-'}${transaction.amount.toFixed(2)}
+                    {transaction.type === 'Income' ? '+' : '-'}${transaction.amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                   </p>
                   <DropDown
                     transactionId={transaction._id}
@@ -192,7 +218,8 @@ const TransactionBox = ({ refresh, view = 'All', filters = {} }) => {
                   />
                 </div>
               </div>
-            ))}
+            );
+            })}
           </div>
         ))
       ) : (

@@ -70,68 +70,70 @@ const IncomeExpenseForm = ({ onClose, onTransactionAdded, initialData = null, on
   };
 
   return (
-    <div className="form-container">
-      <Button text="X" onClick={onClose} />
-      <h2>{type === 'Expense' ? 'Expense Form' : 'Income Form'}</h2>
-      <form onSubmit={handleSubmit(handleFormSubmit)}>
-        <div className="form-group">
-          <label htmlFor="type">Type:</label>
-          <select id="type" {...register('type', { required: 'Type is required' })}>
-            <option value="">Select Type</option>
-            <option value="Income">Income</option>
-            <option value="Expense">Expense</option>
-          </select>
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="title">Title:</label>
-          <input
-            id="title"
-            type="text"
-            {...register('title', { required: 'Title is required' })}
-            placeholder="Enter title"
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="date">Date:</label>
-          <input
-            id="date"
-            type="date"
-            {...register('date', { required: 'Date is required' })}
-          />
-        </div>
-
-        {type === 'Expense' && (
+    <div className="form-overlay" onClick={(e) => e.target.className === 'form-overlay' && onClose && onClose()}>
+      <div className="form-container">
+        <Button text="X" onClick={onClose} />
+        <h2>{type === 'Expense' ? 'Expense Form' : 'Income Form'}</h2>
+        <form onSubmit={handleSubmit(handleFormSubmit)}>
           <div className="form-group">
-            <label htmlFor="category">Category:</label>
-            <select id="category" {...register('category', { required: 'Category is required' })}>
-              <option value="">Select Category</option>
-              {categories.map((category) => (
-                <option key={category} value={category}>
-                  {category}
-                </option>
-              ))}
+            <label htmlFor="type">Type:</label>
+            <select id="type" {...register('type', { required: 'Type is required' })}>
+              <option value="">Select Type</option>
+              <option value="Income">Income</option>
+              <option value="Expense">Expense</option>
             </select>
           </div>
-        )}
 
-        <div className="form-group">
-          <label htmlFor="price">Price ($):</label>
-          <input
-            id="price"
-            type="number"
-            step="0.01"
-            {...register('price', {
-              required: 'Price is required',
-              min: { value: 0.01, message: 'Price must be greater than zero' },
-            })}
-            placeholder="Enter price"
-          />
-        </div>
+          <div className="form-group">
+            <label htmlFor="title">Title:</label>
+            <input
+              id="title"
+              type="text"
+              {...register('title', { required: 'Title is required' })}
+              placeholder="Enter title"
+            />
+          </div>
 
-        <Button text={initialData ? 'Save' : 'Submit'} type="submit" />
-      </form>
+          <div className="form-group">
+            <label htmlFor="date">Date:</label>
+            <input
+              id="date"
+              type="date"
+              {...register('date', { required: 'Date is required' })}
+            />
+          </div>
+
+          {type === 'Expense' && (
+            <div className="form-group">
+              <label htmlFor="category">Category:</label>
+              <select id="category" {...register('category', { required: 'Category is required' })}>
+                <option value="">Select Category</option>
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+
+          <div className="form-group">
+            <label htmlFor="price">Price ($):</label>
+            <input
+              id="price"
+              type="number"
+              step="0.01"
+              {...register('price', {
+                required: 'Price is required',
+                min: { value: 0.01, message: 'Price must be greater than zero' },
+              })}
+              placeholder="Enter price"
+            />
+          </div>
+
+          <Button text={initialData ? 'Save' : 'Submit'} type="submit" />
+        </form>
+      </div>
     </div>
   );
 };

@@ -5,7 +5,7 @@ import Title from "../components/Title/Title";
 import TransactionsFilter from "../components/TransactionsFilter/TransactionsFilter";
 import TransactionBox from "../components/TransactionBox/TransactionBox";
 import ViewBy from "../components/ViewBy/ViewBy";
-import { Banknote, Search, SearchX } from 'lucide-react';
+import { Banknote, Search, SearchX, Plus, ChartPie } from 'lucide-react';
 
 
 const Transactions = () => {
@@ -40,26 +40,30 @@ const Transactions = () => {
   return (
     <div className='transactions-container'>
       <div className="transactions-header">
-        <Title icon="💳" title="Transactions" />
-        <Button text="+" onClick={handleOpenForm} className="btn-add-transaction" />
+        <Title icon={<ChartPie size={30} color="#27ebc8" />} title="TRANSACTIONS" className="title-transactions" />
       </div>
 
-      <ViewBy 
-        options={viewOptions}
-        currentValue={view}
-        onChange={setView}
-      />
-
-      <Button 
-        text={
-          <>
-            {showFilters ? <SearchX /> : <Search />}
-            <span>{showFilters ? 'Hide Filters' : 'Show Filters'}</span>
-          </>
-        }
-        onClick={toggleFilters}
-        className="transactions-filter-toggle"
-      />
+      <div className="transactions-controls">
+        <ViewBy 
+          options={viewOptions}
+          currentValue={view}
+          onChange={setView}
+        />
+        
+        <div className="transactions-actions">
+          <Button 
+            text={
+              <>
+                {showFilters ? <SearchX size={18} /> : <Search size={18} />}
+                <span>{showFilters ? 'Hide' : 'Filter'}</span>
+              </>
+            }
+            onClick={toggleFilters}
+            className="transactions-filter-toggle"
+          />
+          <Button text={<Plus size={20} />} onClick={handleOpenForm} className="btn-add-transaction" />
+        </div>
+      </div>
 
       {showFilters && (
         <TransactionsFilter view={view} onChange={setFilters} />

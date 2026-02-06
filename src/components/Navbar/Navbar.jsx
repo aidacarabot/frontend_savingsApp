@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import './Navbar.css';
-import { LayoutDashboard, ChartPie, ChessQueen, CircleUserRound, LogOut } from 'lucide-react';
+import { LayoutDashboard, ChartPie, ChessQueen, CircleUserRound, LogOut, ArrowLeftRight } from 'lucide-react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import useApiFetch from '../../hooks/useApiFetch';
 import Loader from '../Loader/Loader';

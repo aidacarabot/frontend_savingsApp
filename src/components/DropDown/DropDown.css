@@ -1,107 +1,79 @@
-.select {
-  width: 60px;
-  cursor: pointer;
-  position: relative; /* Asegura que .options se posicione respecto a este contenedor */
-  transition: 300ms;
-  color: white;
-  overflow: visible; /* Permite que los elementos hijos sobrepasen los límites */
-}
-
-.selected {
-  background-color: #2a2f3b;
-  padding: 5px;
-  margin-bottom: 3px;
-  border-radius: 5px;
+.dropdown-container {
   position: relative;
-  z-index: 100000;
-  font-size: 15px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 
-.arrow {
-  position: relative;
-  right: 0px;
-  height: 10px;
-  transform: rotate(-90deg);
-  width: 25px;
-  fill: white;
-  z-index: 100000;
-  transition: 300ms;
-}
-
-.options {
-  display: flex;
-  flex-direction: column;
-  border-radius: 5px;
-  padding: 5px;
-  background-color: #2a2f3b;
-  position: absolute; /* Cambiado a absolute */
-  top: 100%; /* Posiciona las opciones justo debajo del contenedor */
-  left: 0;
-  opacity: 0;
-  transition: 300ms;
-  z-index: 1000; /* Asegura que las opciones estén por encima de otros elementos */
-}
-
-.select:hover > .options {
-  opacity: 1;
-  top: 100%; /* Mantiene la posición al mostrar las opciones */
-}
-
-.select:hover > .selected .arrow {
-  transform: rotate(0deg);
-}
-
-.option {
-  border-radius: 5px;
-  padding: 5px;
-  transition: 300ms;
-  background-color: #2a2f3b;
-  width: 60px;
-  font-size: 15px;
-}
-.option:hover {
-  background-color: #323741;
-}
-
-.options input[type='radio'] {
-  display: none;
-}
-
-.options label {
-  display: inline-block;
-}
-.options label::before {
-  content: attr(data-txt);
-}
-
-.options input[type='radio']:checked + label {
-  display: none;
-}
-
-.options input[type='radio']#all:checked + label {
-  display: none;
-}
-
-.select:has(.options input[type='radio']#all:checked) .selected::before {
-  content: attr(data-default);
-}
-.select:has(.options input[type='radio']#option-1:checked) .selected::before {
-  content: attr(data-one);
-}
-.select:has(.options input[type='radio']#option-2:checked) .selected::before {
-  content: attr(data-two);
-}
-.select:has(.options input[type='radio']#option-3:checked) .selected::before {
-  content: attr(data-three);
-}
-
-.dots {
+.dropdown-trigger {
+  background: transparent;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 6px;
+  color: #9ca3af;
+  transition: all 0.2s ease;
+}
+
+.dropdown-trigger:hover {
+  background: #191919;
+  color: #e5e7eb;
+}
+
+.dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin-top: 4px;
+  background: #1f2937;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  padding: 4px;
+  min-width: 120px;
+  z-index: 1000;
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   width: 100%;
-  text-align: center;
+  padding: 10px 12px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: #e5e7eb;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: left;
+}
+
+.dropdown-item:hover {
+  background: #374151;
+}
+
+.dropdown-item.edit:hover {
+  background: #6b7280;
+  color: #ffffff;
+}
+
+.dropdown-item.delete:hover {
+  background: #6b7280;
+  color: #ffffff;
 }
