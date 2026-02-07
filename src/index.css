@@ -6,12 +6,26 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #000000;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  background-color: #000000;
+  overscroll-behavior: none;
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  background-color: #000000;
+  overscroll-behavior: none;
+  overflow: hidden;
 }
 
 .main-content {
@@ -125,7 +139,7 @@
 
 /* ! TRANSACTIONS PAGE */
 .title-transactions {
-  font-family: "Roboto Mono", monospace;
+  font-family: 'Roboto Mono', monospace;
 }
 .transactions-container {
   width: 100%;
@@ -147,7 +161,7 @@
   align-items: flex-end;
   gap: 20px;
   margin-bottom: 24px;
-  font-family: "Roboto Mono", monospace;
+  font-family: 'Roboto Mono', monospace;
 }
 
 .transactions-controls .view-by-container {
@@ -258,11 +272,15 @@ a:hover {
   height: 100vh; /* Asegura que ocupe toda la altura del viewport */
   overflow: hidden; /* Evita que el contenido desborde el viewport */
   width: 100%;
+  overscroll-behavior: none;
 }
 
 body {
   margin: 0;
   display: flex;
+  background-color: #000000;
+  overscroll-behavior: none;
+  overflow: hidden;
 }
 
 h1 {
@@ -290,13 +308,19 @@ button:focus-visible {
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    color: rgba(255, 255, 255, 0.87);
+    background-color: #000000;
+  }
+  html {
+    background-color: #000000;
+  }
+  body {
+    background-color: #000000;
   }
   a:hover {
-    color: #747bff;
+    color: #2bebc8;
   }
   button {
-    background-color: #f9f9f9;
+    background-color: #1a1a1a;
   }
 }

@@ -1,5 +1,5 @@
 .transactions-filter {
-  background: var(--color-card-bg);
+  background: #2a2c32;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   padding: 24px;
@@ -54,7 +54,7 @@
 .filter-row label {
   font-size: 14px;
   font-weight: 600;
-  color: var(--color-text-secondary);
+  color: #e0e0e0;
   min-width: 50px;
   text-align: right;
 }
@@ -71,8 +71,8 @@
   border-radius: var(--radius-md);
   font-size: 14px;
   font-weight: 500;
-  color: var(--color-text-primary);
-  background: var(--color-hover);
+  color: #e0e0e0;
+  background: #000000;
   transition: var(--transition-fast);
   cursor: pointer;
 }
