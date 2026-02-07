@@ -5,7 +5,7 @@ import Title from "../components/Title/Title";
 import TransactionsFilter from "../components/TransactionsFilter/TransactionsFilter";
 import TransactionBox from "../components/TransactionBox/TransactionBox";
 import ViewBy from "../components/ViewBy/ViewBy";
-import { Banknote, Search, SearchX, Plus, ChartPie } from 'lucide-react';
+import { Banknote, Search, SearchX, Plus, ChartPie, BanknoteArrowDown, BanknoteArrowUp } from 'lucide-react';
 
 
 const Transactions = () => {
@@ -16,9 +16,9 @@ const Transactions = () => {
   const [showFilters, setShowFilters] = useState(false);
 
   const viewOptions = [
-    { value: 'All', label: 'All', icon: <Banknote /> },
-    { value: 'Expenses', label: 'Expenses', icon: '💸' },
-    { value: 'Income', label: 'Income', icon: '💰' }
+    { value: 'All', label: 'ALL', icon: <Banknote /> },
+    { value: 'Expenses', label: 'EXPENSES', icon: <BanknoteArrowDown /> },
+    { value: 'Income', label: 'INCOME', icon: <BanknoteArrowUp /> }
   ];
 
   const handleOpenForm = () => {

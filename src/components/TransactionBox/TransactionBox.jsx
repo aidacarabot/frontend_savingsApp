@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import './TransactionBox.css';
 import { fetchData } from '../../utils/api/fetchData';
 import Loader from '../Loader/Loader';
@@ -17,6 +17,8 @@ const TransactionBox = ({ refresh, view = 'All', filters = {} }) => {
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [displayCount, setDisplayCount] = useState(20);
+  const observerRef = useRef();
 
   //? estados para confirmación y edición
   const [deleteCandidateId, setDeleteCandidateId] = useState(null);
@@ -40,6 +42,7 @@ const TransactionBox = ({ refresh, view = 'All', filters = {} }) => {
   useEffect(() => {
     // cada vez que cambia `refresh` (o al montar), volvemos a pedir las transacciones
     setLoading(true);
+    setDisplayCount(20);
     fetchTransactions();
   }, [refresh]);
 
@@ -124,6 +127,23 @@ const TransactionBox = ({ refresh, view = 'All', filters = {} }) => {
 
   const filteredTransactions = applyFilters(transactions);
 
+  //? Callback para el intersection observer
+  const lastTransactionElementRef = useCallback(
+    (node) => {
+      if (loading) return;
+      if (observerRef.current) observerRef.current.disconnect();
+
+      observerRef.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && displayCount < filteredTransactions.length) {
+          setDisplayCount((prev) => Math.min(prev + 20, filteredTransactions.length));
+        }
+      });
+
+      if (node) observerRef.current.observe(node);
+    },
+    [loading, displayCount, filteredTransactions.length]
+  );
+
   //? Función para obtener el estilo de la categoría
   const getCategoryStyle = (transaction) => {
     const key = transaction.category || transaction.type;
@@ -159,7 +179,7 @@ const TransactionBox = ({ refresh, view = 'All', filters = {} }) => {
     return grouped;
   };
 
-  const groupedTransactions = groupByDate(filteredTransactions);
+  const groupedTransactions = groupByDate(filteredTransactions.slice(0, displayCount));
 
   if (loading) {
     return <Loader />;
@@ -188,14 +208,20 @@ const TransactionBox = ({ refresh, view = 'All', filters = {} }) => {
       )}
 
       {filteredTransactions.length > 0 ? (
-        Object.keys(groupedTransactions).map((date) => (
+        Object.keys(groupedTransactions).map((date, dateIndex) => (
           <div key={date} className="transaction-group">
             <div className="transaction-date-header">{date}</div>
-            {groupedTransactions[date].map((transaction) => {
+            {groupedTransactions[date].map((transaction, txIndex) => {
               const style = getCategoryStyle(transaction);
               const IconComponent = getIconComponent(style.icon);
+              const isLastTransaction = dateIndex === Object.keys(groupedTransactions).length - 1 && 
+                                       txIndex === groupedTransactions[date].length - 1;
               return (
-              <div key={transaction._id} className="transaction-item">
+              <div 
+                key={transaction._id} 
+                className="transaction-item"
+                ref={isLastTransaction ? lastTransactionElementRef : null}
+              >
                 <div className="transaction-icon-wrapper">
                   <div className="transaction-icon-circle" style={{ backgroundColor: style.color }}>
                     <IconComponent className="transaction-icon" strokeWidth={2} />

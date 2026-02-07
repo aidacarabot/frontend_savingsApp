@@ -1,13 +1,14 @@
 .transactions-filter {
-  background: white;
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
   margin-top: 12px;
   margin-bottom: 12px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
   animation: slideDown 0.2s ease;
 }
 
@@ -27,48 +28,121 @@
   justify-content: flex-end;
 }
 
+.filter-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.filter-section-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
 .filter-row {
   display: flex;
-  gap: 12px;
+  gap: 16px;
   align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
 }
 
 .filter-row label {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
-  color: #666;
-  min-width: 60px;
+  color: var(--color-text-secondary);
+  min-width: 50px;
+  text-align: right;
 }
 
 .filter-row input[type='date'],
 .filter-row input[type='number'],
+.filter-row input[type='text'],
 .filter-row select {
-  flex: 1;
+  flex: 0 1 auto;
   min-width: 120px;
-  max-width: 180px;
-  padding: 10px 12px;
-  border: 1.5px solid #e8e8e8;
-  border-radius: 10px;
+  max-width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
   font-size: 14px;
   font-weight: 500;
-  color: #0a0a0a;
-  background: #fafafa;
-  transition: all 0.2s ease;
+  color: var(--color-text-primary);
+  background: var(--color-hover);
+  transition: var(--transition-fast);
+  cursor: pointer;
+}
+
+.filter-row input[type='date'] {
+  width: 180px;
+}
+
+.filter-row select {
+  width: 250px;
+  max-width: 100%;
 }
 
 .filter-row input[type='date']:focus,
 .filter-row input[type='number']:focus,
+.filter-row input[type='text']:focus,
 .filter-row select:focus {
   outline: none;
-  border-color: #0a0a0a;
-  background: white;
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.04);
+  border-color: var(--color-primary);
+  background: var(--color-card-bg);
+  box-shadow: 0 0 0 3px rgba(43, 235, 200, 0.1);
 }
 
 .filter-row input::placeholder {
-  color: #aaa;
+  color: var(--color-text-muted);
   font-weight: 400;
+}
+
+.price-row {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.price-input-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 0 1 auto;
+}
+
+.price-input-group label {
+  min-width: 40px;
+  text-align: left;
+}
+
+.input-with-currency {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 140px;
+  max-width: 280px;
+  flex: 1 1 auto;
+}
+
+.input-with-currency .currency-symbol {
+  position: absolute;
+  left: 16px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-primary);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.input-with-currency input {
+  width: 100%;
+  padding-left: 38px !important;
+  padding-right: 14px;
 }
 
 .filter-row input[type='number']::-webkit-inner-spin-button,
@@ -80,17 +154,32 @@
 @media (max-width: 768px) {
   .filter-row {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
+    align-items: stretch;
+    gap: 10px;
   }
 
   .filter-row label {
     min-width: auto;
+    text-align: left;
   }
 
   .filter-row input,
-  .filter-row select {
+  .filter-row select,
+  .input-with-currency {
     width: 100%;
+    max-width: 100%;
+  }
+
+  .price-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .price-input-group {
+    width: 100%;
+  }
+
+  .input-with-currency {
     max-width: 100%;
   }
 }

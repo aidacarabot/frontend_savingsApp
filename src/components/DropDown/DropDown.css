@@ -12,7 +12,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 6px;
+  border-radius: 50%;
   color: #9ca3af;
   transition: all 0.2s ease;
 }
@@ -27,7 +27,7 @@
   right: 0;
   top: 100%;
   margin-top: 4px;
-  background: #1f2937;
+  background: #2a2c32;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   padding: 4px;

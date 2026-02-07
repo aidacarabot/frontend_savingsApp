@@ -26,7 +26,7 @@
   flex: 1;
   padding: 14px 28px;
   background: transparent;
-  color: rgba(255, 255, 255, 0.5);
+  color: #ffffff;
   border: none;
   border-radius: 0;
   font-size: 15px;
@@ -37,7 +37,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 10px;
   position: relative;
 }
 
@@ -70,6 +70,9 @@
 
 .option-icon {
   font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Estilos para ViewBy en Overview - más compacto */
