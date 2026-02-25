@@ -198,6 +198,7 @@ body {
   transform: scale(1.08);
   box-shadow: 0 6px 24px rgba(43, 235, 200, 0.5);
   background: #34f5d4;
+  font-family: "Roboto Mono", monospace;
 }
 
 .transactions-filter-toggle {

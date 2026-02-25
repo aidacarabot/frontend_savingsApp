@@ -3,7 +3,7 @@ import './IncomeExpenseForm.css';
 import Button from '../Button/Button';
 import { fetchData } from '../../utils/api/fetchData';
 import { CATEGORIES } from '../../utils/constants';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const IncomeExpenseForm = ({ onClose, onTransactionAdded, initialData = null, onTransactionUpdated }) => {
   const { register, handleSubmit, watch, reset, setValue } = useForm({
@@ -18,6 +18,8 @@ const IncomeExpenseForm = ({ onClose, onTransactionAdded, initialData = null, on
       : undefined,
   });
 
+  const [displayPrice, setDisplayPrice] = useState(initialData?.amount ? initialData.amount.toLocaleString('en-US') : '');
+
   const type = watch('type'); // Observa el campo 'type' para cambios
 
   // Si initialData cambia después del montaje, reseteamos via useEffect (evita llamadas sincronas a setValue)
@@ -28,11 +30,32 @@ const IncomeExpenseForm = ({ onClose, onTransactionAdded, initialData = null, on
       setValue('price', initialData.amount != null ? String(initialData.amount) : '');
       setValue('date', initialData.date ? initialData.date.slice(0,10) : '');
       setValue('category', initialData.category || '');
+      setDisplayPrice(initialData.amount != null ? initialData.amount.toLocaleString('en-US') : '');
     } else {
       // si no hay initialData, limpiamos el formulario
       reset();
+      setDisplayPrice('');
     }
   }, [initialData, setValue, reset]);
+
+  // Función para formatear el precio con separador de miles
+  const handlePriceChange = (e) => {
+    const value = e.target.value.replace(/,/g, ''); // Remover comas existentes
+    
+    if (value === '' || /^\d*\.?\d{0,2}$/.test(value)) {
+      setValue('price', value);
+      
+      // Formatear con separador de miles
+      if (value !== '') {
+        const [intPart, decPart] = value.split('.');
+        const formattedInt = parseInt(intPart || '0').toLocaleString('en-US');
+        const formatted = decPart !== undefined ? `${formattedInt}.${decPart}` : formattedInt;
+        setDisplayPrice(formatted);
+      } else {
+        setDisplayPrice('');
+      }
+    }
+  };
   
   // Definimos las categorías como un array
   const categories = CATEGORIES;
@@ -117,17 +140,25 @@ const IncomeExpenseForm = ({ onClose, onTransactionAdded, initialData = null, on
             </div>
           )}
 
-          <div className="form-group">
+          <div className="form-group form-price-input-group">
             <label htmlFor="price">Price ($):</label>
             <input
               id="price"
-              type="number"
-              step="0.01"
+              type="text"
+              value={displayPrice}
+              onChange={handlePriceChange}
+              placeholder="Enter price"
+            />
+            <input
+              type="hidden"
               {...register('price', {
                 required: 'Price is required',
-                min: { value: 0.01, message: 'Price must be greater than zero' },
+                validate: (value) => {
+                  const num = parseFloat(value);
+                  if (isNaN(num) || num <= 0) return 'Price must be greater than zero';
+                  return true;
+                },
               })}
-              placeholder="Enter price"
             />
           </div>
 

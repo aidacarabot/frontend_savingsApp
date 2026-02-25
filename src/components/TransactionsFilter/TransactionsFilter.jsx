@@ -83,9 +83,9 @@ const TransactionsFilter = ({ view = 'All', onChange = () => {} }) => {
         <h4 className="filter-section-title">Date Range</h4>
         <div className="filter-row">
           <label>From</label>
-          <input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} />
+          <input className="filter-input filter-date-input" type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} />
           <label>To</label>
-          <input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} />
+          <input className="filter-input filter-date-input" type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} />
         </div>
       </div>
 
@@ -98,6 +98,7 @@ const TransactionsFilter = ({ view = 'All', onChange = () => {} }) => {
               <div className="input-with-currency">
                 <span className="currency-symbol">$</span>
                 <input
+                  className="filter-input filter-price-input"
                   type="text"
                   inputMode="decimal"
                   value={priceMin}
@@ -111,6 +112,7 @@ const TransactionsFilter = ({ view = 'All', onChange = () => {} }) => {
               <div className="input-with-currency">
                 <span className="currency-symbol">$</span>
                 <input
+                  className="filter-input filter-price-input"
                   type="text"
                   inputMode="decimal"
                   value={priceMax}
@@ -127,7 +129,7 @@ const TransactionsFilter = ({ view = 'All', onChange = () => {} }) => {
         <div className="filter-section">
           <h4 className="filter-section-title">Category</h4>
           <div className="filter-row">
-            <select value={category} onChange={(e) => setCategory(e.target.value)}>
+            <select className="filter-select" value={category} onChange={(e) => setCategory(e.target.value)}>
               <option value="">All Categories</option>
               {CATEGORIES.map((cat) => (
                 <option key={cat} value={cat}>

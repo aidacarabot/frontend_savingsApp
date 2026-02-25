@@ -8,7 +8,7 @@ import { ErrorMessage } from '../Messages/Messages';
 import { 
   House, Car, ShoppingCart, HeartPulse, Drama, Plane, 
   Rss, ShoppingBag, GraduationCap, Gift, Landmark, Beer, 
-  Coins, Wallet, TrendingUp, User, ChartNoAxesCombined 
+  Coins, Wallet, TrendingUp, User, ChartNoAxesCombined, ArrowRightLeft 
 } from 'lucide-react';
 import AreYouSure from '../AreYouSure/AreYouSure';
 import IncomeExpenseForm from '../IncomeExpenseForm/IncomeExpenseForm';
@@ -162,6 +162,18 @@ const TransactionBox = ({ refresh, view = 'All', filters = {} }) => {
     return iconMap[iconName] || Coins;
   };
 
+  //? Función para formatear el monto con centavos más pequeños
+  const formatAmount = (amount) => {
+    const formatted = amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const [integerPart, decimalPart] = formatted.split('.');
+    return (
+      <>
+        {integerPart}
+        <span className="cents">.{decimalPart}</span>
+      </>
+    );
+  };
+
   //? Agrupar transacciones por fecha
   const groupByDate = (items) => {
     const grouped = {};
@@ -229,13 +241,16 @@ const TransactionBox = ({ refresh, view = 'All', filters = {} }) => {
                 </div>
                 <div className="transaction-details">
                   <h3 className="transaction-name">{transaction.name}</h3>
-                  <p className="transaction-category">
+                </div>
+                <div className="transaction-category-center">
+                  <ArrowRightLeft className={`category-icon ${transaction.type === 'Income' ? 'category-income' : 'category-expense'}`} />
+                  <p className={`transaction-category ${transaction.type === 'Income' ? 'category-income' : 'category-expense'}`}>
                     {transaction.category || transaction.type}
                   </p>
                 </div>
                 <div className="transaction-right">
                   <p className={transaction.type === 'Income' ? 'income-amount' : 'expense-amount'}>
-                    {transaction.type === 'Income' ? '+' : '-'}${transaction.amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    {transaction.type === 'Income' ? '+' : '-'}${formatAmount(transaction.amount)}
                   </p>
                   <DropDown
                     transactionId={transaction._id}
