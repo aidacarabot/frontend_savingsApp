@@ -5,10 +5,10 @@ import Loader from '../Loader/Loader';
 import DropDown from '../DropDown/DropDown';
 import { CATEGORY_STYLES } from '../../utils/constants';
 import { ErrorMessage } from '../Messages/Messages';
-import { 
-  House, Car, ShoppingCart, HeartPulse, Drama, Plane, 
-  Rss, ShoppingBag, GraduationCap, Gift, Landmark, Beer, 
-  Coins, Wallet, TrendingUp, User, ChartNoAxesCombined, ArrowRightLeft 
+import {
+  House, Car, ShoppingCart, HeartPulse, Drama, Plane,
+  ShoppingBag, Landmark, Beer,
+  Coins, Wallet, ChartNoAxesCombined, ArrowRightLeft
 } from 'lucide-react';
 import AreYouSure from '../AreYouSure/AreYouSure';
 import IncomeExpenseForm from '../IncomeExpenseForm/IncomeExpenseForm';
@@ -147,14 +147,14 @@ const TransactionBox = ({ refresh, view = 'All', filters = {} }) => {
   //? Función para obtener el estilo de la categoría
   const getCategoryStyle = (transaction) => {
     const key = transaction.category || transaction.type;
-    return CATEGORY_STYLES[key] || CATEGORY_STYLES['Other ❓'];
+    return CATEGORY_STYLES[key] || CATEGORY_STYLES['Other'];
   };
 
   //? Mapa de iconos
   const iconMap = {
     House, Car, ShoppingCart, HeartPulse, Drama, Plane,
-    Rss, ShoppingBag, GraduationCap, Gift, Landmark, Beer,
-    Coins, Wallet, TrendingUp, User, ChartNoAxesCombined
+    ShoppingBag, Landmark, Beer,
+    Coins, Wallet, ChartNoAxesCombined
   };
 
   //? Función para obtener el componente de icono
