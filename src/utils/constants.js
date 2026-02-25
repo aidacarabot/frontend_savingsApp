@@ -1,3 +1,16 @@
+export const CATEGORIES = [
+  'Home',
+  'Groceries',
+  'Dining & Drinks',
+  'Transport',
+  'Lifestyle',
+  'Entertainment',
+  'Health & Fitness',
+  'Travel',
+  'Debt',
+  'Other',
+];
+
 export const CATEGORY_STYLES = {
   'Home': { color: '#7DD3FC', icon: 'House' },
   'Groceries': { color: '#86EFAC', icon: 'ShoppingCart' },

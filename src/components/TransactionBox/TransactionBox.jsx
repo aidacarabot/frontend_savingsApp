@@ -125,7 +125,9 @@ const TransactionBox = ({ refresh, view = 'All', filters = {} }) => {
     });
   };
 
-  const filteredTransactions = applyFilters(transactions);
+  const filteredTransactions = applyFilters(transactions).sort((a, b) => {
+    return new Date(b.date) - new Date(a.date); // Más recientes primero
+  });
 
   //? Callback para el intersection observer
   const lastTransactionElementRef = useCallback(
