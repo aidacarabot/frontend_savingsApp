@@ -93,7 +93,7 @@ const IncomeExpenseForm = ({ onClose, onTransactionAdded, initialData = null, on
   };
 
   return (
-    <div className="form-overlay" onClick={(e) => e.target.className === 'form-overlay' && onClose && onClose()}>
+    <div className="form-overlay">
       <div className="form-container">
         <Button text="X" onClick={onClose} />
         <h2>{type === 'Expense' ? 'Expense Form' : 'Income Form'}</h2>

@@ -246,24 +246,9 @@
 }
 
 .price-input-group input[type='text'] {
-  padding-left: 2.75rem;
+  padding-left: 1rem;
   font-family: 'Roboto Mono', monospace;
   width: 100%;
-}
-
-.form-price-input-group::before {
-  content: '$';
-  position: absolute;
-  left: 1.125rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #2bebc8;
-  font-size: 1.125rem;
-  font-weight: 600;
-  font-family: 'Roboto Mono', monospace;
-  pointer-events: none;
-  z-index: 1;
-  margin-top: 0.9375rem;
 }
 
 /* Select Options */
