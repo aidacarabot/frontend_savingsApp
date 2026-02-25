@@ -43,27 +43,6 @@ body {
 }
 
 /*! LOGIN REGISTER */
-.input-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.input-wrapper input {
-  width: 100%;
-  padding: 14px 16px 14px 48px;
-  font-size: 16px;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  background-color: #f9fafb;
-  transition: all 0.2s ease;
-  outline: none;
-  color: #1a1a2e;
-}
-.input-wrapper input::placeholder {
-  color: #9ca3af;
-}
-
 .login-register-page {
   display: flex;
   flex-direction: column;
@@ -74,30 +53,82 @@ body {
   background-color: var(--color-page-bg);
 }
 
-.input-icon {
+.auth-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.auth-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.auth-input-wrapper input {
+  width: 100%;
+  padding: 14px 16px 14px 48px;
+  font-size: 16px;
+  font-family: var(--font-primary);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background-color: var(--color-pro);
+  transition: all 0.2s ease;
+  outline: none;
+  color: var(--color-text-primary);
+  box-sizing: border-box;
+}
+
+.auth-input-wrapper input::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.auth-input-wrapper input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(43, 235, 200, 0.1);
+}
+
+.auth-input-icon {
   position: absolute;
   left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
   color: var(--color-input-icon);
   display: flex;
   align-items: center;
+  justify-content: center;
   pointer-events: none;
+  z-index: 1;
 }
 
-.toggle-password {
+.auth-toggle-password {
   position: absolute;
   right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
   background: none;
   border: none;
   cursor: pointer;
   color: var(--color-input-icon);
   display: flex;
   align-items: center;
+  justify-content: center;
   padding: 4px;
   transition: color 0.2s ease;
+  z-index: 1;
+  border-radius: 4px;
 }
 
-.toggle-password:hover {
+.auth-toggle-password:hover {
   color: var(--color-text-tertiary);
+}
+
+.auth-error-message {
+  color: #ff4757;
+  font-size: 12px;
+  margin: 0;
+  padding: 0;
+  font-weight: 500;
 }
 
 /* ! USER PAGE */
@@ -198,7 +229,7 @@ body {
   transform: scale(1.08);
   box-shadow: 0 6px 24px rgba(43, 235, 200, 0.5);
   background: #34f5d4;
-  font-family: "Roboto Mono", monospace;
+  font-family: 'Roboto Mono', monospace;
 }
 
 .transactions-filter-toggle {

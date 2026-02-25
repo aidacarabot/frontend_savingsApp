@@ -8,7 +8,7 @@ import Logo from '../Logo/Logo';
 import Loader from '../Loader/Loader';
 import { SuccessMessage, ErrorMessage } from '../Messages/Messages';
 
-const LoginForm = ({ onToggleForm }) => {
+const LoginForm = ({ onToggleForm = null }) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
@@ -63,48 +63,48 @@ const LoginForm = ({ onToggleForm }) => {
         <p className="login-subtitle">Enter your email address and password to log in.</p>
 
         <form onSubmit={handleSubmit(onSubmit)} className="login-form">
-          <div className="form-group">
-            <div className="input-wrapper">
-              <span className="input-icon">
+          <div className="auth-form-group">
+            <div className="auth-input-wrapper">
+              <span className="auth-input-icon">
                 <Mail size={20} />
               </span>
-              <input 
-                {...register("email", { required: "Email is required" })} 
-                type="email" 
+              <input
+                {...register("email", { required: "Email is required" })}
+                type="email"
                 placeholder="Email Address"
                 className={errors.email ? 'error' : ''}
               />
             </div>
-            {errors.email && <p className="error-message">{errors.email.message}</p>}
+            {errors.email && <p className="auth-error-message">{errors.email.message}</p>}
           </div>
 
-          <div className="form-group">
-            <div className="input-wrapper">
-              <span className="input-icon">
+          <div className="auth-form-group">
+            <div className="auth-input-wrapper">
+              <span className="auth-input-icon">
                 <LockKeyhole size={20} />
               </span>
-              <input 
-                {...register("password", { required: "Password is required" })} 
-                type={showPassword ? "text" : "password"} 
+              <input
+                {...register("password", { required: "Password is required" })}
+                type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 className={errors.password ? 'error' : ''}
               />
-              <button 
-                type="button" 
-                className="toggle-password"
+              <button
+                type="button"
+                className="auth-toggle-password"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? <Eye size={20} /> : <EyeClosed size={20} />}
               </button>
             </div>
-            {errors.password && <p className="error-message">{errors.password.message}</p>}
+            {errors.password && <p className="auth-error-message">{errors.password.message}</p>}
           </div>
 
           <button type="submit" className="login-button">Login</button>
         </form>
 
         <p className="signup-text">
-          Don't you have an account? <button type="button" onClick={onToggleForm} className="signup-link">Sign Up</button>
+          Don't you have an account? <button type="button" onClick={() => onToggleForm ? onToggleForm() : navigate('/register')} className="signup-link">Sign Up</button>
         </p>
       </div>
     </div>
