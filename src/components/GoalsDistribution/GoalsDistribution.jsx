@@ -7,7 +7,6 @@ const GoalsDistribution = ({ refreshTrigger }) => {
   const { totalBalance, assignedToGoals, available, loading, refetch: refetchFinancial } = useFinancialData();
   const { responseData: goals, loading: goalsLoading, refetch: refetchGoals } = useApiFetch('/goals', 'GET');
 
-  // Refetch data when refreshTrigger changes
   useEffect(() => {
     if (refreshTrigger !== undefined) {
       refetchGoals();
@@ -30,82 +29,49 @@ const GoalsDistribution = ({ refreshTrigger }) => {
   };
 
   const activeGoals = goals?.filter(goal => goal.currentAmount < goal.targetAmount) || [];
+  const completedGoals = goals?.filter(goal => goal.currentAmount >= goal.targetAmount) || [];
   const assignedPercentage = calculatePercentage(assignedToGoals, totalBalance);
-  const availablePercentage = calculatePercentage(available, totalBalance);
 
   if (loading || goalsLoading) {
     return (
-      <div className="goals-distribution-container">
-        <div className="distribution-loading">Loading distribution...</div>
+      <div className="gd-card">
+        <div className="gd-loading">Loading...</div>
       </div>
     );
   }
 
   return (
-    <div className="goals-distribution-container">
-      {/* Header */}
-      <div className="distribution-header">
-        <div className="header-left">
-          <span className="header-icon">🎯</span>
-          <h2>My Financial Goals</h2>
+    <div className="gd-card">
+      <div className="gd-amounts">
+        <div className="gd-amount-block">
+          <span className="gd-amount-value gd-accent">{formatCurrency(assignedToGoals)}</span>
+          <span className="gd-amount-label">Assigned</span>
         </div>
-        <div className="header-right">
-          <span className="active-indicator"></span>
-          <span className="active-text">Active Goals [{activeGoals.length}]</span>
+        <span className="gd-divider">/</span>
+        <div className="gd-amount-block">
+          <span className="gd-amount-value">{formatCurrency(totalBalance)}</span>
+          <span className="gd-amount-label">Total Balance</span>
         </div>
       </div>
 
-      <div className="distribution-divider"></div>
+      <div className="gd-bar-track">
+        <div
+          className="gd-bar-fill"
+          style={{ width: `${assignedPercentage}%` }}
+        />
+      </div>
 
-      {/* Distribution Section */}
-      <div className="distribution-content">
-        <div className="distribution-title">
-          <span className="distribution-icon">📊</span>
-          <h3>Distribution</h3>
+      <div className="gd-meta">
+        <div className="gd-meta-item">
+          <span className="gd-dot gd-dot-active" />
+          <span>{activeGoals.length} Active</span>
         </div>
-
-        <div className="distribution-stats">
-          <div className="stat-item assigned">
-            <div className="stat-header">
-              <span className="stat-emoji">💚</span>
-              <span className="stat-label">Assigned to Goals:</span>
-            </div>
-            <div className="stat-value">
-              <span className="amount">{formatCurrency(assignedToGoals)}</span>
-              <span className="percentage">({assignedPercentage}%)</span>
-            </div>
-          </div>
-
-          <div className="stat-item unassigned">
-            <div className="stat-header">
-              <span className="stat-emoji">💙</span>
-              <span className="stat-label">Unassigned (Free):</span>
-            </div>
-            <div className="stat-value">
-              <span className="amount">{formatCurrency(available)}</span>
-              <span className="percentage">({availablePercentage}%)</span>
-            </div>
-          </div>
+        <div className="gd-meta-item">
+          <span className="gd-dot gd-dot-done" />
+          <span>{completedGoals.length} Completed</span>
         </div>
-
-        {/* Progress Bar */}
-        <div className="distribution-bar">
-          <div 
-            className="bar-assigned"
-            style={{ width: `${assignedPercentage}%` }}
-          >
-            {assignedPercentage > 15 && (
-              <span className="bar-label">{assignedPercentage}%</span>
-            )}
-          </div>
-          <div 
-            className="bar-available"
-            style={{ width: `${availablePercentage}%` }}
-          >
-            {availablePercentage > 15 && (
-              <span className="bar-label">{availablePercentage}%</span>
-            )}
-          </div>
+        <div className="gd-meta-free">
+          {formatCurrency(available)} free
         </div>
       </div>
     </div>
