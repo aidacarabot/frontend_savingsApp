@@ -4,6 +4,9 @@ import GoalForm from "../components/GoalForm/GoalForm";
 import GoalsDistribution from "../components/GoalsDistribution/GoalsDistribution";
 import { FinancialProvider } from "../context/FinancialContext";
 import "./Goals.css";
+import Title from "../components/Title/Title";
+import { ChessQueen } from 'lucide-react';
+
 
 const Goals = () => {
   const [showGoalForm, setShowGoalForm] = useState(false);
@@ -39,7 +42,7 @@ const Goals = () => {
     <FinancialProvider>
       <div className="goals-page">
         <div className="goals-page-header">
-          <h1 className="goals-page-title">Goals</h1>
+          <Title icon={<ChessQueen size={30} color="#27ebc8" />} title="GOALS" className="title-transactions" />
           <button className="goals-add-btn" onClick={handleAddNewGoal}>
             + Add
           </button>

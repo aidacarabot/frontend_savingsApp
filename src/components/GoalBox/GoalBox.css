@@ -142,17 +142,16 @@
   padding-top: 14px;
 }
 
-.gb-action-row {
+.gb-action-inputs {
   display: flex;
-  gap: 8px;
   align-items: center;
+  gap: 8px;
 }
 
 /* Input action (add/remove) */
 .gb-input-action {
   display: flex;
   align-items: center;
-  gap: 0;
   background: var(--color-card-bg);
   border: 1px solid var(--color-border);
   border-radius: 10px;
@@ -164,12 +163,8 @@
 }
 
 .gb-action-symbol {
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--color-text-tertiary);
   flex-shrink: 0;
-  width: 14px;
-  text-align: center;
+  color: var(--color-text-tertiary);
 }
 
 .gb-remove .gb-action-symbol {
@@ -191,7 +186,6 @@
   width: 100%;
   min-width: 0;
   font-family: var(--font-secondary);
-  -moz-appearance: textfield;
 }
 
 .gb-action-input::-webkit-inner-spin-button,
@@ -237,18 +231,22 @@
 
 /* Monthly button */
 .gb-monthly-btn {
-  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 0 14px;
   height: 38px;
   border-radius: 10px;
   border: none;
   background: var(--color-primary);
   color: #0a0a0a;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   cursor: pointer;
   transition: var(--transition-fast);
   white-space: nowrap;
-  flex-shrink: 0;
+  flex: 0 0 auto;
   font-family: var(--font-secondary);
 }
 
@@ -260,6 +258,135 @@
 
 .gb-monthly-btn:active {
   transform: translateY(0);
+}
+
+.gb-monthly-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Partial monthly (capped by remaining or available) */
+.gb-monthly-btn-partial {
+  background: transparent;
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+}
+
+.gb-monthly-btn-partial:hover {
+  background: rgba(43, 235, 200, 0.1);
+}
+
+/* No free balance warning */
+.gb-no-balance {
+  font-size: 11px;
+  font-weight: 600;
+  font-family: var(--font-secondary);
+  color: #ff6b6b;
+  background: rgba(255, 107, 107, 0.08);
+  border: 1px solid rgba(255, 107, 107, 0.2);
+  border-radius: 8px;
+  padding: 6px 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  letter-spacing: 0.2px;
+}
+
+/* Locked add input */
+.gb-add-locked {
+  opacity: 0.45;
+  cursor: not-allowed;
+  border-color: rgba(255, 107, 107, 0.2);
+}
+
+.gb-add-locked .gb-action-input {
+  cursor: not-allowed;
+}
+
+.gb-add-locked .gb-action-input::placeholder {
+  color: #ff6b6b;
+}
+
+/* Completed card */
+.gb-card-completed {
+  border-color: var(--color-border);
+  opacity: 0.75;
+}
+
+.gb-card-completed:hover {
+  border-color: var(--color-border);
+  opacity: 1;
+}
+
+.gb-card-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.gb-completed-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  background: transparent;
+  color: var(--color-text-tertiary);
+  font-size: 11px;
+  font-weight: 600;
+  font-family: var(--font-secondary);
+  letter-spacing: 0.4px;
+  border-radius: 20px;
+  border: 1px solid var(--color-border);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.gb-current-done {
+  color: var(--color-text-tertiary) !important;
+}
+
+.gb-ring-text-done {
+  fill: var(--color-text-tertiary);
+  font-size: 18px;
+}
+
+/* Add input over-limit state */
+.gb-add-over {
+  border-color: rgba(255, 107, 107, 0.5);
+}
+
+.gb-input-over {
+  color: #ff6b6b;
+}
+
+.gb-add-tooltip {
+  position: absolute;
+  bottom: calc(100% + 7px);
+  left: 0;
+  right: 0;
+  background: var(--color-card-bg);
+  border: 1px solid rgba(255, 107, 107, 0.35);
+  color: #ff6b6b;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: var(--font-secondary);
+  padding: 5px 9px;
+  border-radius: 8px;
+  white-space: nowrap;
+  z-index: 20;
+  pointer-events: none;
+  text-align: center;
+}
+
+.gb-add-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: rgba(255, 107, 107, 0.35);
 }
 
 /* Responsive */
@@ -285,13 +412,13 @@
     align-items: center;
   }
 
-  .gb-action-row {
+  .gb-actions {
     flex-direction: column;
-    gap: 8px;
+    align-items: stretch;
   }
 
-  .gb-input-action {
-    width: 100%;
+  .gb-action-inputs {
+    flex-wrap: wrap;
   }
 
   .gb-monthly-btn {
