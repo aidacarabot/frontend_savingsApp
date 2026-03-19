@@ -46,30 +46,31 @@ const Navbar = () => {
         <ul>
           <li>
             <Link to='/user' className={location.pathname === '/user' ? 'active' : ''}>
-              <CircleUserRound className='nav-icon' size={20} /> User Details
+              <CircleUserRound className='nav-icon' size={16} /> User Details
             </Link>
           </li>
         </ul>
       </div>
+      <span className='nav-section-label'>Navigation</span>
       <ul>
         <li>
           <Link to='/overview' className={location.pathname === '/overview' ? 'active' : ''}>
-            <LayoutDashboard className='nav-icon' size={20} /> Overview
+            <LayoutDashboard className='nav-icon' size={18} /> Overview
           </Link>
         </li>
         <li>
           <Link to='/transactions' className={location.pathname === '/transactions' ? 'active' : ''}>
-            <ChartPie className='nav-icon' size={20} /> Transactions
+            <ArrowLeftRight className='nav-icon' size={18} /> Transactions
           </Link>
         </li>
         <li>
           <Link to='/goals' className={location.pathname === '/goals' ? 'active' : ''}>
-            <ChessQueen className='nav-icon' size={20} /> Goals
+            <ChessQueen className='nav-icon' size={18} /> Goals
           </Link>
         </li>
       </ul>
       <button className='logout-button' onClick={handleLogout}>
-        <LogOut className='nav-icon' size={20} />
+        <LogOut size={18} />
         Logout
       </button>
     </nav>

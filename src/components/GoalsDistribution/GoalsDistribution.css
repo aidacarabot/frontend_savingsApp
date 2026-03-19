@@ -1,9 +1,9 @@
 .gd-card {
-  background: rgba(255, 255, 255, 0.04);
+  background: #101113;
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--color-border);
-  border-radius: 20px;
+  border: 1px solid var(--color-pro);
+  border-radius: 10px;
   padding: 28px;
 }
 
@@ -31,7 +31,7 @@
 
 .gd-amount-value {
   font-size: 28px;
-  font-weight: 800;
+  font-weight: 600;
   color: var(--color-text-primary);
   letter-spacing: -1px;
   font-family: var(--font-secondary);
@@ -44,9 +44,10 @@
 .gd-amount-label {
   font-size: 12px;
   font-weight: 500;
-  color: var(--color-text-tertiary);
+  color: #a1a3ac;
   text-transform: uppercase;
   letter-spacing: 0.8px;
+  font-family: var(--font-primary);
 }
 
 .gd-divider {
@@ -84,9 +85,10 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   color: var(--color-text-secondary);
+  font-family: var(--font-tertiary);
 }
 
 .gd-dot {
@@ -108,9 +110,10 @@
 
 .gd-meta-free {
   margin-left: auto;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
-  color: var(--color-text-tertiary);
+  color: #a1a3ac;
+  font-family: var(--font-tertiary);
 }
 
 @keyframes gdPulse {

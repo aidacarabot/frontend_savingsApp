@@ -25,10 +25,6 @@
   transition: var(--transition-fast);
 }
 
-.gb-card:hover {
-  border-color: rgba(43, 235, 200, 0.15);
-}
-
 /* Header */
 .gb-card-header {
   display: flex;
@@ -43,7 +39,7 @@
   color: var(--color-text-primary);
   margin: 0;
   letter-spacing: -0.3px;
-  font-family: var(--font-secondary);
+  font-family: var(--font-tertiary);
 }
 
 /* Body: ring + info */

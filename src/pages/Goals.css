@@ -42,13 +42,13 @@
 }
 
 .goals-section-label {
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 600;
-  color: var(--color-text-tertiary);
+  color: var(--color-text-secondary);
   text-transform: uppercase;
   letter-spacing: 1.2px;
-  margin: 28px 0 16px;
-  font-family: var(--font-secondary);
+  margin: 60px 0 20px;
+  font-family: var(--font-primary);
 }
 
 @media (max-width: 768px) {

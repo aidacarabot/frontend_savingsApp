@@ -71,7 +71,7 @@ const GoalsDistribution = ({ refreshTrigger }) => {
           <span>{completedGoals.length} Completed</span>
         </div>
         <div className="gd-meta-free">
-          {formatCurrency(available)} free
+          {formatCurrency(available)} available
         </div>
       </div>
     </div>
