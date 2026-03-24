@@ -3,6 +3,11 @@
   max-width: 720px;
   margin: 0 auto;
   width: 100%;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .goals-page-header {
@@ -34,6 +39,7 @@
   transition: var(--transition-fast);
   letter-spacing: -0.2px;
   font-family: var(--font-secondary);
+  outline: none;
 }
 
 .goals-add-btn:hover {
@@ -47,8 +53,15 @@
   color: var(--color-text-secondary);
   text-transform: uppercase;
   letter-spacing: 1.2px;
-  margin: 60px 0 20px;
+  margin: 20px 0;
   font-family: var(--font-primary);
+}
+
+.goals-list-scroll {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+  padding-bottom: 1.5rem;
 }
 
 @media (max-width: 768px) {

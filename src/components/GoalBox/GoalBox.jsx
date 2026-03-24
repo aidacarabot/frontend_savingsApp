@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Minus, Plus } from 'lucide-react';
+import { Minus, Plus, Frown, Meh, Smile, Laugh, PartyPopper } from 'lucide-react';
 import useApiFetch from '../../hooks/useApiFetch';
 import { useFinancialData } from '../../hooks/useFinancialData';
 import DropDown from '../DropDown/DropDown';
@@ -29,7 +29,7 @@ const CircularProgress = ({ percentage, completed }) => {
         cy={radius}
         r={normalizedRadius}
         fill="none"
-        stroke={completed ? 'var(--color-text-tertiary)' : 'var(--color-primary)'}
+        stroke="var(--color-primary)"
         strokeWidth={stroke}
         strokeLinecap="round"
         strokeDasharray={`${circumference} ${circumference}`}
@@ -49,15 +49,26 @@ const CircularProgress = ({ percentage, completed }) => {
   );
 };
 
+const getGoalIcon = (percentage, isCompleted) => {
+  if (isCompleted) return PartyPopper;
+  if (percentage < 20) return Frown;
+  if (percentage < 50) return Meh;
+  if (percentage < 75) return Smile;
+  return Laugh;
+};
+
 const GoalBox = ({ onGoalUpdated, onEditGoal }) => {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [goalToDelete, setGoalToDelete] = useState(null);
   const [addAmounts, setAddAmounts] = useState({});
   const [removeAmounts, setRemoveAmounts] = useState({});
+  const [localGoals, setLocalGoals] = useState(null);
 
   const { responseData: goals, loading, error, refetch } = useApiFetch('/goals', 'GET');
   const { responseData: userData } = useApiFetch('/users', 'GET');
   const { available, loading: loadingFinancial, refetch: refetchFinancial } = useFinancialData();
+
+  const displayGoals = localGoals ?? goals;
 
   const calculateAgeAtCompletion = (completionDate) => {
     if (!completionDate || !userData?.birthDate) return 0;
@@ -87,7 +98,7 @@ const GoalBox = ({ onGoalUpdated, onEditGoal }) => {
 
   const handleAddFunds = async (goalId, amount) => {
     try {
-      const goal = goals.find(g => g._id === goalId);
+      const goal = displayGoals.find(g => g._id === goalId);
       const currentAmount = goal.currentAmount || 0;
       const remaining = goal.targetAmount - currentAmount;
       const safeAmount = Math.min(parseFloat(amount), remaining, Math.max(0, available));
@@ -95,27 +106,35 @@ const GoalBox = ({ onGoalUpdated, onEditGoal }) => {
       if (safeAmount <= 0) return;
 
       const newAmount = currentAmount + safeAmount;
+      setLocalGoals(displayGoals.map(g =>
+        g._id === goalId ? { ...g, currentAmount: newAmount } : g
+      ));
+      setAddAmounts(prev => ({ ...prev, [goalId]: '' }));
       await fetchData(`/goals/${goalId}`, 'PUT', { currentAmount: newAmount });
-      refetch();
       refetchFinancial();
       if (onGoalUpdated) onGoalUpdated();
-      setAddAmounts(prev => ({ ...prev, [goalId]: '' }));
     } catch (err) {
       console.error('Error adding funds:', err);
+      setLocalGoals(null);
+      refetch();
     }
   };
 
   const handleRemoveFunds = async (goalId, amount) => {
     try {
-      const goal = goals.find(g => g._id === goalId);
+      const goal = displayGoals.find(g => g._id === goalId);
       const newAmount = Math.max(0, (goal.currentAmount || 0) - parseFloat(amount));
+      setLocalGoals(displayGoals.map(g =>
+        g._id === goalId ? { ...g, currentAmount: newAmount } : g
+      ));
+      setRemoveAmounts(prev => ({ ...prev, [goalId]: '' }));
       await fetchData(`/goals/${goalId}`, 'PUT', { currentAmount: newAmount });
-      refetch();
       refetchFinancial();
       if (onGoalUpdated) onGoalUpdated();
-      setRemoveAmounts(prev => ({ ...prev, [goalId]: '' }));
     } catch (err) {
       console.error('Error removing funds:', err);
+      setLocalGoals(null);
+      refetch();
     }
   };
 
@@ -129,6 +148,7 @@ const GoalBox = ({ onGoalUpdated, onEditGoal }) => {
       await fetchData(`/goals/${goalToDelete}`, 'DELETE');
       setShowDeleteConfirm(false);
       setGoalToDelete(null);
+      setLocalGoals(null);
       refetch();
       refetchFinancial();
       if (onGoalUpdated) onGoalUpdated();
@@ -147,11 +167,11 @@ const GoalBox = ({ onGoalUpdated, onEditGoal }) => {
     if (goal && onEditGoal) onEditGoal(goal);
   };
 
-  if (loading) return <div className="gb-status">Loading goals...</div>;
-  if (error) return <div className="gb-status gb-error">Error loading goals</div>;
-  if (!goals || goals.length === 0) return <div className="gb-status">No goals created yet.</div>;
+  if (loading && !displayGoals) return <div className="gb-status">Loading goals...</div>;
+  if (error && !displayGoals) return <div className="gb-status gb-error">Error loading goals</div>;
+  if (!displayGoals || displayGoals.length === 0) return <div className="gb-status">No goals created yet.</div>;
 
-  const sortedGoals = [...goals].sort((a, b) => {
+  const sortedGoals = [...displayGoals].sort((a, b) => {
     const aCompleted = (a.currentAmount || 0) >= a.targetAmount;
     const bCompleted = (b.currentAmount || 0) >= b.targetAmount;
     if (aCompleted !== bCompleted) return aCompleted ? 1 : -1;
@@ -160,12 +180,14 @@ const GoalBox = ({ onGoalUpdated, onEditGoal }) => {
     return 0;
   });
 
-  return (
-    <div className="gb-list">
-      {sortedGoals.map((goal) => {
+  const activeGoals = sortedGoals.filter(g => (g.currentAmount || 0) < g.targetAmount);
+  const completedGoals = sortedGoals.filter(g => (g.currentAmount || 0) >= g.targetAmount);
+
+  const renderGoal = (goal) => {
         const ageAtCompletion = calculateAgeAtCompletion(goal.completionDate);
         const percentage = calculateCompletionPercentage(goal.currentAmount || 0, goal.targetAmount);
         const isCompleted = (goal.currentAmount || 0) >= goal.targetAmount;
+        const GoalIcon = getGoalIcon(percentage, isCompleted);
         const currentAmount = goal.currentAmount || 0;
         const remaining = goal.targetAmount - currentAmount;
         const maxAdd = loadingFinancial ? remaining : Math.min(remaining, Math.max(0, available));
@@ -174,12 +196,16 @@ const GoalBox = ({ onGoalUpdated, onEditGoal }) => {
         const addVal = addAmounts[goal._id] || '';
         const removeVal = removeAmounts[goal._id] || '';
         const addIsOver = addVal !== '' && parseFloat(addVal) > maxAdd && maxAdd > 0;
+        const removeIsOver = removeVal !== '' && parseFloat(removeVal) > currentAmount;
 
         return (
           <div key={goal._id} className={`gb-card${isCompleted ? ' gb-card-completed' : ''}`}>
             <div className="gb-card-header">
               <div className="gb-card-title-row">
-                <h3 className="gb-card-name">{goal.goalName}</h3>
+                <h3 className="gb-card-name">
+                  <GoalIcon size={15} color="var(--color-primary)" style={{ flexShrink: 0 }} />
+                  {goal.goalName}
+                </h3>
                 {isCompleted && (
                   <span className="gb-completed-badge">Completed</span>
                 )}
@@ -236,24 +262,29 @@ const GoalBox = ({ onGoalUpdated, onEditGoal }) => {
                   </div>
                 )}
                 <div className="gb-action-inputs">
-                  <div className="gb-input-action gb-remove">
+                  <div className={`gb-input-action gb-remove${removeIsOver ? ' gb-remove-over' : ''}`}>
                     <Minus className="gb-action-symbol" size={14} />
                     <input
                       type="number"
                       value={removeVal}
                       onChange={(e) => setRemoveAmounts(prev => ({ ...prev, [goal._id]: e.target.value }))}
                       onKeyDown={(e) => {
-                        if (e.key === 'Enter' && removeVal && parseFloat(removeVal) > 0) {
+                        if (e.key === 'Enter' && removeVal && parseFloat(removeVal) > 0 && !removeIsOver) {
                           handleRemoveFunds(goal._id, removeVal);
                         }
                       }}
                       placeholder="Remove"
-                      className="gb-action-input"
+                      className={`gb-action-input${removeIsOver ? ' gb-input-remove-over' : ''}`}
                       min="0"
                       max={currentAmount}
                       step="0.01"
                     />
-                    {removeVal && parseFloat(removeVal) > 0 && (
+                    {removeIsOver && (
+                      <div className="gb-remove-tooltip">
+                        Max ${currentAmount.toFixed(0)} saved
+                      </div>
+                    )}
+                    {removeVal && parseFloat(removeVal) > 0 && !removeIsOver && (
                       <button
                         className="gb-action-confirm gb-confirm-remove"
                         onClick={() => handleRemoveFunds(goal._id, removeVal)}
@@ -311,7 +342,20 @@ const GoalBox = ({ onGoalUpdated, onEditGoal }) => {
             )}
           </div>
         );
-      })}
+  };
+
+  return (
+    <div className="gb-list">
+      {activeGoals.map(renderGoal)}
+
+      {completedGoals.length > 0 && (
+        <>
+          <div className="gb-section-divider">
+            <span className="gb-section-divider-label">Completed</span>
+          </div>
+          {completedGoals.map(renderGoal)}
+        </>
+      )}
 
       {showDeleteConfirm && (
         <AreYouSure

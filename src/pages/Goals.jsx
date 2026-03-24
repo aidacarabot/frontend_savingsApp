@@ -52,11 +52,12 @@ const Goals = () => {
 
         <div className="goals-section-label">Your Goals</div>
 
-        <GoalBox
-          key={refreshGoals}
-          onGoalUpdated={handleGoalUpdated}
-          onEditGoal={handleEditGoal}
-        />
+        <div className="goals-list-scroll">
+          <GoalBox
+            onGoalUpdated={handleGoalUpdated}
+            onEditGoal={handleEditGoal}
+          />
+        </div>
 
         {showGoalForm && (
           <GoalForm

@@ -32,7 +32,7 @@ const GoalsDistribution = ({ refreshTrigger }) => {
   const completedGoals = goals?.filter(goal => goal.currentAmount >= goal.targetAmount) || [];
   const assignedPercentage = calculatePercentage(assignedToGoals, totalBalance);
 
-  if (loading || goalsLoading) {
+  if ((loading || goalsLoading) && !goals) {
     return (
       <div className="gd-card">
         <div className="gd-loading">Loading...</div>
