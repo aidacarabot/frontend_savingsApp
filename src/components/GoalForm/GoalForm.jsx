@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useEffect, useRef } from 'react';
+import { Goal } from 'lucide-react';
 import Button from '../Button/Button';
 import { fetchData } from '../../utils/api/fetchData';
 import useApiFetch from '../../hooks/useApiFetch';
@@ -96,8 +97,8 @@ const GoalForm = ({ onClose, onGoalAdded, initialData = null, isEditing = false 
         </button>
 
         <div className="gf-header">
-          <h2>{isEditing ? 'Edit Goal' : 'New Goal'}</h2>
-          <p>Define your target and we'll map the path</p>
+          <h2><Goal size={22} color="var(--color-primary)" style={{ verticalAlign: 'middle', marginRight: 10, marginBottom: 6 }} />{isEditing ? 'Edit Goal' : 'New Goal'}</h2>
+          <p>Define your goal, timeline, or monthly amount — we’ll create your plan.</p>
         </div>
 
         <form className="gf-form" onSubmit={handleSubmit(handleFormSubmit)}>
