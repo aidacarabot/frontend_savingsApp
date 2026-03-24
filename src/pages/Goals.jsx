@@ -53,9 +53,10 @@ const Goals = () => {
         <div className="goals-section-label">Your Goals</div>
 
         <div className="goals-list-scroll">
-          <GoalBox
+        <GoalBox
             onGoalUpdated={handleGoalUpdated}
             onEditGoal={handleEditGoal}
+            refreshTrigger={refreshGoals}
           />
         </div>
 

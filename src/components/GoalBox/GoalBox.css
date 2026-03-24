@@ -12,6 +12,34 @@
   font-family: var(--font-secondary);
 }
 
+.gb-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.gb-empty-title {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  font-family: var(--font-tertiary);
+  letter-spacing: -0.3px;
+}
+
+.gb-empty-subtitle {
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-text-tertiary);
+  font-family: var(--font-primary);
+  max-width: 240px;
+  line-height: 1.5;
+}
+
 .gb-error {
   color: #ff4757;
 }
@@ -65,7 +93,7 @@
 
 .gb-ring-text {
   font-size: 15px;
-  font-weight: 800;
+  font-weight: 700;
   fill: var(--color-text-primary);
   font-family: var(--font-secondary);
   transform: rotate(90deg);
@@ -87,7 +115,7 @@
 
 .gb-current {
   font-size: 22px;
-  font-weight: 800;
+  font-weight: 600;
   color: var(--color-primary);
   letter-spacing: -0.8px;
   font-family: var(--font-secondary);
@@ -110,7 +138,7 @@
 /* Stats */
 .gb-card-stats {
   display: flex;
-  gap: 20px;
+  gap: 50px;
 }
 
 .gb-stat {
@@ -125,6 +153,7 @@
   color: var(--color-text-tertiary);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  font-family: var(--font-tertiary);
 }
 
 .gb-stat-value {
@@ -132,7 +161,7 @@
   font-weight: 600;
   color: var(--color-text-secondary);
   letter-spacing: -0.2px;
-  font-family: var(--font-secondary);
+  font-family: var(--font-tertiary);
 }
 
 /* Actions row */
@@ -181,11 +210,11 @@
   color: var(--color-text-primary);
   font-size: 14px;
   font-weight: 500;
+  font-family: var(--font-secondary);
   padding: 8px 6px;
   outline: none;
   width: 100%;
   min-width: 0;
-  font-family: var(--font-secondary);
   text-align: center;
 }
 
@@ -197,6 +226,7 @@
 
 .gb-action-input::placeholder {
   color: var(--color-text-tertiary);
+  font-family: var(--font-tertiary);
 }
 
 /* Confirm button inside input */
@@ -248,7 +278,7 @@
   transition: var(--transition-fast);
   white-space: nowrap;
   flex: 0 0 auto;
-  font-family: var(--font-secondary);
+  font-family: var(--font-tertiary);
   outline: none;
 }
 

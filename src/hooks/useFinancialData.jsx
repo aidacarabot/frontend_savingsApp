@@ -122,12 +122,22 @@ export const useFinancialData = () => {
       .filter((t) => t.type === 'Expense')
       .reduce((sum, t) => sum + t.amount, 0);
 
-    const totalBalance = allTimeIncome - allTimeExpenses;
-
     // Calcular el dinero total que está asignado a goals (currentAmount de cada goal)
-    const assignedToGoals = userData.goals
-      ? userData.goals.reduce((sum, goal) => sum + (goal.currentAmount || 0), 0)
+    const completedGoalsAmount = userData.goals
+      ? userData.goals
+          .filter(g => (g.currentAmount || 0) >= g.targetAmount)
+          .reduce((sum, g) => sum + (g.currentAmount || 0), 0)
       : 0;
+
+    const activeGoalsAmount = userData.goals
+      ? userData.goals
+          .filter(g => (g.currentAmount || 0) < g.targetAmount)
+          .reduce((sum, g) => sum + (g.currentAmount || 0), 0)
+      : 0;
+
+    const assignedToGoals = activeGoalsAmount;
+
+    const totalBalance = allTimeIncome - allTimeExpenses - completedGoalsAmount;
 
     const available = totalBalance - assignedToGoals;
 

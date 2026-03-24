@@ -1,11 +1,19 @@
-import { useState } from 'react';
-import { Minus, Plus, Frown, Meh, Smile, Laugh, PartyPopper } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Minus, Plus, Check, Target, Frown, Meh, Smile, Laugh, PartyPopper } from 'lucide-react';
+import confetti from 'canvas-confetti';
 import useApiFetch from '../../hooks/useApiFetch';
 import { useFinancialData } from '../../hooks/useFinancialData';
 import DropDown from '../DropDown/DropDown';
 import AreYouSure from '../AreYouSure/AreYouSure';
 import { fetchData } from '../../utils/api/fetchData';
 import './GoalBox.css';
+
+const fireConfetti = () => {
+  const colors = ['#27ebc8', '#1bc9aa', '#0fa88d'];
+  confetti({ particleCount: 120, spread: 80, origin: { y: 0.6 }, colors });
+  setTimeout(() => confetti({ particleCount: 60, angle: 60, spread: 55, origin: { x: 0, y: 0.65 }, colors }), 150);
+  setTimeout(() => confetti({ particleCount: 60, angle: 120, spread: 55, origin: { x: 1, y: 0.65 }, colors }), 300);
+};
 
 const CircularProgress = ({ percentage, completed }) => {
   const radius = 44;
@@ -15,37 +23,53 @@ const CircularProgress = ({ percentage, completed }) => {
   const strokeDashoffset = circumference - (percentage / 100) * circumference;
 
   return (
-    <svg width={radius * 2} height={radius * 2} className="gb-ring">
-      <circle
-        cx={radius}
-        cy={radius}
-        r={normalizedRadius}
-        fill="none"
-        stroke="var(--color-border)"
-        strokeWidth={stroke}
-      />
-      <circle
-        cx={radius}
-        cy={radius}
-        r={normalizedRadius}
-        fill="none"
-        stroke="var(--color-primary)"
-        strokeWidth={stroke}
-        strokeLinecap="round"
-        strokeDasharray={`${circumference} ${circumference}`}
-        strokeDashoffset={strokeDashoffset}
-        className="gb-ring-progress"
-      />
-      <text
-        x="50%"
-        y="50%"
-        textAnchor="middle"
-        dominantBaseline="central"
-        className={completed ? 'gb-ring-text gb-ring-text-done' : 'gb-ring-text'}
-      >
-        {completed ? '✓' : `${Math.round(percentage)}%`}
-      </text>
-    </svg>
+    <div style={{ position: 'relative', flexShrink: 0, width: radius * 2, height: radius * 2 }}>
+      <svg width={radius * 2} height={radius * 2} className="gb-ring">
+        <circle
+          cx={radius}
+          cy={radius}
+          r={normalizedRadius}
+          fill="none"
+          stroke="var(--color-border)"
+          strokeWidth={stroke}
+        />
+        <circle
+          cx={radius}
+          cy={radius}
+          r={normalizedRadius}
+          fill="none"
+          stroke="var(--color-primary)"
+          strokeWidth={stroke}
+          strokeLinecap="round"
+          strokeDasharray={`${circumference} ${circumference}`}
+          strokeDashoffset={strokeDashoffset}
+          className="gb-ring-progress"
+        />
+        {!completed && (
+          <text
+            x="50%"
+            y="50%"
+            textAnchor="middle"
+            dominantBaseline="central"
+            className="gb-ring-text"
+          >
+            {`${Math.round(percentage)}%`}
+          </text>
+        )}
+      </svg>
+      {completed && (
+        <Check
+          size={22}
+          color="var(--color-primary)"
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+          }}
+        />
+      )}
+    </div>
   );
 };
 
@@ -57,7 +81,7 @@ const getGoalIcon = (percentage, isCompleted) => {
   return Laugh;
 };
 
-const GoalBox = ({ onGoalUpdated, onEditGoal }) => {
+const GoalBox = ({ onGoalUpdated, onEditGoal, refreshTrigger }) => {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [goalToDelete, setGoalToDelete] = useState(null);
   const [addAmounts, setAddAmounts] = useState({});
@@ -67,6 +91,13 @@ const GoalBox = ({ onGoalUpdated, onEditGoal }) => {
   const { responseData: goals, loading, error, refetch } = useApiFetch('/goals', 'GET');
   const { responseData: userData } = useApiFetch('/users', 'GET');
   const { available, loading: loadingFinancial, refetch: refetchFinancial } = useFinancialData();
+
+  useEffect(() => {
+    if (refreshTrigger > 0) {
+      setLocalGoals(null);
+      refetch();
+    }
+  }, [refreshTrigger, refetch]);
 
   const displayGoals = localGoals ?? goals;
 
@@ -106,11 +137,13 @@ const GoalBox = ({ onGoalUpdated, onEditGoal }) => {
       if (safeAmount <= 0) return;
 
       const newAmount = currentAmount + safeAmount;
+      const justCompleted = newAmount >= goal.targetAmount && currentAmount < goal.targetAmount;
       setLocalGoals(displayGoals.map(g =>
         g._id === goalId ? { ...g, currentAmount: newAmount } : g
       ));
       setAddAmounts(prev => ({ ...prev, [goalId]: '' }));
       await fetchData(`/goals/${goalId}`, 'PUT', { currentAmount: newAmount });
+      if (justCompleted) fireConfetti();
       refetchFinancial();
       if (onGoalUpdated) onGoalUpdated();
     } catch (err) {
@@ -169,7 +202,13 @@ const GoalBox = ({ onGoalUpdated, onEditGoal }) => {
 
   if (loading && !displayGoals) return <div className="gb-status">Loading goals...</div>;
   if (error && !displayGoals) return <div className="gb-status gb-error">Error loading goals</div>;
-  if (!displayGoals || displayGoals.length === 0) return <div className="gb-status">No goals created yet.</div>;
+  if (!displayGoals || displayGoals.length === 0) return (
+    <div className="gb-empty">
+      <Target size={40} color="var(--color-text-tertiary)" strokeWidth={1.5} />
+      <p className="gb-empty-title">No goals yet</p>
+      <p className="gb-empty-subtitle">Create your first goal and start saving towards it</p>
+    </div>
+  );
 
   const sortedGoals = [...displayGoals].sort((a, b) => {
     const aCompleted = (a.currentAmount || 0) >= a.targetAmount;
@@ -210,11 +249,13 @@ const GoalBox = ({ onGoalUpdated, onEditGoal }) => {
                   <span className="gb-completed-badge">Completed</span>
                 )}
               </div>
-              <DropDown
-                transactionId={goal._id}
-                onDeleteRequest={handleDeleteRequest}
-                onEditRequest={handleEditRequest}
-              />
+              {!isCompleted && (
+                <DropDown
+                  transactionId={goal._id}
+                  onDeleteRequest={handleDeleteRequest}
+                  onEditRequest={handleEditRequest}
+                />
+              )}
             </div>
 
             <div className="gb-card-body">
@@ -346,7 +387,13 @@ const GoalBox = ({ onGoalUpdated, onEditGoal }) => {
 
   return (
     <div className="gb-list">
-      {activeGoals.map(renderGoal)}
+      {activeGoals.length > 0 ? activeGoals.map(renderGoal) : (
+        <div className="gb-empty">
+          <Target size={40} color="var(--color-primary)" strokeWidth={1.5} />
+          <p className="gb-empty-title">No active goals</p>
+          <p className="gb-empty-subtitle">You don’t have any active goals. Create one to start saving.</p>
+        </div>
+      )}
 
       {completedGoals.length > 0 && (
         <>
