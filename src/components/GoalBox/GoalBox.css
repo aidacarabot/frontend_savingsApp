@@ -482,6 +482,35 @@
   border-top-color: rgba(255, 107, 107, 0.35);
 }
 
+/* Collapsible completed card */
+.gb-card-collapsed {
+  padding-bottom: 14px;
+}
+
+.gb-card-collapsed .gb-card-header {
+  margin-bottom: 0;
+}
+
+.gb-card-header-collapsible {
+  cursor: pointer;
+  border-radius: 8px;
+  transition: var(--transition-fast);
+  user-select: none;
+}
+
+.gb-card-header-collapsible:hover .gb-card-name {
+  color: var(--color-primary);
+}
+
+.gb-chevron {
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+}
+
+.gb-chevron-up {
+  transform: rotate(180deg);
+}
+
 /* Responsive */
 @media (max-width: 600px) {
   .gb-card-body {

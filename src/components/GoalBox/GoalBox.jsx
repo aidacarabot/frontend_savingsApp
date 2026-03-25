@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Minus, Plus, Check, Target, Frown, Meh, Smile, Laugh, PartyPopper } from 'lucide-react';
+import { Minus, Plus, Check, Target, Frown, Meh, Smile, Laugh, PartyPopper, ChevronDown } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import useApiFetch from '../../hooks/useApiFetch';
 import { useFinancialData } from '../../hooks/useFinancialData';
@@ -87,6 +87,10 @@ const GoalBox = ({ onGoalUpdated, onEditGoal, refreshTrigger }) => {
   const [addAmounts, setAddAmounts] = useState({});
   const [removeAmounts, setRemoveAmounts] = useState({});
   const [localGoals, setLocalGoals] = useState(null);
+  const [expandedGoals, setExpandedGoals] = useState({});
+
+  const toggleExpandGoal = (goalId) =>
+    setExpandedGoals(prev => ({ ...prev, [goalId]: !prev[goalId] }));
 
   const { responseData: goals, loading, error, refetch } = useApiFetch('/goals', 'GET');
   const { responseData: userData } = useApiFetch('/users', 'GET');
@@ -216,7 +220,8 @@ const GoalBox = ({ onGoalUpdated, onEditGoal, refreshTrigger }) => {
     if (aCompleted !== bCompleted) return aCompleted ? 1 : -1;
     // Among active goals: newest first (MongoDB _id encodes creation time)
     if (!aCompleted && !bCompleted) return b._id > a._id ? 1 : -1;
-    return 0;
+    // Among completed goals: newest first
+    return b._id > a._id ? 1 : -1;
   });
 
   const activeGoals = sortedGoals.filter(g => (g.currentAmount || 0) < g.targetAmount);
@@ -236,29 +241,45 @@ const GoalBox = ({ onGoalUpdated, onEditGoal, refreshTrigger }) => {
         const removeVal = removeAmounts[goal._id] || '';
         const addIsOver = addVal !== '' && parseFloat(addVal) > maxAdd && maxAdd > 0;
         const removeIsOver = removeVal !== '' && parseFloat(removeVal) > currentAmount;
+        const isExpanded = isCompleted ? (expandedGoals[goal._id] ?? false) : true;
 
         return (
-          <div key={goal._id} className={`gb-card${isCompleted ? ' gb-card-completed' : ''}`}>
-            <div className="gb-card-header">
-              <div className="gb-card-title-row">
-                <h3 className="gb-card-name">
-                  <GoalIcon size={15} color="var(--color-primary)" style={{ flexShrink: 0 }} />
-                  {goal.goalName}
-                </h3>
-                {isCompleted && (
+          <div key={goal._id} className={`gb-card${isCompleted ? ' gb-card-completed' : ''}${isCompleted && !isExpanded ? ' gb-card-collapsed' : ''}`}>
+            {isCompleted ? (
+              <div
+                className="gb-card-header gb-card-header-collapsible"
+                onClick={() => toggleExpandGoal(goal._id)}
+              >
+                <div className="gb-card-title-row">
+                  <h3 className="gb-card-name">
+                    <GoalIcon size={15} color="var(--color-primary)" style={{ flexShrink: 0 }} />
+                    {goal.goalName}
+                  </h3>
                   <span className="gb-completed-badge">Completed</span>
-                )}
+                </div>
+                <ChevronDown
+                  size={18}
+                  color="var(--color-text-tertiary)"
+                  className={`gb-chevron${isExpanded ? ' gb-chevron-up' : ''}`}
+                />
               </div>
-              {!isCompleted && (
+            ) : (
+              <div className="gb-card-header">
+                <div className="gb-card-title-row">
+                  <h3 className="gb-card-name">
+                    <GoalIcon size={15} color="var(--color-primary)" style={{ flexShrink: 0 }} />
+                    {goal.goalName}
+                  </h3>
+                </div>
                 <DropDown
                   transactionId={goal._id}
                   onDeleteRequest={handleDeleteRequest}
                   onEditRequest={handleEditRequest}
                 />
-              )}
-            </div>
+              </div>
+            )}
 
-            <div className="gb-card-body">
+            {isExpanded && <div className="gb-card-body">
               <CircularProgress percentage={percentage} completed={isCompleted} />
 
               <div className="gb-card-info">
@@ -293,9 +314,9 @@ const GoalBox = ({ onGoalUpdated, onEditGoal, refreshTrigger }) => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div>}
 
-            {!isCompleted && (
+            {isExpanded && !isCompleted && (
               <div className="gb-actions">
                 {noFreeBalance && (
                   <div className="gb-no-balance">

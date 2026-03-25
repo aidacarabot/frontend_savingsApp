@@ -3,7 +3,6 @@ import GoalBox from "../components/GoalBox/GoalBox";
 import GoalForm from "../components/GoalForm/GoalForm";
 import GoalsDistribution from "../components/GoalsDistribution/GoalsDistribution";
 import { FinancialProvider } from "../context/FinancialContext";
-import "./Goals.css";
 import Title from "../components/Title/Title";
 import { ChessQueen } from 'lucide-react';
 
