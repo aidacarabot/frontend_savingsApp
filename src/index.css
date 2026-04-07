@@ -192,7 +192,7 @@ body {
   cursor: pointer;
   transition: var(--transition-fast);
   letter-spacing: -0.2px;
-  font-family: var(--font-secondary);
+  font-family: var(--font-primary);
   outline: none;
 }
 
