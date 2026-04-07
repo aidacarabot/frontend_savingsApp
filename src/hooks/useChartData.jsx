@@ -64,15 +64,12 @@ export const useChartData = () => {
         const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         xAxisLabel = monthNames[currentMonth];
 
-        // Balance inicial del mes actual (antes del día 1)
-        const monthStart = new Date(currentYear, currentMonth, 1);
-        let currentAccumulatedBalance = calculateInitialBalance(monthStart);
+        // Savings empieza desde 0 al inicio del mes
+        let currentAccumulatedBalance = 0;
 
-        // Balance inicial del mes anterior (antes del día 1 del mes anterior)
         const previousMonth = currentMonth === 0 ? 11 : currentMonth - 1;
         const previousYear = currentMonth === 0 ? currentYear - 1 : currentYear;
-        const previousMonthStart = new Date(previousYear, previousMonth, 1);
-        let previousAccumulatedBalance = calculateInitialBalance(previousMonthStart);
+        let previousAccumulatedBalance = 0;
 
         // Transacciones del mes actual
         const currentMonthTransactions = userData.transactions.filter((t) => {
@@ -117,13 +114,9 @@ export const useChartData = () => {
       case 'Year': {
         xAxisLabel = currentYear.toString();
 
-        // Balance inicial del año actual
-        const yearStart = new Date(currentYear, 0, 1);
-        let currentAccumulatedBalance = calculateInitialBalance(yearStart);
-
-        // Balance inicial del año anterior
-        const previousYearStart = new Date(currentYear - 1, 0, 1);
-        let previousAccumulatedBalance = calculateInitialBalance(previousYearStart);
+        // Savings empieza desde 0 al inicio del año
+        let currentAccumulatedBalance = 0;
+        let previousAccumulatedBalance = 0;
 
         // Transacciones del año actual
         const currentYearTransactions = userData.transactions.filter((t) => {

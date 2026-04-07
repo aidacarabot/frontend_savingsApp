@@ -1,4 +1,4 @@
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ComposedChart, Line } from 'recharts';
+import { BarChart, Bar, LabelList, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ComposedChart, Line, Area } from 'recharts';
 import { useFinancialContext } from '../../context/FinancialContext';
 import { useChartData } from '../../hooks/useChartData';
 import Loader from '../Loader/Loader';
@@ -6,7 +6,7 @@ import './SavingsChart.css';
 
 const SavingsChart = () => {
   const { viewBy } = useFinancialContext();
-  const { current, xAxisLabel, loading, error } = useChartData();
+  const { current, loading, error } = useChartData();
 
   // Formatear moneda
   const formatCurrency = (value) => {
@@ -124,7 +124,7 @@ const SavingsChart = () => {
           <p className="tooltip-title">{formatTooltipTitle(data.name)}</p>
           
           <div className="tooltip-section">
-            <p className="tooltip-label">Total Balance:</p>
+            <p className="tooltip-label">Savings:</p>
             <p className="tooltip-value balance">{formatCurrency(data.balance)}</p>
           </div>
 
@@ -139,7 +139,7 @@ const SavingsChart = () => {
               Expenses: <span>{formatCurrency(data.periodExpenses)}</span>
             </p>
             <p className="tooltip-detail savings">
-              Savings: <span>{formatCurrency(data.periodSavings)}</span>
+              Net Change: <span>{formatCurrency(data.periodSavings)}</span>
             </p>
           </div>
 
@@ -156,14 +156,6 @@ const SavingsChart = () => {
       );
     }
     return null;
-  };
-
-  // Formatear el eje Y con $ al final
-  const formatYAxis = (value) => {
-    if (value >= 1000) {
-      return `${(value / 1000).toFixed(1)}K`;
-    }
-    return `${value}`;
   };
 
   if (loading) {
@@ -192,78 +184,73 @@ const SavingsChart = () => {
   }
 
   const legendNames = getLegendNames();
+  const currentTotal = current.length > 0 ? current[current.length - 1].balance : 0;
 
   return (
     <div className="savings-chart-container">
-      <h2 className="chart-title">📊 SAVINGS OVER TIME</h2>
-      
-      <ResponsiveContainer width="100%" height={400}>
+      <div className="chart-header">
+        <p className="chart-period-label">
+          SAVINGS {viewBy === 'Month' ? 'THIS MONTH' : viewBy === 'Year' ? 'THIS YEAR' : 'ALL TIME'}
+        </p>
+        <p className="chart-total">{formatCurrency(currentTotal)}</p>
+        <div className="chart-legend-inline">
+          <span className="legend-dot-current" />
+          <span className="legend-name">{legendNames.current}</span>
+          {viewBy !== 'All-Time' && (
+            <>
+              <span className="legend-dot-previous" />
+              <span className="legend-name muted">{legendNames.previous}</span>
+            </>
+          )}
+        </div>
+      </div>
+
+      <ResponsiveContainer width="100%" height={280}>
         {viewBy === 'All-Time' ? (
-          <BarChart
-            data={current}
-            margin={{ top: 20, right: 30, left: 20, bottom: 30 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" stroke="#3a3c41" />
-            <XAxis 
-              dataKey="name" 
-              stroke="#e0e0e0"
-              style={{ fontSize: '0.875rem' }}
-              label={{ value: xAxisLabel, position: 'insideBottom', offset: -10, style: { fontWeight: 600, fill: '#ffffff' } }}
-            />
-            <YAxis 
-              stroke="#e0e0e0"
-              tickFormatter={formatYAxis}
-              style={{ fontSize: '0.875rem' }}
-              domain={[0, 'dataMax + 500']}
-              allowDataOverflow={false}
-              label={{ value: '$', angle: 0, position: 'insideTopLeft', style: { fontWeight: 600, fill: '#ffffff' } }}
-            />
-            <Tooltip content={<CustomTooltip />} />
-            <Bar 
-              dataKey="balance" 
-              fill="#2BEBC8" 
-              radius={[2, 2, 0, 0]}
-            />
+          <BarChart data={current} margin={{ top: 24, right: 16, left: 16, bottom: 10 }}>
+            <defs>
+              <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#2BEBC8" stopOpacity={1} />
+                <stop offset="100%" stopColor="#2BEBC8" stopOpacity={0.4} />
+              </linearGradient>
+            </defs>
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+            <XAxis dataKey="name" stroke="#444" tick={{ fill: '#666', fontSize: 11 }} axisLine={false} tickLine={false} padding={{ left: 10, right: 10 }} />
+            <YAxis hide />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255,255,255,0.04)' }} />
+            <Bar dataKey="balance" fill="url(#barGradient)" radius={[6, 6, 0, 0]}>
+              <LabelList dataKey="balance" position="top" formatter={(v) => v >= 1000 ? `$${(v/1000).toFixed(1)}k` : `$${v}`} style={{ fill: '#2BEBC8', fontSize: 10, fontWeight: 600 }} />
+            </Bar>
           </BarChart>
         ) : (
-          <ComposedChart
-            data={current}
-            margin={{ top: 20, right: 30, left: 20, bottom: 30 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" stroke="#3a3c41" />
-            <XAxis 
-              dataKey="name" 
-              stroke="#e0e0e0"
-              style={{ fontSize: '0.875rem' }}
-              label={{ value: xAxisLabel, position: 'insideBottom', offset: -10, style: { fontWeight: 600, fill: '#ffffff' } }}
-            />
-            <YAxis 
-              stroke="#e0e0e0"
-              tickFormatter={formatYAxis}
-              style={{ fontSize: '0.875rem' }}
-              domain={[0, 'dataMax + 500']}
-              allowDataOverflow={false}
-              label={{ value: '$', angle: 0, position: 'insideTopLeft', style: { fontWeight: 600, fill: '#ffffff' } }}
-            />
-            <Tooltip content={<CustomTooltip />} />
-            <Legend 
-              wrapperStyle={{ paddingTop: '20px' }}
-              iconType="circle"
-            />
-            <Bar 
-              dataKey="balance" 
-              fill="#2BEBC8" 
-              name={legendNames.current}
-              radius={[2, 2, 0, 0]}
-            />
-            <Line 
-              type="monotone" 
-              dataKey="previousBalance" 
-              stroke="#9E9E9E" 
-              name={legendNames.previous}
+          <ComposedChart data={current} margin={{ top: 10, right: 16, left: 16, bottom: 10 }}>
+            <defs>
+              <linearGradient id="savingsGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#2BEBC8" stopOpacity={0.25} />
+                <stop offset="95%" stopColor="#2BEBC8" stopOpacity={0} />
+              </linearGradient>
+            </defs>
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+            <XAxis dataKey="name" stroke="#444" tick={{ fill: '#555', fontSize: 11 }} axisLine={false} tickLine={false} padding={{ left: 10, right: 10 }} />
+            <YAxis hide />
+            <Tooltip content={<CustomTooltip />} cursor={{ stroke: 'rgba(255,255,255,0.08)', strokeWidth: 1 }} />
+            <Area
+              type="monotone"
+              dataKey="balance"
+              stroke="#2BEBC8"
               strokeWidth={2}
-              dot={{ r: 3 }}
-              activeDot={{ r: 5 }}
+              fill="url(#savingsGradient)"
+              dot={false}
+              activeDot={{ r: 4, fill: '#2BEBC8', strokeWidth: 0 }}
+            />
+            <Line
+              type="monotone"
+              dataKey="previousBalance"
+              stroke="#555"
+              strokeWidth={1.5}
+              strokeDasharray="5 4"
+              dot={false}
+              activeDot={{ r: 3, fill: '#555', strokeWidth: 0 }}
             />
           </ComposedChart>
         )}
