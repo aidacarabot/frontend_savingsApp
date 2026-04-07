@@ -131,6 +131,9 @@ body {
   font-weight: 500;
 }
 
+/* ! OVERVIEW PAGE*/
+
+
 /* ! USER PAGE */
 .user-container {
   display: flex;
@@ -268,6 +271,11 @@ body {
   display: flex;
   gap: 20px;
   width: 100%;
+}
+
+.icon-overview-h1 {
+  margin-bottom: 3px;
+  color: var(--color-primary);
 }
 
 /* ! TRANSACTIONS PAGE */

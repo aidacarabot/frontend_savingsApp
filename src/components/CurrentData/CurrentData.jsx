@@ -1,3 +1,4 @@
+import { PiggyBank, TrendingDown, TrendingUp, Wallet } from 'lucide-react';
 import { useFinancialContext } from '../../context/FinancialContext';
 import { useFinancialData } from '../../hooks/useFinancialData';
 import Loader from '../Loader/Loader';
@@ -7,8 +8,6 @@ const CurrentData = () => {
   const { viewBy } = useFinancialContext();
   const { 
     totalBalance,
-    available,
-    assignedToGoals,
     savings, 
     income, 
     expenses, 
@@ -28,15 +27,6 @@ const CurrentData = () => {
     }).format(amount);
   };
 
-  const getPeriodText = () => {
-    switch (viewBy) {
-      case 'Month': return 'This Month';
-      case 'Year': return 'This Year';
-      case 'All-Time': return 'All Time';
-      default: return viewBy;
-    }
-  };
-
   const getComparisonText = () => {
     switch (viewBy) {
       case 'Month': return 'vs. Last Month';
@@ -49,36 +39,17 @@ const CurrentData = () => {
     if (!comparison) return null;
 
     if (comparison.noData) {
-      return (
-        <div className="comparison-badge no-data">
-          <span className="no-data-text">No data available</span>
-        </div>
-      );
+      return <p className="comparison-pct no-data">No previous data</p>;
     }
 
     const percentage = Math.abs(comparison.percentage).toFixed(1);
     const isPositive = comparison.isPositive;
-
-    let triangle = '▲';
-    if (isExpense) {
-      triangle = isPositive ? '▼' : '▲';
-    } else {
-      triangle = isPositive ? '▲' : '▼';
-    }
+    const triangle = isExpense ? (isPositive ? '▼' : '▲') : (isPositive ? '▲' : '▼');
 
     return (
-      <div className="comparison-container">
-        <div className={`comparison-badge ${isPositive ? 'positive' : 'negative'}`}>
-          <span className="triangle">{triangle}</span>
-          <span className="percentage">{percentage}%</span>
-          <span className="comparison-label">{label}</span>
-        </div>
-        {comparison.previousValue !== undefined && (
-          <div className="previous-value">
-            Previous: {formatCurrency(comparison.previousValue)}
-          </div>
-        )}
-      </div>
+      <p className="comparison-pct">
+        {triangle} {percentage}% {label}
+      </p>
     );
   };
 
@@ -103,55 +74,53 @@ const CurrentData = () => {
   return (
     <div className="current-data-container">
       <div className="financial-data">
+
         <div id="balance-section" className="data-card">
-          <h3>💰 Current Balance</h3>
-          <p className="amount">{formatCurrency(totalBalance)}</p>
-          <div className="balance-details">
-            <div className="balance-item">
-              <span className="label">Available:</span>
-              <span className="value">{formatCurrency(available)}</span>
-            </div>
-            <div className="balance-item">
-              <span className="label">In Goals:</span>
-              <span className="value">{formatCurrency(assignedToGoals)}</span>
-            </div>
+          <div className="data-card-icon"><Wallet size={28} /></div>
+          <div className="card-content">
+            <h3>Current Balance</h3>
+            <p className="amount">{formatCurrency(totalBalance)}</p>
+            <ComparisonBadge comparison={balanceComparison} label={getComparisonText()} />
+            {balanceComparison?.previousValue !== undefined && (
+              <div className="previous-pill">Previous balance: {formatCurrency(balanceComparison.previousValue)}</div>
+            )}
           </div>
-          <ComparisonBadge 
-            comparison={balanceComparison} 
-            label={getComparisonText()} 
-          />
         </div>
 
         <div id="savings-section" className="data-card">
-          <h3>🎯 Your Savings</h3>
-          <small>{getPeriodText()}</small>
-          <p className="amount">{formatCurrency(savings)}</p>
-          <ComparisonBadge 
-            comparison={savingsComparison} 
-            label={getComparisonText()} 
-          />
+          <div className="data-card-icon"><PiggyBank size={28} /></div>
+          <div className="card-content">
+            <h3>Savings</h3>
+            <p className="amount">{formatCurrency(savings)}</p>
+            <ComparisonBadge comparison={savingsComparison} label={getComparisonText()} />
+            {savingsComparison?.previousValue !== undefined && (
+              <div className="previous-pill">Previous savings: {formatCurrency(savingsComparison.previousValue)}</div>
+            )}
+          </div>
         </div>
-        
+
         <div id="income-section" className="data-card">
-          <h3>📈 Your Income</h3>
-          <small>{getPeriodText()}</small>
-          <p className="amount">+{formatCurrency(income)}</p>
-          <ComparisonBadge 
-            comparison={incomeComparison} 
-            label={getComparisonText()} 
-          />
+          <div className="data-card-icon"><TrendingUp size={28} /></div>
+          <div className="card-content">
+            <h3>Income</h3>
+            <p className="amount">{income !== 0 ? '+' : ''}{formatCurrency(income)}</p>
+            <ComparisonBadge comparison={incomeComparison} label={getComparisonText()} />
+            {incomeComparison?.previousValue !== undefined && (
+              <div className="previous-pill">Previous income: {formatCurrency(incomeComparison.previousValue)}</div>
+            )}
+          </div>
         </div>
-        
+
         <div id="expenses-section" className="data-card">
-          <h3>📉 Your Expenses</h3>
-          <small>{getPeriodText()}</small>
-          <p className="amount">-{formatCurrency(expenses)}</p>
-        
-          <ComparisonBadge 
-            comparison={expensesComparison} 
-            label={getComparisonText()}
-            isExpense={true}
-          />
+          <div className="data-card-icon"><TrendingDown size={28} /></div>
+          <div className="card-content">
+            <h3>Expenses</h3>
+            <p className="amount">{expenses !== 0 ? '-' : ''}{formatCurrency(expenses)}</p>
+            <ComparisonBadge comparison={expensesComparison} label={getComparisonText()} isExpense={true} />
+            {expensesComparison?.previousValue !== undefined && (
+              <div className="previous-pill">Previous expenses: {formatCurrency(expensesComparison.previousValue)}</div>
+            )}
+          </div>
         </div>
       </div>
     </div>

@@ -1,3 +1,4 @@
+import { CalendarDays } from 'lucide-react'
 import CurrentData from "../components/CurrentData/CurrentData"
 import ExpensesChart from "../components/ExpensesChart/ExpensesChart"
 import GoalsOverview from "../components/GoalsOverview/GoalsOverview"
@@ -19,7 +20,7 @@ const OverviewContent = () => {
 
   return (
     <div className='overview-container'>
-      <Title icon="📅" title={`Today is ${currentDate}`} />
+      <Title icon={<CalendarDays className="icon-overview-h1" />} title={`Today is ${currentDate}`} />
       <ViewBy 
         options={viewByOptions}
         currentValue={viewBy}

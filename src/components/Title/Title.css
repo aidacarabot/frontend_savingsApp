@@ -1,7 +1,6 @@
 .title-container {
   padding: 1rem;
   margin-bottom: 1rem;
-
 }
 
 .title-section {
@@ -18,8 +17,10 @@
   font-size: 36px;
   font-weight: 800;
   color: var(--color-text-primary);
+  font-family: var(--font-tertiary);
   margin: 0;
   letter-spacing: -1.5px;
+  text-transform: uppercase;
 }
 
 /* Responsive */

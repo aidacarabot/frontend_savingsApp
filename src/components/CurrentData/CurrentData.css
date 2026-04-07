@@ -1,158 +1,96 @@
 .current-data-container {
-  padding: 1rem;
-}
-
-.date-section {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 1.5rem;
+  padding: 0.5rem 1rem 1rem;
 }
 
 .financial-data {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+}
+
+/* Divider lines forming the cross */
+.data-card:nth-child(1),
+.data-card:nth-child(2) {
+  border-bottom: 1px solid var(--color-pro);
+}
+
+.data-card:nth-child(1),
+.data-card:nth-child(3) {
+  border-right: 1px solid var(--color-pro);
 }
 
 .data-card {
-  padding: 1.5rem;
-  border-radius: 8px;
-  background: #1a1a1a;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 200px;
+  padding: 1.4rem 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  box-sizing: border-box;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
-  transition: transform 0.2s, box-shadow 0.2s;
-  position: relative;
+  gap: 0.35rem;
 }
 
-.data-card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.data-card h3 {
-  margin: 0 0 0.5rem 0;
-  color: #666;
-  font-size: 1rem;
-  font-weight: 600;
+.card-content h3 {
+  margin: 0;
+  margin-bottom: 15px;
+  color: var(--color-text-primary);
+  font-size: 0.72rem;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
+}
+
+.data-card-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: var(--color-primary);
+  color: var(--color-navbar-bg);
 }
 
 .amount {
-  font-size: 2rem;
-  font-weight: bold;
-  margin: 0.5rem 0;
-  color: #2c3e50;
-}
-
-#balance-section .amount {
-  color: #818CF8;
-}
-
-#savings-section .amount {
-  color: #28edc8;
-}
-
-#income-section .amount {
-  color: #38BDF8;
-}
-
-#expenses-section .amount {
-  color: #FCD34D;
-}
-
-.data-card small {
-  color: #999;
-  font-size: 0.875rem;
-  display: block;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.balance-details {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin: 1rem 0;
-  padding: 0.75rem;
-  background: #f9f9f9;
-  border-radius: 6px;
-}
-
-.balance-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.875rem;
-}
-
-.balance-item .label {
-  color: #666;
-  font-weight: 500;
-}
-
-.balance-item .value {
-  color: #333;
+  font-size: 1.75rem;
   font-weight: 600;
+  margin: 0;
+  color: var(--color-primary);
+  letter-spacing: -1px;
+  line-height: 1;
+  white-space: nowrap;
 }
 
-.comparison-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.25rem;
-  margin-top: 0.5rem;
-}
-
-.comparison-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  padding: 0.3rem 0.6rem;
-  border-radius: 4px;
+.comparison-pct {
   font-size: 0.75rem;
-  font-weight: 600;
-}
-
-.comparison-badge.positive {
-  background: #e8f5e9;
-  color: #2e7d32;
-}
-
-.comparison-badge.negative {
-  background: #ffebee;
-  color: #c62828;
-}
-
-.comparison-badge.no-data {
-  background: #f5f5f5;
-  color: #999;
   font-weight: 500;
+  color: var(--color-text-muted);
+  margin: 0;
 }
 
-.comparison-badge .triangle {
-  font-size: 0.7rem;
-}
-
-.comparison-badge .percentage {
-  font-weight: 700;
-}
-
-.comparison-badge .comparison-label {
-  font-size: 0.7rem;
-  opacity: 0.8;
-}
-
-.comparison-badge .no-data-text {
-  font-size: 0.7rem;
+.comparison-pct.no-data {
+  color: var(--color-otro);
   font-style: italic;
 }
 
-.previous-value {
-  font-size: 0.7rem;
-  color: #999;
-  font-style: italic;
-  margin-top: 0.15rem;
+.previous-pill {
+  display: inline-block;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 5px;
+  padding: 0.3rem 0.9rem;
+  font-size: 0.68rem;
+  color: var(--color-otro);
+  margin-top: 1rem;
+  white-space: nowrap;
 }
 
 .error-message {
@@ -160,4 +98,21 @@
   text-align: center;
   padding: 1rem;
   font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .amount {
+    font-size: 1.4rem;
+  }
+
+  .data-card-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .previous-pill {
+    font-size: 0.62rem;
+    padding: 0.25rem 0.7rem;
+  }
 }
