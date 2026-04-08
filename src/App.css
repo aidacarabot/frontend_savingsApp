@@ -22,6 +22,8 @@ button:focus {
   --color-pro: #191919;
   --color-page-bg: #2a2c32;
   --color-primary: #2bebc8;
+  --color-primary-10: rgba(43, 235, 200, 0.1);
+  --color-primary-03: rgba(43, 235, 200, 0.03);
   --color-text-primary: #ffffff;
   --color-text-secondary: #e0e0e0;
   --color-text-tertiary: #6b7280;

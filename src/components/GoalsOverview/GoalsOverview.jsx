@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Target, Trophy, ArrowRight, CalendarClock } from 'lucide-react';
+import { Trophy, ArrowRight, CalendarClock } from 'lucide-react';
 import useApiFetch from '../../hooks/useApiFetch';
 import { useFinancialData } from '../../hooks/useFinancialData';
 import './GoalsOverview.css';
@@ -40,10 +40,22 @@ const GoalsOverview = () => {
     <div className="go-container">
       {/* Header */}
       <div className="go-header">
-        <p className="go-label"><Target size={11} strokeWidth={2.5} /> GOALS OVERVIEW</p>
+        <p className="go-label"> GOALS OVERVIEW</p>
         <button className="go-view-all" onClick={() => navigate('/goals')}>
           View all <ArrowRight size={12} />
         </button>
+      </div>
+
+      {/* Count chips */}
+      <div className="go-counts">
+        <span className="go-count-chip go-count-active">
+          <span className="go-pulse-dot" />
+          {activeGoals.length} active
+        </span>
+        <span className="go-count-chip">
+          <Trophy size={9} strokeWidth={2} />
+          {completedGoals.length} completed
+        </span>
       </div>
 
       {/* Balance block */}
@@ -65,18 +77,6 @@ const GoalsOverview = () => {
             <p className="go-sub-value go-sub-value--accent">{fmt(totalAvailable)}</p>
           </div>
         </div>
-      </div>
-
-      {/* Count chips */}
-      <div className="go-counts">
-        <span className="go-count-chip go-count-active">
-          <span className="go-pulse-dot" />
-          {activeGoals.length} active
-        </span>
-        <span className="go-count-chip">
-          <Trophy size={9} strokeWidth={2} />
-          {completedGoals.length} completed
-        </span>
       </div>
 
       {/* Goal list */}

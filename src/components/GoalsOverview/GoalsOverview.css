@@ -1,7 +1,5 @@
-/* ===== GOALS OVERVIEW ===== */
-
 .go-container {
-  background: #111;
+  background: var(--color-pro);
   border-radius: 16px;
   padding: 1.25rem 1.25rem 1rem;
   display: flex;
@@ -17,15 +15,13 @@
 }
 
 .go-label {
-  display: flex;
-  align-items: center;
   gap: 0.35rem;
-  font-size: 0.65rem;
-  font-weight: 700;
-  color: #444;
-  letter-spacing: 1.5px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  font-family: var(--font-tertiary);
+  letter-spacing: 1.2px;
   text-transform: uppercase;
-  margin: 0;
 }
 
 .go-view-all {
@@ -35,6 +31,7 @@
   font-size: 0.7rem;
   font-weight: 500;
   color: var(--color-primary);
+  font-family: var(--font-tertiary);
   background: none;
   border: none;
   cursor: pointer;
@@ -47,12 +44,12 @@
 
 /* Balance block */
 .go-balance-block {
-  background: #0d0d0d;
   border-radius: 12px;
   padding: 0.9rem 1rem;
   display: flex;
   flex-direction: column;
   gap: 0.65rem;
+  justify-content: center;
 }
 
 .go-balance-main {
@@ -64,26 +61,29 @@
 .go-balance-label {
   font-size: 0.57rem;
   font-weight: 600;
-  color: #333;
+  color: var(--color-text-tertiary);
+  font-family: var(--font-tertiary);
   text-transform: uppercase;
   letter-spacing: 1px;
   margin: 0;
+  align-self: center;
 }
 
 .go-balance-value {
   font-size: 1.55rem;
-  font-weight: 700;
-  color: var(--color-text-secondary);
+  font-weight: 500;
+  color: var(--color-otro);
   letter-spacing: -1px;
   font-family: var(--font-secondary);
   margin: 0;
   line-height: 1;
+  align-self: center;
 }
 
 /* Allocation track */
 .go-alloc-track {
   height: 3px;
-  background: #1a1a1a;
+  background: var(--color-page-bg);
   border-radius: 99px;
   overflow: hidden;
 }
@@ -105,32 +105,29 @@
 }
 
 .go-sub-card {
-  background: #111;
+  background: var(--color-page-bg);
   border-radius: 8px;
   padding: 0.55rem 0.7rem;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 0.18rem;
-  border: 1px solid #181818;
-}
-
-.go-sub-card--accent {
-  border-color: rgba(43, 235, 200, 0.1);
 }
 
 .go-sub-label {
   font-size: 0.54rem;
-  font-weight: 600;
-  color: #2e2e2e;
+  font-weight: 700;
+  color: var(--color-text-tertiary);
+  font-family: var(--font-tertiary);
   text-transform: uppercase;
   letter-spacing: 1px;
-  margin: 0;
 }
 
 .go-sub-value {
   font-size: 0.9rem;
   font-weight: 600;
-  color: #3a3a3a;
+  color: var(--color-primary);
   font-family: var(--font-secondary);
   letter-spacing: -0.3px;
   margin: 0;
@@ -138,7 +135,7 @@
 }
 
 .go-sub-value--accent {
-  color: var(--color-primary);
+  color: var(--color-text-secondary);
 }
 
 /* Count chips */
@@ -155,14 +152,14 @@
   font-weight: 500;
   padding: 0.22rem 0.55rem;
   border-radius: 99px;
-  border: 1px solid #1a1a1a;
-  color: #383838;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
 }
 
 .go-count-active {
-  color: rgba(43, 235, 200, 0.6);
-  border-color: rgba(43, 235, 200, 0.1);
-  background: rgba(43, 235, 200, 0.03);
+  color: var(--color-primary);
+  border-color: var(--color-primary-10);
+  background: var(--color-primary-03);
 }
 
 /* Pulse dot */
@@ -197,13 +194,13 @@
   width: 2px;
 }
 .go-goals-scroll::-webkit-scrollbar-thumb {
-  background: #1e1e1e;
+  background: var(--color-scrollbar-thumb);
   border-radius: 2px;
 }
 
 .go-goals-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
   gap: 0.6rem;
 }
 
@@ -213,8 +210,8 @@
   align-items: center;
   gap: 0.3rem;
   padding: 0.6rem 0.25rem 0.45rem;
-  background: #0d0d0d;
-  border-radius: 12px;
+  background: var(--color-navbar-bg);
+  border-radius: 10px;
   aspect-ratio: 1;
   justify-content: center;
 }
@@ -225,16 +222,16 @@
 }
 
 .go-ring-text {
-  font-size: 9.5px;
-  font-weight: 700;
+  font-size: 10px;
+  font-weight: 500;
   fill: var(--color-primary);
-  font-family: 'Roboto Mono', monospace;
+  font-family: var(--font-secondary);
 }
 
 .go-goal-card-name {
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   font-weight: 400;
-  color: #555;
+  color: var(--color-text-secondary);
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
@@ -247,8 +244,9 @@
   display: flex;
   align-items: center;
   gap: 0.15rem;
-  font-size: 0.56rem;
-  color: #3a3a3a;
+  font-size: 0.6rem;
+  color: var(--color-text-tertiary);
+  font-family: var(--font-tertiary);
 }
 
 /* Empty state */
