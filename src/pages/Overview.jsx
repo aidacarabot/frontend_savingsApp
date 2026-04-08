@@ -28,10 +28,12 @@ const OverviewContent = () => {
       />
       <CurrentData />
       <div className='charts-wrapper'>
-        <SavingsChart />
+        <div className='charts-left-col'>
+          <SavingsChart />
+          <GoalsOverview />
+        </div>
         <ExpensesChart />
       </div>
-      <GoalsOverview />
     </div>
   );
 };

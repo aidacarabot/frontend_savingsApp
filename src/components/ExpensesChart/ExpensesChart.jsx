@@ -1,25 +1,21 @@
-import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
+import { ChartPie, House, Car, ShoppingCart, HeartPulse, Drama, Plane, ShoppingBag, Landmark, Beer, Coins } from 'lucide-react';
 import { useExpensesData } from '../../hooks/useExpensesData';
+import { CATEGORY_STYLES } from '../../utils/constants';
 import Loader from '../Loader/Loader';
 import './ExpensesChart.css';
+
+const iconMap = { House, Car, ShoppingCart, HeartPulse, Drama, Plane, ShoppingBag, Landmark, Beer, Coins };
 
 const ExpensesChart = () => {
   const { expensesData, totalExpenses, periodLabel, loading, error } = useExpensesData();
 
-  // Colores pastel variados
-  const COLORS = [
-    '#A8DADC', // Azul pastel
-    '#F4A3A8', // Rosa pastel
-    '#B4A7D6', // Lavanda pastel
-    '#FFD6A5', // Naranja/Durazno pastel
-    '#C1E1C1', // Verde pastel
-    '#F7CAC9', // Rosa claro pastel
-    '#B5EAD7', // Verde menta pastel
-    '#E2CFC4', // Beige pastel
-    '#C7CEEA', // Azul lavanda pastel
-  ];
+  const getColor = (name) => CATEGORY_STYLES[name]?.color || CATEGORY_STYLES['Other'].color;
+  const getIcon = (name) => {
+    const iconName = CATEGORY_STYLES[name]?.icon || 'Coins';
+    return iconMap[iconName] || Coins;
+  };
 
-  // Formatear moneda
   const formatCurrency = (value) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -29,7 +25,6 @@ const ExpensesChart = () => {
     }).format(value);
   };
 
-  // Tooltip personalizado
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
@@ -44,79 +39,26 @@ const ExpensesChart = () => {
     return null;
   };
 
-  // Renderizar texto central en el donut
-  const renderCenterText = ({ cx, cy }) => {
-    return (
-      <g>
-        <text
-          x={cx}
-          y={cy - 10}
-          textAnchor="middle"
-          dominantBaseline="middle"
-          fontSize="32"
-          fontWeight="700"
-          fill="#1a1a1a"
-          className="center-total-amount"
-        >
-          {formatCurrency(totalExpenses)}
-        </text>
-        <text
-          x={cx}
-          y={cy + 20}
-          textAnchor="middle"
-          dominantBaseline="middle"
-          fontSize="14"
-          fontWeight="500"
-          fill="#666"
-        >
-          Total Expenses
-        </text>
-      </g>
-    );
-  };
+  const renderCenterText = ({ cx, cy }) => (
+    <g>
+      <text x={cx} y={cy - 10} textAnchor="middle" dominantBaseline="middle"
+        fontSize="28" fontWeight="700" fill="#ffffff" className="center-total-amount">
+        {formatCurrency(totalExpenses)}
+      </text>
+      <text x={cx} y={cy + 18} textAnchor="middle" dominantBaseline="middle"
+        fontSize="12" fontWeight="500" fill="#555">
+        Total expenses
+      </text>
+    </g>
+  );
 
-  // Renderizar leyenda personalizada
-  const renderLegend = (props) => {
-    const { payload } = props;
-    // Filtrar el payload para excluir el pie dummy del texto central
-    const filteredPayload = payload.filter((entry) => entry.value !== 'value');
-    
-    return (
-      <div className="custom-legend">
-        {filteredPayload.map((entry, index) => (
-          <div key={`legend-${index}`} className="legend-item">
-            <div
-              className="legend-color"
-              style={{ backgroundColor: entry.color }}
-            />
-            <span className="legend-label">{entry.value}</span>
-            <span className="legend-value">{formatCurrency(entry.payload.value)}</span>
-          </div>
-        ))}
-      </div>
-    );
-  };
-
-  if (loading) {
-    return (
-      <div className="expenses-chart-container">
-        <Loader />
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="expenses-chart-container">
-        <p className="error-message">Error loading expenses data</p>
-      </div>
-    );
-  }
+  if (loading) return <div className="expenses-chart-container"><Loader /></div>;
+  if (error) return <div className="expenses-chart-container"><p className="error-message">Error loading expenses data</p></div>;
 
   if (!expensesData || expensesData.length === 0) {
     return (
       <div className="expenses-chart-container">
-        <h2 className="chart-title">📊 CATEGORY BREAKDOWN</h2>
+        <p className="expenses-period-label"><ChartPie size={13} /> CATEGORY BREAKDOWN</p>
         <p className="no-data-message">No expenses for this period</p>
       </div>
     );
@@ -124,50 +66,58 @@ const ExpensesChart = () => {
 
   return (
     <div className="expenses-chart-container">
-      <h2 className="chart-title">📊 CATEGORY BREAKDOWN</h2>
-      <p className="period-label">{periodLabel}</p>
+      <div className="expenses-header">
+        <p className="expenses-period-label"><ChartPie size={13} /> CATEGORY BREAKDOWN</p>
+        <p className="expenses-period-sub">{periodLabel}</p>
+      </div>
 
-      <ResponsiveContainer width="100%" height={400}>
+      <ResponsiveContainer width="100%" height={260}>
         <PieChart>
           <Pie
             data={expensesData}
-            cx="50%"
-            cy="50%"
-            labelLine={false}
-            outerRadius={120}
-            innerRadius={105}
-            fill="#8884d8"
+            cx="50%" cy="50%"
+            outerRadius={105}
+            innerRadius={88}
             dataKey="value"
             paddingAngle={3}
             cornerRadius={6}
             stroke="none"
           >
-            {expensesData.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            {expensesData.map((entry) => (
+              <Cell key={`cell-${entry.name}`} fill={getColor(entry.name)} />
             ))}
           </Pie>
           <Pie
             data={[{ value: 1 }]}
-            cx="50%"
-            cy="50%"
-            innerRadius={0}
-            outerRadius={0}
-            fill="none"
-            dataKey="value"
+            cx="50%" cy="50%"
+            innerRadius={0} outerRadius={0}
+            fill="none" dataKey="value"
             isAnimationActive={false}
             label={renderCenterText}
             legendType="none"
           />
-          <Tooltip 
-            content={<CustomTooltip />}
-            animationDuration={0}
-            isAnimationActive={false}
-            offset={10}
-            cursor={{ fill: 'transparent' }}
-          />
-          <Legend content={renderLegend} />
+          <Tooltip content={<CustomTooltip />} animationDuration={0} isAnimationActive={false} />
         </PieChart>
       </ResponsiveContainer>
+
+      <div className="expenses-legend">
+        {expensesData.map((entry) => {
+          const IconComp = getIcon(entry.name);
+          const color = getColor(entry.name);
+          return (
+            <div key={entry.name} className="expenses-legend-item">
+              <div className="expenses-legend-icon" style={{ background: `${color}22`, color }}>
+                <IconComp size={14} />
+              </div>
+              <div className="expenses-legend-info">
+                <span className="expenses-legend-name">{entry.name}</span>
+                <span className="expenses-legend-pct">{entry.percentage}% of expenses</span>
+              </div>
+              <span className="expenses-legend-value">{formatCurrency(entry.value)}</span>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };

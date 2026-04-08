@@ -263,7 +263,7 @@ body {
   display: flex;
   flex-direction: column;
   width: 80vw;
-  padding: 50px;
+  padding: 20px;
   gap: 20px;
 }
 
@@ -271,6 +271,15 @@ body {
   display: flex;
   gap: 20px;
   width: 100%;
+  align-items: stretch;
+}
+
+.charts-left-col {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .icon-overview-h1 {

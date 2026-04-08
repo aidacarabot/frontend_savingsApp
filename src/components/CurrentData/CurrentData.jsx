@@ -76,7 +76,7 @@ const CurrentData = () => {
       <div className="financial-data">
 
         <div id="balance-section" className="data-card">
-          <div className="data-card-icon"><Wallet size={28} /></div>
+          <div className="data-card-icon"><Wallet size={20} /></div>
           <div className="card-content">
             <h3>Current Balance</h3>
             <p className="amount">{formatCurrency(totalBalance)}</p>
@@ -88,7 +88,7 @@ const CurrentData = () => {
         </div>
 
         <div id="savings-section" className="data-card">
-          <div className="data-card-icon"><PiggyBank size={28} /></div>
+          <div className="data-card-icon"><PiggyBank size={20} /></div>
           <div className="card-content">
             <h3>Savings</h3>
             <p className="amount">{formatCurrency(savings)}</p>
@@ -100,7 +100,7 @@ const CurrentData = () => {
         </div>
 
         <div id="income-section" className="data-card">
-          <div className="data-card-icon"><TrendingUp size={28} /></div>
+          <div className="data-card-icon"><TrendingUp size={20} /></div>
           <div className="card-content">
             <h3>Income</h3>
             <p className="amount">{income !== 0 ? '+' : ''}{formatCurrency(income)}</p>
@@ -112,7 +112,7 @@ const CurrentData = () => {
         </div>
 
         <div id="expenses-section" className="data-card">
-          <div className="data-card-icon"><TrendingDown size={28} /></div>
+          <div className="data-card-icon"><TrendingDown size={20} /></div>
           <div className="card-content">
             <h3>Expenses</h3>
             <p className="amount">{expenses !== 0 ? '-' : ''}{formatCurrency(expenses)}</p>

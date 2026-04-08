@@ -1,121 +1,127 @@
 import { useNavigate } from 'react-router-dom';
+import { Target, Trophy, ArrowRight, CalendarClock } from 'lucide-react';
 import useApiFetch from '../../hooks/useApiFetch';
 import { useFinancialData } from '../../hooks/useFinancialData';
-import Button from '../Button/Button';
 import './GoalsOverview.css';
 
 const GoalsOverview = () => {
   const navigate = useNavigate();
   const { responseData: goals, loading: goalsLoading } = useApiFetch('/goals', 'GET');
-  const { available, assignedToGoals, loading: financialLoading } = useFinancialData();
+  const { available, assignedToGoals, totalBalance, loading: financialLoading } = useFinancialData();
 
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0
-    }).format(amount);
+  const fmt = (amount) =>
+    new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(amount);
+
+  const pct = (current, target) => {
+    if (!target || target <= 0) return 0;
+    return Math.min((current / target) * 100, 100);
   };
 
-  const calculateCompletionPercentage = (currentAmount, targetAmount) => {
-    if (!targetAmount || targetAmount <= 0) return 0;
-    return Math.min((currentAmount / targetAmount) * 100, 100);
-  };
-
-  const calculateMonthsRemaining = (completionDate) => {
-    if (!completionDate) return 0;
-    const today = new Date();
-    const goalDate = new Date(completionDate);
-    const diffTime = goalDate - today;
-    const diffMonths = Math.ceil(diffTime / (1000 * 60 * 60 * 24 * 30));
-    return Math.max(0, diffMonths);
+  const monthsLeft = (completionDate) => {
+    if (!completionDate) return null;
+    const diff = Math.ceil((new Date(completionDate) - new Date()) / (1000 * 60 * 60 * 24 * 30));
+    return Math.max(0, diff);
   };
 
   if (goalsLoading || financialLoading) {
-    return (
-      <div className="goals-overview-container">
-        <h2>YOUR GOALS</h2>
-        <p>Loading goals...</p>
-      </div>
-    );
+    return <div className="go-container"><p className="go-loading">Loading...</p></div>;
   }
 
-  const activeGoals = goals?.filter(goal => goal.currentAmount < goal.targetAmount) || [];
-  const completedGoals = goals?.filter(goal => goal.currentAmount >= goal.targetAmount) || [];
-  const goalsToDisplay = activeGoals.slice(0, 3);
+  const allGoals = goals || [];
+  const activeGoals = allGoals.filter(g => (g.currentAmount || 0) < g.targetAmount);
+  const completedGoals = allGoals.filter(g => (g.currentAmount || 0) >= g.targetAmount);
+  const totalAssigned = assignedToGoals || 0;
+  const totalAvailable = available || 0;
+  const assignedPct = (totalAssigned + totalAvailable) > 0
+    ? (totalAssigned / (totalAssigned + totalAvailable)) * 100
+    : 0;
 
   return (
-    <div className="goals-overview-container">
-      <h2>🎯 MY GOALS</h2>
-      
-      <div className="goals-summary">
-        <div className="goals-counts">
-          <div className="goals-count-item">
-            <span className="goal-icon">🎯</span>
-            <span className="active-text">Active Goals</span>
-            <span className="count-badge">[{activeGoals.length}]</span>
-          </div>
-          <div className="goals-count-item completed">
-            <span className="goal-icon">✅</span>
-            <span className="completed-text">Completed Goals</span>
-            <span className="count-badge">[{completedGoals.length}]</span>
-          </div>
+    <div className="go-container">
+      {/* Header */}
+      <div className="go-header">
+        <p className="go-label"><Target size={11} strokeWidth={2.5} /> GOALS OVERVIEW</p>
+        <button className="go-view-all" onClick={() => navigate('/goals')}>
+          View all <ArrowRight size={12} />
+        </button>
+      </div>
+
+      {/* Balance block */}
+      <div className="go-balance-block">
+        <div className="go-balance-main">
+          <p className="go-balance-label">Total balance</p>
+          <p className="go-balance-value">{fmt(totalBalance || 0)}</p>
         </div>
-        
-        <div className="goals-balance">
-          <span className="balance-icon">💰</span>
-          <span className="assigned-amount">{formatCurrency(assignedToGoals)} assigned</span>
-          <span className="separator">•</span>
-          <span className="available-amount">{formatCurrency(available)} unassigned</span>
+        <div className="go-alloc-track">
+          <div className="go-alloc-fill" style={{ width: `${assignedPct}%` }} />
+        </div>
+        <div className="go-balance-sub">
+          <div className="go-sub-card">
+            <p className="go-sub-label">Assigned</p>
+            <p className="go-sub-value">{fmt(totalAssigned)}</p>
+          </div>
+          <div className="go-sub-card go-sub-card--accent">
+            <p className="go-sub-label">Available</p>
+            <p className="go-sub-value go-sub-value--accent">{fmt(totalAvailable)}</p>
+          </div>
         </div>
       </div>
 
-      {goalsToDisplay.length === 0 ? (
-        <div className="no-goals-message">
-          <p>No active goals yet. Start saving for your dreams!</p>
+      {/* Count chips */}
+      <div className="go-counts">
+        <span className="go-count-chip go-count-active">
+          <span className="go-pulse-dot" />
+          {activeGoals.length} active
+        </span>
+        <span className="go-count-chip">
+          <Trophy size={9} strokeWidth={2} />
+          {completedGoals.length} completed
+        </span>
+      </div>
+
+      {/* Goal list */}
+      {activeGoals.length === 0 ? (
+        <div className="go-empty">
+          <Trophy size={24} strokeWidth={1.5} />
+          <p>No active goals</p>
         </div>
       ) : (
-        <div className="goals-preview">
-          {goalsToDisplay.map((goal) => {
-            const percentage = calculateCompletionPercentage(goal.currentAmount || 0, goal.targetAmount);
-            const monthsRemaining = calculateMonthsRemaining(goal.completionDate);
-
-            return (
-              <div key={goal._id} className="goal-card">
-                <div className="goal-card-header">
-                  <span className="goal-name">{goal.goalName}</span>
+        <div className="go-goals-scroll">
+          <div className="go-goals-grid">
+            {activeGoals.map((goal) => {
+              const p = pct(goal.currentAmount || 0, goal.targetAmount);
+              const mo = monthsLeft(goal.completionDate);
+              const radius = 28;
+              const stroke = 3;
+              const nr = radius - stroke;
+              const circ = nr * 2 * Math.PI;
+              const offset = circ - (p / 100) * circ;
+              return (
+                <div key={goal._id} className="go-goal-card">
+                  <svg width={radius * 2} height={radius * 2} className="go-ring-svg">
+                    <circle cx={radius} cy={radius} r={nr} fill="none" stroke="#1e1e1e" strokeWidth={stroke} />
+                    <circle
+                      cx={radius} cy={radius} r={nr} fill="none"
+                      stroke="var(--color-primary)"
+                      strokeWidth={stroke} strokeLinecap="round"
+                      strokeDasharray={`${circ} ${circ}`}
+                      strokeDashoffset={offset}
+                      style={{ transform: 'rotate(-90deg)', transformOrigin: '50% 50%' }}
+                    />
+                    <text x="50%" y="50%" textAnchor="middle" dominantBaseline="central" className="go-ring-text">
+                      {Math.round(p)}%
+                    </text>
+                  </svg>
+                  <span className="go-goal-card-name">{goal.goalName}</span>
+                  {mo !== null && (
+                    <span className="go-goal-card-months"><CalendarClock size={9} /> {mo}mo</span>
+                  )}
                 </div>
-
-                <div className="goal-progress-bar">
-                  <div 
-                    className="goal-progress-fill"
-                    style={{ width: `${percentage}%` }}
-                  />
-                </div>
-                
-                <div className="goal-percentage">
-                  {percentage.toFixed(0)}%
-                </div>
-
-                <div className="goal-amounts">
-                  {formatCurrency(goal.currentAmount || 0)}/{formatCurrency(goal.targetAmount)}
-                </div>
-
-                <div className="goal-time-remaining">
-                  <span className="calendar-icon">📅</span>
-                  <span>{monthsRemaining} {monthsRemaining === 1 ? 'month' : 'months'}</span>
-                </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       )}
-
-      <Button 
-        text="Manage All Goals →"
-        onClick={() => navigate('/goals')}
-      />
     </div>
   );
 };

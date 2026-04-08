@@ -1,130 +1,146 @@
 .expenses-chart-container {
-  background: #1a1a1a;
+  background: #111;
   border-radius: 16px;
-  padding: 24px;
+  padding: 1.5rem 1.5rem 1rem;
   margin: 0;
   flex: 0.6;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
-.recharts-sector {
-  border: none;
-  border-radius: 16px;
+.recharts-surface,
+.recharts-wrapper,
+.recharts-wrapper svg,
+.recharts-wrapper *,
+.recharts-wrapper:focus,
+.recharts-wrapper svg:focus,
+.recharts-wrapper *:focus {
+  outline: none !important;
+}
+
+.expenses-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin-bottom: 0.25rem;
+}
+
+.expenses-period-label {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #555;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.expenses-period-sub {
+  font-size: 0.72rem;
+  color: #444;
+  margin: 0;
 }
 
 .center-total-amount {
-  font-size: 32px;
-  font-weight: 700;
-  fill: white;
-  font-family: "Roboto Mono", monospace;
+  font-family: 'Roboto Mono', monospace;
 }
 
-.chart-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #1a1a1a;
-  margin: 0 0 8px 0;
-  text-align: center;
-  font-family: "Roboto Mono", monospace;
-}
-
-.period-label {
-  font-size: 0.875rem;
-  color: #666;
-  text-align: center;
-  margin: 0 0 24px 0;
-  font-weight: 500;
-}
-
-/* Tooltip personalizado */
+/* Tooltip */
 .expenses-tooltip {
-  background: white;
-  padding: 12px 16px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  border: none;
-  transition: opacity 0.2s ease-out;
-  opacity: 1;
+  background: rgb(28, 29, 33);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
 .tooltip-category {
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   font-weight: 600;
-  color: #1a1a1a;
+  color: #ccc;
   margin: 0 0 4px 0;
 }
 
 .tooltip-amount {
   font-size: 1rem;
   font-weight: 700;
-  color: #0a2f51;
-  margin: 0 0 4px 0;
+  color: #ffffff;
+  margin: 0 0 2px 0;
 }
 
 .tooltip-percentage {
-  font-size: 0.75rem;
-  color: #666;
+  font-size: 0.7rem;
+  color: #555;
   margin: 0;
 }
 
-/* Leyenda personalizada */
-.custom-legend {
+/* Legend */
+.expenses-legend {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-top: 24px;
-  padding: 0 16px;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
 }
 
-.legend-item {
+.expenses-legend-item {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 0.875rem;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }
 
-.legend-color {
-  width: 16px;
-  height: 16px;
-  border-radius: 4px;
+.expenses-legend-item:last-child {
+  border-bottom: none;
+}
+
+.expenses-legend-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
 }
 
-.legend-label {
+.expenses-legend-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
   flex: 1;
-  color: #333;
+  min-width: 0;
+}
+
+.expenses-legend-name {
+  font-size: 0.82rem;
   font-weight: 500;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.legend-value {
-  color: #666;
+.expenses-legend-pct {
+  font-size: 0.68rem;
+  color: var(--color-text-tertiary);
+}
+
+.expenses-legend-value {
+  font-size: 0.82rem;
   font-weight: 600;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
 }
 
-/* Mensaje de error y sin datos */
 .error-message,
 .no-data-message {
   text-align: center;
-  color: #666;
+  color: #555;
   padding: 40px;
   font-size: 0.875rem;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .expenses-chart-container {
-    padding: 16px;
-  }
-
-  .chart-title {
-    font-size: 1.1rem;
-  }
-
-  .custom-legend {
-    padding: 0 8px;
-  }
-
-  .legend-item {
-    font-size: 0.8rem;
-  }
 }
