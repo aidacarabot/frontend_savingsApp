@@ -14,8 +14,7 @@ const ProfilePictureEdit = () => {
         <div className="profile-pic">
           <img src={imageSrc} id="output" alt="Profile" />
           <label className="-label" htmlFor="file">
-            <span className="icon-camera"><FaCamera /></span>
-            <span>Change Image</span>
+            <FaCamera className="icon-camera" />
           </label>
           <input id="file" type="file" onChange={handleImageChange} />
         </div>

@@ -3,6 +3,6 @@
   width: 100px;
   height: 100px;
   box-shadow: var(--shadow);
-  border-radius: var(--radius);
+  border-radius: 50%;
   border: 3px solid var(--color-primary);
 }

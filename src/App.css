@@ -33,6 +33,7 @@ button:focus {
   --color-hover: #343638;
   --color-shadow: rgba(0, 0, 0, 0.3);
   --color-otro: #a1a3ac;
+  --color-danger: #ff4757;
 
   /* Fonts */
   --font-primary: 'Google Sans', sans-serif;
