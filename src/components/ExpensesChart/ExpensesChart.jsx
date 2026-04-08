@@ -28,10 +28,17 @@ const ExpensesChart = () => {
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
+      const color = getColor(data.name);
+      const IconComp = getIcon(data.name);
       return (
         <div className="expenses-tooltip">
-          <p className="tooltip-category">{data.name}</p>
-          <p className="tooltip-amount">{formatCurrency(data.value)}</p>
+          <p className="tooltip-category">
+            <span className="tooltip-icon" style={{ color }}>
+              <IconComp size={13} strokeWidth={2} />
+            </span>
+            {data.name}
+          </p>
+          <p className="tooltip-amount" style={{ color }}>{formatCurrency(data.value)}</p>
           <p className="tooltip-percentage">{data.percentage}% of total</p>
         </div>
       );
@@ -46,7 +53,7 @@ const ExpensesChart = () => {
         {formatCurrency(totalExpenses)}
       </text>
       <text x={cx} y={cy + 18} textAnchor="middle" dominantBaseline="middle"
-        fontSize="12" fontWeight="500" fill="#555">
+        fontSize="12" fontWeight="500" fill="#555" className="center-total-label">
         Total expenses
       </text>
     </g>
@@ -58,7 +65,7 @@ const ExpensesChart = () => {
   if (!expensesData || expensesData.length === 0) {
     return (
       <div className="expenses-chart-container">
-        <p className="expenses-period-label"><ChartPie size={13} /> CATEGORY BREAKDOWN</p>
+        <p className="expenses-period-label">CATEGORY BREAKDOWN</p>
         <p className="no-data-message">No expenses for this period</p>
       </div>
     );
@@ -67,7 +74,7 @@ const ExpensesChart = () => {
   return (
     <div className="expenses-chart-container">
       <div className="expenses-header">
-        <p className="expenses-period-label"><ChartPie size={13} /> CATEGORY BREAKDOWN</p>
+        <p className="expenses-period-label">CATEGORY BREAKDOWN</p>
         <p className="expenses-period-sub">{periodLabel}</p>
       </div>
 

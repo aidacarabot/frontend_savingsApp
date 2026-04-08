@@ -1,5 +1,5 @@
 .expenses-chart-container {
-  background: #111;
+  background: var(--color-pro);
   border-radius: 16px;
   padding: 1.5rem 1.5rem 1rem;
   margin: 0;
@@ -31,51 +31,73 @@
   display: flex;
   align-items: center;
   gap: 0.35rem;
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: #555;
+  color: var(--color-text-secondary);
+  font-family: var(--font-tertiary);
   letter-spacing: 1.2px;
   text-transform: uppercase;
   margin: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
 }
 
 .expenses-period-sub {
   font-size: 0.72rem;
-  color: #444;
+  color: var(--color-text-muted);
   margin: 0;
+  font-family: var(--font-tertiary);
 }
 
 .center-total-amount {
-  font-family: 'Roboto Mono', monospace;
+  font-family: var(--font-tertiary);
+  font-weight: 500;
+}
+
+.center-total-label {
+  font-family: var(--font-secondary);
+  font-weight: 500;
+  fill: var(--color-text-secondary);
 }
 
 /* Tooltip */
 .expenses-tooltip {
-  background: rgb(28, 29, 33);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 10px;
+  background: var(--color-pro);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
   padding: 0.75rem 1rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
 }
 
 .tooltip-category {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
   font-size: 0.75rem;
   font-weight: 600;
-  color: #ccc;
-  margin: 0 0 4px 0;
+  color: var(--color-text-secondary);
+  font-family: var(--font-primary);
+  margin: 0 0 6px 0;
+}
+
+.tooltip-icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
 }
 
 .tooltip-amount {
   font-size: 1rem;
-  font-weight: 700;
-  color: #ffffff;
+  font-weight: 500;
   margin: 0 0 2px 0;
+  font-family: var(--font-tertiary);
 }
 
 .tooltip-percentage {
   font-size: 0.7rem;
-  color: #555;
+  color: var(--color-input-icon);
   margin: 0;
+  font-family: var(--font-secondary);
 }
 
 /* Legend */
@@ -132,7 +154,7 @@
 
 .expenses-legend-value {
   font-size: 0.82rem;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--color-text-secondary);
   white-space: nowrap;
 }
@@ -140,7 +162,7 @@
 .error-message,
 .no-data-message {
   text-align: center;
-  color: #555;
+  color: var(--color-text-secondary);
   padding: 40px;
   font-size: 0.875rem;
 }
