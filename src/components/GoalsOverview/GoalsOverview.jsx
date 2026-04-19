@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { Trophy, ArrowRight, CalendarClock } from 'lucide-react';
 import useApiFetch from '../../hooks/useApiFetch';
 import { useFinancialData } from '../../hooks/useFinancialData';
+import Loader from '../Loader/Loader';
 import './GoalsOverview.css';
 
 const GoalsOverview = () => {
@@ -24,7 +25,7 @@ const GoalsOverview = () => {
   };
 
   if (goalsLoading || financialLoading) {
-    return <div className="go-container"><p className="go-loading">Loading...</p></div>;
+    return <div className="go-container"><Loader /></div>;
   }
 
   const allGoals = goals || [];

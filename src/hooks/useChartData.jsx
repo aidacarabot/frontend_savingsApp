@@ -188,8 +188,8 @@ export const useChartData = () => {
     return {
       current: currentData,
       xAxisLabel,
-      loading: false,
-      error: null,
+      loading,
+      error,
     };
   }, [userData, viewBy, loading, error]);
 

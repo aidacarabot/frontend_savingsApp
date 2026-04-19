@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useFinancialData } from '../../hooks/useFinancialData';
 import useApiFetch from '../../hooks/useApiFetch';
+import Loader from '../Loader/Loader';
 import './GoalsDistribution.css';
 
 const GoalsDistribution = ({ refreshTrigger }) => {
@@ -35,7 +36,7 @@ const GoalsDistribution = ({ refreshTrigger }) => {
   if ((loading || goalsLoading) && !goals) {
     return (
       <div className="gd-card">
-        <div className="gd-loading">Loading...</div>
+        <Loader />
       </div>
     );
   }

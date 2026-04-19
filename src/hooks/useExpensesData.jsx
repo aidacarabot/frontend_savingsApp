@@ -78,8 +78,8 @@ export const useExpensesData = () => {
       expensesData: chartData,
       totalExpenses,
       periodLabel,
-      loading: false,
-      error: null
+      loading,
+      error
     };
   }, [userData, viewBy, loading, error]);
 

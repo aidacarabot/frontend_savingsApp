@@ -5,6 +5,7 @@ import useApiFetch from '../../hooks/useApiFetch';
 import { useFinancialData } from '../../hooks/useFinancialData';
 import DropDown from '../DropDown/DropDown';
 import AreYouSure from '../AreYouSure/AreYouSure';
+import Loader from '../Loader/Loader';
 import { fetchData } from '../../utils/api/fetchData';
 import './GoalBox.css';
 
@@ -204,7 +205,7 @@ const GoalBox = ({ onGoalUpdated, onEditGoal, refreshTrigger }) => {
     if (goal && onEditGoal) onEditGoal(goal);
   };
 
-  if (loading && !displayGoals) return <div className="gb-status">Loading goals...</div>;
+  if (loading && !displayGoals) return <Loader />;
   if (error && !displayGoals) return <div className="gb-status gb-error">Error loading goals</div>;
   if (!displayGoals || displayGoals.length === 0) return (
     <div className="gb-empty">

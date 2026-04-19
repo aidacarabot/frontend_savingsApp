@@ -198,8 +198,8 @@ export const useFinancialData = () => {
       savingsComparison,
       incomeComparison,
       expensesComparison,
-      loading: false,
-      error: null
+      loading,
+      error
     };
   }, [userData, viewBy, loading, error]);
 
