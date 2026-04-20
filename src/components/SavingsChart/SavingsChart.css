@@ -1,7 +1,7 @@
 .savings-chart-container {
   padding: 1.5rem 1.5rem 1rem;
   background: var(--color-pro);
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   margin: 0;
   flex: 1;
   min-width: 0;
@@ -18,8 +18,8 @@
 }
 
 .chart-period-label {
-  font-size: 0.8rem;
-  font-weight: 600;
+  font-size: var(--fsr-80);
+  font-weight: var(--fw-semibold);
   color: var(--color-text-secondary);
   font-family: var(--font-tertiary);
   letter-spacing: 1.2px;
@@ -28,7 +28,7 @@
 
 .chart-total {
   font-size: 2rem;
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
   color: var(--color-primary);
   margin: 0;
   letter-spacing: -1px;
@@ -45,7 +45,7 @@
 .legend-dot-current {
   width: 8px;
   height: 8px;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   background: var(--color-primary);
   flex-shrink: 0;
 }
@@ -53,15 +53,15 @@
 .legend-dot-previous {
   width: 8px;
   height: 8px;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   background: var(--color-text-muted);
   flex-shrink: 0;
 }
 
 .legend-name {
-  font-size: 0.72rem;
+  font-size: var(--fsr-72);
   color: var(--color-primary);
-  font-weight: 500;
+  font-weight: var(--fw-medium);
   margin-right: 1rem;
 }
 
@@ -70,20 +70,20 @@
 }
 
 .custom-tooltip {
-  background: rgb(28, 29, 33);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 10px;
+  background: var(--color-surface-tooltip);
+  border: 1px solid var(--color-white-08);
+  border-radius: var(--radius-base);
   padding: 0.85rem 1rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 8px 24px var(--color-shadow-40);
   min-width: 190px;
 }
 
 .tooltip-title {
-  font-weight: 600;
-  color: #ccc;
+  font-weight: var(--fw-semibold);
+  color: var(--color-text-dim);
   margin-bottom: 0.6rem;
-  font-size: 0.8rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  font-size: var(--fsr-80);
+  border-bottom: 1px solid var(--color-white-07);
   padding-bottom: 0.5rem;
 }
 
@@ -97,12 +97,12 @@
   text-transform: uppercase;
   letter-spacing: 0.8px;
   margin-bottom: 0.2rem;
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
 }
 
 .tooltip-value {
   font-size: 1.1rem;
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   margin: 0.15rem 0;
   color: var(--color-text-secondary);
 }
@@ -113,19 +113,19 @@
 
 .tooltip-value.previous {
   color: var(--color-text-muted);
-  font-size: 0.9rem;
+  font-size: var(--fsr-90);
 }
 
 .tooltip-detail {
   display: flex;
   justify-content: space-between;
-  font-size: 0.8rem;
+  font-size: var(--fsr-80);
   margin: 0.3rem 0;
   color: var(--color-text-tertiary);
 }
 
 .tooltip-detail span {
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
   color: var(--color-text-secondary);
 }
 
@@ -143,27 +143,27 @@
 
 .tooltip-divider {
   height: 1px;
-  background: rgba(255, 255, 255, 0.07);
+  background: var(--color-white-07);
   margin: 0.5rem 0;
 }
 
 .no-data-message {
   text-align: center;
-  color: #444;
+  color: var(--color-text-empty);
   padding: 3rem;
   font-size: 1rem;
 }
 
 .error-message {
-  color: #e05260;
+  color: var(--color-danger-nav);
   text-align: center;
   padding: 2rem;
-  font-weight: 500;
+  font-weight: var(--fw-medium);
 }
 
 .recharts-cartesian-grid-horizontal line,
 .recharts-cartesian-grid-vertical line {
-  stroke: rgba(255, 255, 255, 0.05);
+  stroke: var(--color-white-05);
 }
 
 .recharts-wrapper,
@@ -190,7 +190,18 @@
 .recharts-legend-item {
   display: flex !important;
   align-items: center !important;
-  font-size: 0.875rem !important;
+  font-size: var(--fsr-875) !important;
   color: var(--color-text-secondary) !important;
-  font-weight: 500 !important;
+  font-weight: var(--fw-medium) !important;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .savings-chart-container {
+    padding: 1rem 1rem 0.75rem;
+  }
+
+  .chart-total {
+    font-size: 1.5rem;
+  }
 }

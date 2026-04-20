@@ -6,16 +6,16 @@
 .title-section {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: var(--sp-4);
 }
 
 .title-icon {
-  font-size: 40px;
+  font-size: var(--fs-40);
 }
 
 .title-section h1 {
-  font-size: 34px;
-  font-weight: 800;
+  font-size: var(--fs-34);
+  font-weight: var(--fw-extrabold);
   color: var(--color-text-primary);
   font-family: var(--font-tertiary);
   margin: 0;
@@ -26,16 +26,16 @@
 /* Responsive */
 @media (max-width: 768px) {
   .title-section h1 {
-    font-size: 28px;
+    font-size: var(--fs-28);
   }
 }
 
 @media (max-width: 480px) {
   .title-section h1 {
-    font-size: 24px;
+    font-size: var(--fs-24);
   }
 
   .title-icon {
-    font-size: 28px;
+    font-size: var(--fs-28);
   }
 }

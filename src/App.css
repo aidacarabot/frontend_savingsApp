@@ -16,43 +16,216 @@ button:focus {
   outline: none;
 }
 
-/* Variables globales de colores */
+/* Variables globales */
 #root {
+  /* ─── Colores: fondos / superficies ─── */
   --color-navbar-bg: #000000;
+  --color-surface-nav: #0c0c0e;
+  --color-surface-dark: #101113;
+  --color-surface-black: #0a0a0a;
+  --color-surface-select: #0f0f0f;
+  --color-surface-tooltip: rgb(28, 29, 33);
+  --color-surface-input: rgba(25, 25, 25, 0.6);
   --color-pro: #191919;
+  --color-card-bg: #1a1c22;
   --color-page-bg: #2a2c32;
+  --color-hover: #343638;
+  --color-overlay: rgba(0, 0, 0, 0.7);
+  --color-overlay-dark: rgba(0, 0, 0, 0.75);
+  --color-overlay-soft: rgba(0, 0, 0, 0.65);
+
+  /* ─── Colores: primario ─── */
   --color-primary: #2bebc8;
-  --color-primary-10: rgba(43, 235, 200, 0.1);
+  --color-primary-light: #34f5d4;
+  --color-primary-hover: #24d4b4;
   --color-primary-03: rgba(43, 235, 200, 0.03);
+  --color-primary-04: rgba(43, 235, 200, 0.04);
+  --color-primary-06: rgba(43, 235, 200, 0.06);
+  --color-primary-08: rgba(43, 235, 200, 0.08);
+  --color-primary-10: rgba(43, 235, 200, 0.1);
+  --color-primary-12: rgba(43, 235, 200, 0.12);
+  --color-primary-15: rgba(43, 235, 200, 0.15);
+  --color-primary-18: rgba(43, 235, 200, 0.18);
+  --color-primary-20: rgba(43, 235, 200, 0.2);
+  --color-primary-25: rgba(43, 235, 200, 0.25);
+  --color-primary-30: rgba(43, 235, 200, 0.3);
+  --color-primary-35: rgba(43, 235, 200, 0.35);
+  --color-primary-40: rgba(43, 235, 200, 0.4);
+  --color-primary-45: rgba(43, 235, 200, 0.45);
+  --color-primary-50: rgba(43, 235, 200, 0.5);
+  --color-primary-90: rgba(43, 235, 200, 0.9);
+
+  /* ─── Colores: texto ─── */
   --color-text-primary: #ffffff;
   --color-text-secondary: #e0e0e0;
   --color-text-tertiary: #6b7280;
-  --color-input-icon: #9ca3af;
   --color-text-muted: #999999;
-  --color-border: #3a3c41;
-  --color-hover: #343638;
-  --color-shadow: rgba(0, 0, 0, 0.3);
-  --color-otro: #a1a3ac;
-  --color-danger: #ff4757;
+  --color-text-accent: #a1a3ac;
+  --color-text-dim: #cccccc;
+  --color-text-empty: #444444;
+  --color-input-icon: #9ca3af;
 
-  /* Fonts */
+  /* ─── Colores: peligro / estado negativo ─── */
+  --color-danger: #ff4757;
+  --color-danger-muted: #ff6b6b;
+  --color-danger-nav: #e05050;
+  --color-error: #f44336;
+
+  /* ─── Colores: éxito / ingreso ─── */
+  --color-success: #00d09c;
+  --color-success-dark: #00b386;
+  --color-income: #66bb6a;
+  --color-expense-soft: #ef5350;
+
+  /* ─── Colores: bordes, sombras y UI ─── */
+  --color-border: #3a3c41;
+  --color-border-subtle: rgba(255, 255, 255, 0.04);
+  --color-scrollbar-thumb: var(--color-border);
+  --color-shadow: rgba(0, 0, 0, 0.3);
+  --color-dropdown-hover: #374151;
+  --color-link-default: #646cff;
+  --color-link-hover: #535bf2;
+
+  /* ─── Colores: blanco (overlays/opacidades) ─── */
+  --color-white-03: rgba(255, 255, 255, 0.03);
+  --color-white-05: rgba(255, 255, 255, 0.05);
+  --color-white-06: rgba(255, 255, 255, 0.06);
+  --color-white-07: rgba(255, 255, 255, 0.07);
+  --color-white-08: rgba(255, 255, 255, 0.08);
+  --color-white-10: rgba(255, 255, 255, 0.1);
+  --color-white-12: rgba(255, 255, 255, 0.12);
+  --color-white-20: rgba(255, 255, 255, 0.2);
+  --color-white-30: rgba(255, 255, 255, 0.3);
+  --color-white-35: rgba(255, 255, 255, 0.35);
+  --color-white-80: rgba(255, 255, 255, 0.8);
+
+  /* ─── Colores: peligro (alphas) ─── */
+  --color-danger-15: rgba(255, 71, 87, 0.15);
+  --color-danger-25: rgba(255, 71, 87, 0.25);
+  --color-danger-35: rgba(255, 71, 87, 0.35);
+  --color-danger-muted-08: rgba(255, 107, 107, 0.08);
+  --color-danger-muted-15: rgba(255, 107, 107, 0.15);
+  --color-danger-muted-20: rgba(255, 107, 107, 0.2);
+  --color-danger-muted-25: rgba(255, 107, 107, 0.25);
+  --color-danger-muted-35: rgba(255, 107, 107, 0.35);
+  --color-danger-muted-50: rgba(255, 107, 107, 0.5);
+
+  /* ─── Colores: logout/rojo coral (alphas) ─── */
+  --color-logout-08: rgba(231, 76, 60, 0.08);
+  --color-logout-15: rgba(231, 76, 60, 0.15);
+  --color-logout-16: rgba(231, 76, 60, 0.16);
+  --color-logout-30: rgba(231, 76, 60, 0.3);
+
+  /* ─── Colores: ingresos/gastos (alphas) ─── */
+  --color-income-0: rgba(102, 187, 106, 0);
+  --color-income-30: rgba(102, 187, 106, 0.3);
+  --color-income-40: rgba(102, 187, 106, 0.4);
+  --color-expense-soft-10: rgba(239, 83, 80, 0.1);
+  --color-expense-soft-15: rgba(239, 83, 80, 0.15);
+  --color-expense-soft-40: rgba(239, 83, 80, 0.4);
+  --color-expense-soft-50: rgba(239, 83, 80, 0.5);
+
+  /* ─── Colores: superficies oscuras (alphas) ─── */
+  --color-surface-dark-50: rgba(16, 17, 19, 0.5);
+  --color-surface-gradient-start: rgba(18, 18, 18, 0.98);
+  --color-surface-gradient-end: rgba(12, 12, 12, 0.95);
+
+  /* ─── Colores: sombras negras (alphas) ─── */
+  --color-shadow-12: rgba(0, 0, 0, 0.12);
+  --color-shadow-40: rgba(0, 0, 0, 0.4);
+  --color-shadow-50: rgba(0, 0, 0, 0.5);
+  --color-shadow-70: rgba(0, 0, 0, 0.7);
+  --color-shadow-80: rgba(0, 0, 0, 0.8);
+
+  /* ─── Tipografía: familias ─── */
   --font-primary: 'Google Sans', sans-serif;
   --font-secondary: 'Tomorrow', sans-serif;
   --font-tertiary: 'Roboto Mono', monospace;
 
+  /* ─── Tipografía: tamaños ─── */
+  --fs-10: 10px;
+  --fs-11: 11px;
+  --fs-12: 12px;
+  --fs-13: 13px;
+  --fs-14: 14px;
+  --fs-15: 15px;
+  --fs-16: 16px;
+  --fs-17: 17px;
+  --fs-18: 18px;
+  --fs-20: 20px;
+  --fs-22: 22px;
+  --fs-24: 24px;
+  --fs-26: 26px;
+  --fs-28: 28px;
+  --fs-32: 32px;
+  --fs-34: 34px;
+  --fs-36: 36px;
+  --fs-40: 40px;
 
-  /* Transiciones */
-  --transition-smooth: all 0.3s ease;
+  /* ─── Tipografía: tamaños rem (relativos) ─── */
+  --fsr-62: 0.62rem;
+  --fsr-68: 0.68rem;
+  --fsr-70: 0.7rem;
+  --fsr-72: 0.72rem;
+  --fsr-75: 0.75rem;
+  --fsr-80: 0.8rem;
+  --fsr-82: 0.82rem;
+  --fsr-8125: 0.8125rem;
+  --fsr-875: 0.875rem;
+  --fsr-90: 0.9rem;
+
+  /* ─── Tipografía: pesos ─── */
+  --fw-light: 300;
+  --fw-normal: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fw-extrabold: 800;
+
+  /* ─── Transiciones ─── */
   --transition-fast: all 0.2s ease;
+  --transition-smooth: all 0.3s ease;
+  --transition-bounce: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 
-  /* Sombras */
+  /* ─── Sombras: neutras ─── */
   --shadow-sm: 0 2px 8px var(--color-shadow);
   --shadow-md: 0 4px 16px var(--color-shadow);
   --shadow-lg: 0 6px 20px var(--color-shadow);
+  --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.6);
 
-  /* Border radius */
+  /* ─── Sombras: primario ─── */
+  --shadow-primary-sm: 0 4px 16px rgba(43, 235, 200, 0.35);
+  --shadow-primary-md: 0 8px 24px rgba(43, 235, 200, 0.3);
+
+  /* ─── Espaciado ─── */
+  --sp-1: 4px;
+  --sp-1-5: 6px;
+  --sp-2: 8px;
+  --sp-2-5: 10px;
+  --sp-3: 12px;
+  --sp-3-5: 14px;
+  --sp-4: 16px;
+  --sp-4-5: 18px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-7: 28px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-11: 44px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+
+  /* ─── Bordes (radius) ─── */
+  --radius-xs: 4px;
+  --radius-6: 6px;
   --radius-sm: 8px;
+  --radius-base: 10px;
   --radius-md: 12px;
+  --radius-14: 14px;
   --radius-lg: 16px;
+  --radius-card: 18px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+  --radius-pill: 999px;
   --radius-full: 50%;
 }

@@ -10,6 +10,7 @@ import { ChessQueen } from 'lucide-react';
 const Goals = () => {
   const [showGoalForm, setShowGoalForm] = useState(false);
   const [refreshGoals, setRefreshGoals] = useState(0);
+  const [refreshDistribution, setRefreshDistribution] = useState(0);
   const [editingGoal, setEditingGoal] = useState(null);
 
   const handleAddNewGoal = () => {
@@ -26,10 +27,11 @@ const Goals = () => {
     setShowGoalForm(false);
     setEditingGoal(null);
     setRefreshGoals((prev) => prev + 1);
+    setRefreshDistribution((prev) => prev + 1);
   };
 
   const handleGoalUpdated = () => {
-    setRefreshGoals((prev) => prev + 1);
+    setRefreshDistribution((prev) => prev + 1);
   };
 
   const handleEditGoal = (goal) => {
@@ -47,7 +49,7 @@ const Goals = () => {
           </button>
         </div>
 
-        <GoalsDistribution refreshTrigger={refreshGoals} />
+        <GoalsDistribution refreshTrigger={refreshDistribution} />
 
         <div className="goals-section-label">Your Goals</div>
 

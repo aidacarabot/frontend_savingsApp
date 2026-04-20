@@ -53,10 +53,12 @@ const Transactions = () => {
         <div className="transactions-actions">
           <Button 
             text={
-              <>
-                {showFilters ? <SearchX size={18} /> : <Search size={18} />}
-                <span>{showFilters ? 'Hide' : 'Filter'}</span>
-              </>
+              <span className="transactions-filter-content">
+                <span className="transactions-filter-icon" aria-hidden="true">
+                  {showFilters ? <SearchX size={18} /> : <Search size={18} />}
+                </span>
+                <span className="transactions-filter-label">{showFilters ? 'Hide' : 'Filter'}</span>
+              </span>
             }
             onClick={toggleFilters}
             className="transactions-filter-toggle"

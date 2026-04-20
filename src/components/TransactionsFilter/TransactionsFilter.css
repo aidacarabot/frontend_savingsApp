@@ -1,26 +1,14 @@
 .transactions-filter {
-  background: #2a2c32;
+  background: var(--color-page-bg);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  padding: 24px;
+  padding: var(--sp-6);
   box-shadow: var(--shadow-sm);
-  margin-top: 12px;
-  margin-bottom: 12px;
+  margin-top: var(--sp-3);
+  margin-bottom: var(--sp-3);
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  animation: slideDown 0.2s ease;
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  gap: var(--sp-5);
 }
 
 .filter-header {
@@ -31,12 +19,12 @@
 .filter-section {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--sp-3);
 }
 
 .filter-section-title {
-  font-size: 15px;
-  font-weight: 700;
+  font-size: var(--fs-15);
+  font-weight: var(--fw-bold);
   color: var(--color-primary);
   margin: 0;
   text-transform: uppercase;
@@ -45,19 +33,19 @@
 
 .filter-row {
   display: flex;
-  gap: 16px;
+  gap: var(--sp-4);
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
 }
 
 .filter-row label {
-  font-size: 14px;
-  font-weight: 600;
-  color: #e0e0e0;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-semibold);
+  color: var(--color-text-secondary);
   min-width: 50px;
   text-align: right;
-  font-family: 'Roboto Mono', monospace;
+  font-family: var(--font-tertiary);
 }
 
 /* Specific classes for filter inputs */
@@ -69,24 +57,24 @@
   padding: 12px 14px;
   border: 1.5px solid var(--color-border);
   border-radius: var(--radius-md);
-  font-size: 14px;
-  font-weight: 500;
-  color: #e0e0e0;
-  background: #000000;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-medium);
+  color: var(--color-text-secondary);
+  background: var(--color-navbar-bg);
   transition: var(--transition-fast);
   cursor: pointer;
   text-align: center;
-  font-family: 'Google Sans', 'Roboto', sans-serif;
+  font-family: var(--font-primary);
 }
 
 .filter-date-input {
   width: 180px;
-  font-family: 'Roboto Mono', monospace;
+  font-family: var(--font-tertiary);
 }
 
 .filter-date-input {
   width: 180px;
-  font-family: 'Roboto Mono', monospace;
+  font-family: var(--font-tertiary);
 }
 
 .filter-select {
@@ -109,13 +97,13 @@
 }
 
 .filter-input::placeholder {
-  color: #e0e0e0;
-  font-weight: 500;
+  color: var(--color-text-secondary);
+  font-weight: var(--fw-medium);
 }
 
 .price-row {
   display: flex;
-  gap: 20px;
+  gap: var(--sp-5);
   align-items: center;
   justify-content: center;
 }
@@ -125,7 +113,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: var(--sp-3);
   flex: 0 1 auto;
 }
 
@@ -151,8 +139,8 @@
   left: 14px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 14px;
-  font-weight: 700;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-bold);
   color: var(--color-primary);
   pointer-events: none;
   z-index: 10;
@@ -162,7 +150,7 @@
   width: 100%;
   padding-left: 38px !important;
   padding-right: 14px !important;
-  color: #e0e0e0;
+  color: var(--color-text-secondary);
   text-align: left !important;
   position: relative;
   z-index: 1;
@@ -180,7 +168,7 @@
   .filter-row {
     flex-direction: column;
     align-items: stretch;
-    gap: 10px;
+    gap: var(--sp-2-5);
   }
 
   .filter-row label {
@@ -197,7 +185,7 @@
 
   .price-row {
     flex-direction: column;
-    gap: 12px;
+    gap: var(--sp-3);
     align-items: stretch;
   }
 

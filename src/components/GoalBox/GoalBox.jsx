@@ -82,6 +82,22 @@ const getGoalIcon = (percentage, isCompleted) => {
   return Laugh;
 };
 
+const getNextValidCompletionDate = (completionDate) => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const parsedDate = completionDate ? new Date(completionDate) : null;
+  const hasValidDate = parsedDate && !Number.isNaN(parsedDate.getTime());
+
+  if (hasValidDate && parsedDate > today) {
+    return parsedDate.toISOString().split('T')[0];
+  }
+
+  const fallbackDate = new Date(today);
+  fallbackDate.setDate(fallbackDate.getDate() + 1);
+  return fallbackDate.toISOString().split('T')[0];
+};
+
 const GoalBox = ({ onGoalUpdated, onEditGoal, refreshTrigger }) => {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [goalToDelete, setGoalToDelete] = useState(null);
@@ -123,6 +139,28 @@ const GoalBox = ({ onGoalUpdated, onEditGoal, refreshTrigger }) => {
     return Math.min((currentAmount / targetAmount) * 100, 100);
   };
 
+  const updateGoalAmount = async (goal, newAmount) => {
+    try {
+      await fetchData(`/goals/${goal._id}`, 'PUT', { currentAmount: newAmount });
+      return null;
+    } catch (error) {
+      const hasCompletionDateValidationError =
+        typeof error?.error === 'string' && error.error.includes('completionDate');
+
+      if (!hasCompletionDateValidationError) {
+        throw error;
+      }
+
+      const adjustedCompletionDate = getNextValidCompletionDate(goal.completionDate);
+      await fetchData(`/goals/${goal._id}`, 'PUT', {
+        currentAmount: newAmount,
+        completionDate: adjustedCompletionDate,
+      });
+
+      return adjustedCompletionDate;
+    }
+  };
+
   const formatCurrency = (amount) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -147,7 +185,12 @@ const GoalBox = ({ onGoalUpdated, onEditGoal, refreshTrigger }) => {
         g._id === goalId ? { ...g, currentAmount: newAmount } : g
       ));
       setAddAmounts(prev => ({ ...prev, [goalId]: '' }));
-      await fetchData(`/goals/${goalId}`, 'PUT', { currentAmount: newAmount });
+      const adjustedCompletionDate = await updateGoalAmount(goal, newAmount);
+      if (adjustedCompletionDate) {
+        setLocalGoals(prev => prev?.map(g =>
+          g._id === goalId ? { ...g, completionDate: adjustedCompletionDate } : g
+        ));
+      }
       if (justCompleted) fireConfetti();
       refetchFinancial();
       if (onGoalUpdated) onGoalUpdated();
@@ -166,7 +209,12 @@ const GoalBox = ({ onGoalUpdated, onEditGoal, refreshTrigger }) => {
         g._id === goalId ? { ...g, currentAmount: newAmount } : g
       ));
       setRemoveAmounts(prev => ({ ...prev, [goalId]: '' }));
-      await fetchData(`/goals/${goalId}`, 'PUT', { currentAmount: newAmount });
+      const adjustedCompletionDate = await updateGoalAmount(goal, newAmount);
+      if (adjustedCompletionDate) {
+        setLocalGoals(prev => prev?.map(g =>
+          g._id === goalId ? { ...g, completionDate: adjustedCompletionDate } : g
+        ));
+      }
       refetchFinancial();
       if (onGoalUpdated) onGoalUpdated();
     } catch (err) {

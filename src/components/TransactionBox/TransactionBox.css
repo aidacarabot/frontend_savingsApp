@@ -1,14 +1,14 @@
 .transaction-box {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  margin-top: 20px;
+  gap: var(--sp-5);
+  margin-top: var(--sp-5);
   max-height: calc(100vh - 280px);
   overflow-y: auto;
   overflow-x: hidden;
-  padding-right: 8px;
+  padding-right: var(--sp-2);
   scrollbar-width: thin;
-  scrollbar-color: rgba(43, 235, 200, 0.3) rgba(16, 17, 19, 0.5);
+  scrollbar-color: var(--color-primary-30) var(--color-surface-dark-50);
 }
 
 .transaction-box::-webkit-scrollbar {
@@ -16,18 +16,18 @@
 }
 
 .transaction-box::-webkit-scrollbar-track {
-  background: rgba(16, 17, 19, 0.5);
-  border-radius: 4px;
+  background: var(--color-surface-dark-50);
+  border-radius: var(--radius-xs);
 }
 
 .transaction-box::-webkit-scrollbar-thumb {
-  background: rgba(43, 235, 200, 0.3);
-  border-radius: 4px;
+  background: var(--color-primary-30);
+  border-radius: var(--radius-xs);
   transition: background 0.3s ease;
 }
 
 .transaction-box::-webkit-scrollbar-thumb:hover {
-  background: rgba(43, 235, 200, 0.5);
+  background: var(--color-primary-50);
 }
 
 .transaction-group {
@@ -38,31 +38,31 @@
 
 .transaction-date-header {
   font-family: var(--font-primary);
-  font-size: 14px;
-  font-weight: 800;
-  color: #a1a3ac;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-extrabold);
+  color: var(--color-text-accent);
   letter-spacing: 0.3px;
   padding: 8px 4px;
-  margin-bottom: 12px;
-  margin-top: 8px;
+  margin-bottom: var(--sp-3);
+  margin-top: var(--sp-2);
 }
 
 .transaction-item {
-  background: #101113;
-  border-radius: 10px;
+  background: var(--color-surface-dark);
+  border-radius: var(--radius-base);
   display: flex;
   align-items: center;
   padding: 14px 16px;
-  gap: 8px;
-  margin-bottom: 8px;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-2);
 }
 
 .transaction-icon-wrapper {
   width: 48px;
   height: 48px;
   min-width: 48px;
-  border-radius: 12px;
-  background: #000000;
+  border-radius: var(--radius-md);
+  background: var(--color-navbar-bg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -72,7 +72,7 @@
 .transaction-icon-circle {
   width: 32px;
   height: 32px;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -81,7 +81,7 @@
 .transaction-icon {
   width: 18px;
   height: 18px;
-  color: #000000;
+  color: var(--color-navbar-bg);
   stroke-width: 2.5;
 }
 
@@ -96,9 +96,9 @@
 
 .transaction-name {
   font-family: var(--font-primary);
-  font-size: 16px;
-  font-weight: 600;
-  color: #e5e7eb;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-semibold);
+  color: var(--color-text-secondary);
   margin: 0;
   letter-spacing: -0.3px;
   line-height: 1.4;
@@ -123,8 +123,8 @@
 
 .transaction-category {
   font-family: var(--font-primary);
-  font-size: 12px;
-  font-weight: 600;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
   margin: 0;
   line-height: 1.3;
   white-space: nowrap;
@@ -135,20 +135,20 @@
 }
 
 .category-expense {
-  color: #a1a3ac;
+  color: var(--color-text-accent);
 }
 
 .transaction-right {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--sp-3);
   justify-content: flex-end;
   flex-shrink: 0;
 }
 
 .income-amount {
-  font-size: 16px;
-  font-weight: 600;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-semibold);
   color: var(--color-primary);
   letter-spacing: -0.4px;
   margin: 0;
@@ -156,8 +156,8 @@
 }
 
 .expense-amount {
-  font-size: 16px;
-  font-weight: 500;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-medium);
   color: var(--color-text-primary);
   letter-spacing: -0.4px;
   margin: 0;
@@ -166,6 +166,38 @@
 
 .income-amount .cents,
 .expense-amount .cents {
-  font-size: 12px;
-  font-weight: 600;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .transaction-item {
+    padding: 10px 12px;
+    gap: var(--sp-1-5);
+  }
+
+  .transaction-icon-wrapper {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+  }
+
+  .transaction-details {
+    min-width: 80px;
+    max-width: 130px;
+  }
+
+  .transaction-name {
+    font-size: var(--fs-14);
+  }
+
+  .transaction-category {
+    font-size: var(--fs-11);
+  }
+
+  .income-amount,
+  .expense-amount {
+    font-size: var(--fs-14);
+  }
 }

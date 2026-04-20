@@ -2,7 +2,7 @@
   object-fit: cover;
   width: 100px;
   height: 100px;
-  box-shadow: var(--shadow);
-  border-radius: 50%;
+  box-shadow: var(--shadow-md);
+  border-radius: var(--radius-full);
   border: 3px solid var(--color-primary);
 }

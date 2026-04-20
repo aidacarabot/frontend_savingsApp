@@ -1,13 +1,12 @@
-/* Overlay */
 .confirmation-overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(12px) saturate(0.6);
+  -webkit-backdrop-filter: blur(12px) saturate(0.6);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,20 +15,26 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
-
-/* Card */
 .confirmation-card {
-  background: #1a1c22;
-  border: 1px solid #3a3c41;
-  border-radius: 24px;
-  padding: 32px 28px;
+  background: var(--color-card-bg, #1a1a1f);
+  background-color: var(--color-card-bg, #1a1a1f);
+  isolation: isolate;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-2xl);
+  padding: var(--sp-8) var(--sp-7);
   max-width: 420px;
   width: 90%;
   position: relative;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  box-shadow:
+    0 32px 80px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(255, 255, 255, 0.06);
   animation: slideUp 0.3s ease-out;
   display: flex;
   flex-direction: column;
@@ -48,116 +53,114 @@
   }
 }
 
-/* Close button */
 .confirmation-close-btn {
   position: absolute;
-  top: 16px;
-  right: 16px;
-  background: #3a3c41;
+  top: var(--sp-4);
+  right: var(--sp-4);
+  background: var(--color-border);
   border: none;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  font-size: 20px;
+  width: var(--sp-8);
+  height: var(--sp-8);
+  border-radius: var(--radius-full);
+  font-size: var(--fs-20);
   cursor: pointer;
-  color: #6b7280;
+  color: var(--color-text-tertiary);
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
+  transition: var(--transition-fast);
   padding: 0;
 }
 
 .confirmation-close-btn:hover {
-  background: #343638;
-  color: #ffffff;
+  background: var(--color-hover);
+  color: var(--color-text-primary);
   transform: rotate(90deg);
 }
 
-/* Icon */
 .confirmation-icon {
-  width: 64px;
-  height: 64px;
-  background: rgba(43, 235, 200, 0.08);
-  border: 1px solid rgba(43, 235, 200, 0.2);
-  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  background: var(--color-danger-15);
+  border: 1px solid var(--color-danger-35);
+  border-radius: var(--radius-full);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: var(--sp-5);
+  flex-shrink: 0;
 }
 
-/* Title */
 .confirmation-title {
-  font-size: 20px;
-  font-weight: 800;
-  color: #ffffff;
-  margin: 0 0 10px 0;
+  font-size: var(--fs-20);
+  font-weight: var(--fw-extrabold);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--sp-2-5) 0;
   letter-spacing: -0.5px;
-  font-family: 'Roboto Mono', monospace;
+  font-family: var(--font-tertiary);
 }
 
-/* Message */
 .confirmation-message {
-  font-size: 14px;
-  color: #9ca3af;
-  margin: 0 0 28px 0;
+  font-size: var(--fs-14);
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--sp-7) 0;
   line-height: 1.6;
-  font-family: 'Google Sans', sans-serif;
+  font-family: var(--font-primary);
+  max-width: 300px;
 }
 
 /* Buttons */
 .confirmation-buttons {
   display: flex;
-  gap: 12px;
+  gap: var(--sp-3);
   width: 100%;
 }
 
 .conf-btn {
   flex: 1;
-  padding: 14px;
-  border-radius: 12px;
-  font-size: 14px;
-  font-weight: 700;
-  font-family: 'Tomorrow', sans-serif;
+  padding: var(--sp-3-5);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-bold);
+  font-family: var(--font-secondary);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: var(--transition-fast);
   letter-spacing: -0.2px;
   border: none;
 }
 
 .conf-btn-cancel {
-  background: #2a2c32;
-  color: #e0e0e0;
-  border: 1px solid #3a3c41;
+  background: var(--color-page-bg);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
 }
 
 .conf-btn-cancel:hover {
-  background: #343638;
-  color: #ffffff;
+  background: var(--color-hover);
+  color: var(--color-text-primary);
   transform: translateY(-1px);
 }
 
 .conf-btn-confirm {
-  background: rgba(255, 71, 87, 0.15);
-  color: #ff4757;
-  border: 1px solid rgba(255, 71, 87, 0.35);
+  background: var(--color-danger-15);
+  color: var(--color-danger);
+  border: 1px solid var(--color-danger-35);
 }
 
 .conf-btn-confirm:hover {
-  background: rgba(255, 71, 87, 0.25);
-  box-shadow: 0 4px 16px rgba(255, 71, 87, 0.25);
+  background: var(--color-danger-25);
+  box-shadow: 0 4px 16px var(--color-danger-25);
   transform: translateY(-1px);
 }
 
 @media (max-width: 480px) {
   .confirmation-card {
-    padding: 28px 20px;
+    padding: var(--sp-7) var(--sp-5);
     width: 92%;
   }
 
   .confirmation-buttons {
     flex-direction: column;
-    gap: 10px;
+    gap: var(--sp-2-5);
   }
 }

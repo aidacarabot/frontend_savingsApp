@@ -1,6 +1,6 @@
 .expenses-chart-container {
   background: var(--color-pro);
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   padding: 1.5rem 1.5rem 1rem;
   margin: 0;
   flex: 0.6;
@@ -36,12 +36,12 @@
   letter-spacing: 1.2px;
   text-transform: uppercase;
   margin: 0;
-  font-size: 0.8rem;
-  font-weight: 600;
+  font-size: var(--fsr-80);
+  font-weight: var(--fw-semibold);
 }
 
 .expenses-period-sub {
-  font-size: 0.72rem;
+  font-size: var(--fsr-72);
   color: var(--color-text-muted);
   margin: 0;
   font-family: var(--font-tertiary);
@@ -49,12 +49,12 @@
 
 .center-total-amount {
   font-family: var(--font-tertiary);
-  font-weight: 500;
+  font-weight: var(--fw-medium);
 }
 
 .center-total-label {
   font-family: var(--font-secondary);
-  font-weight: 500;
+  font-weight: var(--fw-medium);
   fill: var(--color-text-secondary);
 }
 
@@ -73,8 +73,8 @@
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: var(--fsr-75);
+  font-weight: var(--fw-semibold);
   color: var(--color-text-secondary);
   font-family: var(--font-primary);
   margin: 0 0 6px 0;
@@ -88,13 +88,13 @@
 
 .tooltip-amount {
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: var(--fw-medium);
   margin: 0 0 2px 0;
   font-family: var(--font-tertiary);
 }
 
 .tooltip-percentage {
-  font-size: 0.7rem;
+  font-size: var(--fsr-70);
   color: var(--color-input-icon);
   margin: 0;
   font-family: var(--font-secondary);
@@ -113,7 +113,7 @@
   align-items: center;
   gap: 0.75rem;
   padding: 0.5rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid var(--color-border-subtle);
 }
 
 .expenses-legend-item:last-child {
@@ -123,7 +123,7 @@
 .expenses-legend-icon {
   width: 32px;
   height: 32px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -139,8 +139,8 @@
 }
 
 .expenses-legend-name {
-  font-size: 0.82rem;
-  font-weight: 500;
+  font-size: var(--fsr-82);
+  font-weight: var(--fw-medium);
   color: var(--color-text-secondary);
   white-space: nowrap;
   overflow: hidden;
@@ -148,13 +148,13 @@
 }
 
 .expenses-legend-pct {
-  font-size: 0.68rem;
+  font-size: var(--fsr-68);
   color: var(--color-text-tertiary);
 }
 
 .expenses-legend-value {
-  font-size: 0.82rem;
-  font-weight: 500;
+  font-size: var(--fsr-82);
+  font-weight: var(--fw-medium);
   color: var(--color-text-secondary);
   white-space: nowrap;
 }
@@ -163,6 +163,6 @@
 .no-data-message {
   text-align: center;
   color: var(--color-text-secondary);
-  padding: 40px;
-  font-size: 0.875rem;
+  padding: var(--sp-10);
+  font-size: var(--fsr-875);
 }

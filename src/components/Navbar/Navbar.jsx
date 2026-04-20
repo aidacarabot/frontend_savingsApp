@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react';
 import './Navbar.css';
-import { LayoutDashboard, ChartPie, ChessQueen, CircleUserRound, LogOut, ArrowLeftRight } from 'lucide-react';
+import { LayoutDashboard, ChessQueen, CircleUserRound, LogOut, ArrowLeftRight } from 'lucide-react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import useApiFetch from '../../hooks/useApiFetch';
 import Loader from '../Loader/Loader';
 import ProfilePicture from '../ProfilePicture/ProfilePicture';
 import Logo from '../Logo/Logo';
+import AreYouSure from '../AreYouSure/AreYouSure';
 
 const Navbar = () => {
   const [userName, setUserName] = useState(localStorage.getItem('user_name') || '');
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -36,6 +38,8 @@ const Navbar = () => {
     localStorage.clear();
     navigate('/login');
   };
+
+  const handleLogoutClick = () => setShowLogoutConfirm(true);
 
   return (
     <nav>
@@ -68,11 +72,23 @@ const Navbar = () => {
             <ChessQueen className='nav-icon' size={18} /> Goals
           </Link>
         </li>
+        <li className='mobile-only'>
+          <Link to='/user' className={location.pathname === '/user' ? 'active' : ''}>
+            <CircleUserRound className='nav-icon' size={18} /> User
+          </Link>
+        </li>
       </ul>
-      <button className='logout-button' onClick={handleLogout}>
+      <button className='logout-button' onClick={handleLogoutClick}>
         <LogOut size={18} />
         Logout
       </button>
+      {showLogoutConfirm && (
+        <AreYouSure
+          message='Are you sure you want to logout?'
+          onConfirm={handleLogout}
+          onCancel={() => setShowLogoutConfirm(false)}
+        />
+      )}
     </nav>
   )
 };

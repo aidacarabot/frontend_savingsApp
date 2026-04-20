@@ -1,6 +1,6 @@
 .go-container {
   background: var(--color-pro);
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   padding: 1.25rem 1.25rem 1rem;
   display: flex;
   flex-direction: column;
@@ -16,8 +16,8 @@
 
 .go-label {
   gap: 0.35rem;
-  font-size: 0.8rem;
-  font-weight: 600;
+  font-size: var(--fsr-80);
+  font-weight: var(--fw-semibold);
   color: var(--color-text-secondary);
   font-family: var(--font-tertiary);
   letter-spacing: 1.2px;
@@ -28,8 +28,8 @@
   display: flex;
   align-items: center;
   gap: 0.25rem;
-  font-size: 0.7rem;
-  font-weight: 500;
+  font-size: var(--fsr-70);
+  font-weight: var(--fw-medium);
   color: var(--color-primary);
   font-family: var(--font-tertiary);
   background: none;
@@ -44,7 +44,7 @@
 
 /* Balance block */
 .go-balance-block {
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   padding: 0.9rem 1rem;
   display: flex;
   flex-direction: column;
@@ -60,7 +60,7 @@
 
 .go-balance-label {
   font-size: 0.57rem;
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
   color: var(--color-text-tertiary);
   font-family: var(--font-tertiary);
   text-transform: uppercase;
@@ -71,8 +71,8 @@
 
 .go-balance-value {
   font-size: 1.55rem;
-  font-weight: 500;
-  color: var(--color-otro);
+  font-weight: var(--fw-medium);
+  color: var(--color-text-accent);
   letter-spacing: -1px;
   font-family: var(--font-secondary);
   margin: 0;
@@ -84,14 +84,14 @@
 .go-alloc-track {
   height: 3px;
   background: var(--color-page-bg);
-  border-radius: 99px;
+  border-radius: var(--radius-pill);
   overflow: hidden;
 }
 
 .go-alloc-fill {
   height: 100%;
   background: var(--color-primary);
-  border-radius: 99px;
+  border-radius: var(--radius-pill);
   transition: width 0.5s ease;
   min-width: 4px;
   opacity: 0.55;
@@ -106,7 +106,7 @@
 
 .go-sub-card {
   background: var(--color-page-bg);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   padding: 0.55rem 0.7rem;
   display: flex;
   flex-direction: column;
@@ -117,7 +117,7 @@
 
 .go-sub-label {
   font-size: 0.54rem;
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: var(--color-text-tertiary);
   font-family: var(--font-tertiary);
   text-transform: uppercase;
@@ -125,8 +125,8 @@
 }
 
 .go-sub-value {
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-size: var(--fsr-90);
+  font-weight: var(--fw-semibold);
   color: var(--color-primary);
   font-family: var(--font-secondary);
   letter-spacing: -0.3px;
@@ -148,10 +148,10 @@
   display: flex;
   align-items: center;
   gap: 0.3rem;
-  font-size: 0.62rem;
-  font-weight: 500;
+  font-size: var(--fsr-62);
+  font-weight: var(--fw-medium);
   padding: 0.22rem 0.55rem;
-  border-radius: 99px;
+  border-radius: var(--radius-pill);
   border: 1px solid var(--color-border);
   color: var(--color-text-secondary);
 }
@@ -166,7 +166,7 @@
 .go-pulse-dot {
   width: 5px;
   height: 5px;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   background: var(--color-primary);
   flex-shrink: 0;
   animation: go-pulse 2s ease-in-out infinite;
@@ -211,7 +211,7 @@
   gap: 0.3rem;
   padding: 0.6rem 0.25rem 0.45rem;
   background: var(--color-navbar-bg);
-  border-radius: 10px;
+  border-radius: var(--radius-base);
   aspect-ratio: 1;
   justify-content: center;
 }
@@ -222,15 +222,15 @@
 }
 
 .go-ring-text {
-  font-size: 10px;
-  font-weight: 500;
+  font-size: var(--fs-10);
+  font-weight: var(--fw-medium);
   fill: var(--color-primary);
   font-family: var(--font-secondary);
 }
 
 .go-goal-card-name {
-  font-size: 0.7rem;
-  font-weight: 400;
+  font-size: var(--fsr-70);
+  font-weight: var(--fw-normal);
   color: var(--color-text-secondary);
   text-align: center;
   white-space: nowrap;
@@ -256,18 +256,18 @@
   align-items: center;
   gap: 0.5rem;
   padding: 1.75rem 0 1.25rem;
-  color: #252525;
+  color: var(--color-text-empty);
 }
 
 .go-empty p {
-  font-size: 0.7rem;
-  color: #333;
+  font-size: var(--fsr-70);
+  color: var(--color-text-empty);
   margin: 0;
 }
 
 /* Loading */
 .go-loading {
-  color: #444;
-  font-size: 0.75rem;
+  color: var(--color-text-empty);
+  font-size: var(--fsr-75);
   padding: 1rem;
 }

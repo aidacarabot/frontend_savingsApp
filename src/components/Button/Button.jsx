@@ -1,4 +1,3 @@
-import './Button.css';
 
 const Button = ({ text, onClick, type = 'button', variant, className = '' }) => {
   const buttonClass = variant ? `btn btn-${variant}` : `btn ${className}`.trim();

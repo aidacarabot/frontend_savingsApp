@@ -4,7 +4,7 @@
   max-width: 480px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--sp-2-5);
   font-family: var(--font-primary);
   cursor: default;
 }
@@ -14,7 +14,7 @@
   display: flex;
   align-items: center;
   gap: 18px;
-  margin-bottom: 4px;
+  margin-bottom: var(--sp-1);
 }
 
 .pif-identity {
@@ -24,8 +24,8 @@
 }
 
 .pif-name {
-  font-size: 24px;
-  font-weight: 800;
+  font-size: var(--fs-24);
+  font-weight: var(--fw-extrabold);
   color: var(--color-text-primary);
   font-family: var(--font-secondary);
   letter-spacing: -0.8px;
@@ -37,10 +37,10 @@
   background: var(--color-primary-10);
   color: var(--color-primary);
   border: 1px solid var(--color-primary-10);
-  border-radius: 20px;
+  border-radius: var(--radius-xl);
   padding: 3px 12px;
-  font-size: 12px;
-  font-weight: 600;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
 }
 
 /* ── Income card ── */
@@ -52,23 +52,23 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: var(--sp-3);
 }
 
 .pif-card-label {
   display: flex;
   align-items: center;
   gap: 7px;
-  font-size: 12px;
-  font-weight: 600;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
   color: var(--color-text-tertiary);
   text-transform: uppercase;
   letter-spacing: 0.8px;
 }
 
 .pif-card-value {
-  font-size: 20px;
-  font-weight: 700;
+  font-size: var(--fs-20);
+  font-weight: var(--fw-bold);
   margin: 0;
   cursor: default;
   user-select: none;
@@ -84,8 +84,8 @@
   display: flex;
   align-items: center;
   gap: 7px;
-  font-size: 12px;
-  font-weight: 600;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
   color: var(--color-text-tertiary);
   text-transform: uppercase;
   letter-spacing: 0.8px;
@@ -108,7 +108,7 @@
 .pif-expense-item {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--sp-2);
   padding: 8px 12px;
   border-bottom: 1px solid var(--color-border);
   border-right: 1px solid var(--color-border);
@@ -122,7 +122,7 @@
 }
 
 /* Remove bottom border on last two items */
-.pif-expense-item:nth-last-child(-n+2) {
+.pif-expense-item:nth-last-child(-n + 2) {
   border-bottom: none;
 }
 
@@ -143,8 +143,8 @@
 
 .pif-expense-name {
   flex: 1;
-  font-size: 13px;
-  font-weight: 500;
+  font-size: var(--fs-13);
+  font-weight: var(--fw-medium);
   color: var(--color-text-secondary);
   white-space: nowrap;
   overflow: hidden;
@@ -152,8 +152,8 @@
 }
 
 .pif-expense-amount {
-  font-size: 13px;
-  font-weight: 600;
+  font-size: var(--fs-13);
+  font-weight: var(--fw-semibold);
   color: var(--color-text-primary);
   font-family: var(--font-tertiary);
   flex-shrink: 0;
@@ -165,7 +165,7 @@
 .pif-input-row {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--sp-1);
   background: var(--color-pro);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
@@ -185,8 +185,8 @@
 
 .pif-currency-prefix {
   color: var(--color-text-tertiary);
-  font-size: 13px;
-  font-weight: 600;
+  font-size: var(--fs-13);
+  font-weight: var(--fw-semibold);
   font-family: var(--font-tertiary);
 }
 
@@ -196,8 +196,8 @@
   outline: none;
   color: var(--color-text-primary);
   font-family: var(--font-tertiary);
-  font-size: 14px;
-  font-weight: 600;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-semibold);
   width: 110px;
   padding: 0;
   cursor: text;
@@ -205,12 +205,12 @@
 
 .pif-input--sm {
   width: 70px;
-  font-size: 13px;
+  font-size: var(--fs-13);
 }
 
 .pif-input::placeholder {
   color: var(--color-text-tertiary);
-  font-weight: 400;
+  font-weight: var(--fw-normal);
 }
 
 /* ── Summary ── */
@@ -221,7 +221,7 @@
   padding: 13px 18px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--sp-2);
 }
 
 .pif-summary-row {
@@ -231,16 +231,16 @@
 }
 
 .pif-summary-label {
-  font-size: 12px;
-  font-weight: 600;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
   color: var(--color-text-tertiary);
   text-transform: uppercase;
   letter-spacing: 0.8px;
 }
 
 .pif-summary-total {
-  font-size: 18px;
-  font-weight: 700;
+  font-size: var(--fs-18);
+  font-weight: var(--fw-bold);
   color: var(--color-text-primary);
   font-family: var(--font-tertiary);
   cursor: default;
@@ -252,13 +252,13 @@
   width: 100%;
   height: 4px;
   background: var(--color-border);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   overflow: hidden;
 }
 
 .pif-progress-fill {
   height: 100%;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: var(--color-primary);
   transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -268,42 +268,46 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 8px;
+  padding-top: var(--sp-2);
   border-top: 1px solid var(--color-border);
 }
 
 .pif-savings-label {
-  font-size: 12px;
-  font-weight: 600;
+  font-size: var(--fs-12);
+  font-weight: var(--fw-semibold);
   color: var(--color-text-tertiary);
   text-transform: uppercase;
   letter-spacing: 0.8px;
 }
 
 .pif-savings-value {
-  font-size: 16px;
-  font-weight: 700;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-bold);
   font-family: var(--font-tertiary);
   cursor: default;
   user-select: none;
 }
 
-.pif-savings--positive { color: var(--color-primary); }
-.pif-savings--negative { color: var(--color-danger); }
+.pif-savings--positive {
+  color: var(--color-primary);
+}
+.pif-savings--negative {
+  color: var(--color-danger);
+}
 
 /* ── Actions ── */
 .pif-actions {
   display: flex;
-  gap: 8px;
+  gap: var(--sp-2);
   justify-content: flex-end;
   margin-top: 2px;
 }
 
 .pif-btn {
   padding: 9px 20px;
-  border-radius: 20px;
-  font-size: 14px;
-  font-weight: 600;
+  border-radius: var(--radius-xl);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-semibold);
   cursor: pointer;
   transition: var(--transition-fast);
   font-family: var(--font-primary);
@@ -343,3 +347,38 @@
 .pif-btn--ghost:hover {
   border-color: var(--color-text-tertiary);
   color: var(--color-text-secondary);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .pif-wrapper {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .pif-expenses-list {
+    grid-template-columns: 1fr;
+  }
+
+  /* Single column: reset right border */
+  .pif-expense-item {
+    border-right: none;
+  }
+
+  .pif-expense-item:nth-last-child(-n + 2) {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .pif-expense-item:last-child {
+    border-bottom: none;
+  }
+
+  .pif-name {
+    font-size: var(--fs-20);
+  }
+
+  .pif-card-value {
+    font-size: var(--fs-17);
+  }
+}
