@@ -102,7 +102,7 @@
   font-weight: var(--fw-medium);
 }
 
-/* Responsive */
+/*! Responsive */
 
 /* Tablet */
 @media (max-width: 1024px) {
@@ -125,8 +125,9 @@
   }
 
   .data-card-icon {
-    width: var(--sp-9);
-    height: var(--sp-9);
+    width: var(--sp-8);
+    height: var(--sp-8);
+    border-radius: var(--radius-xs);
   }
 
   .card-content h3 {
