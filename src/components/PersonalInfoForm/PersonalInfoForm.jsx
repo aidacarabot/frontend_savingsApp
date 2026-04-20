@@ -4,6 +4,7 @@ import useCalculateAge from "../../hooks/useCalculateAge";
 import useProfileEditor from "../../hooks/useProfileEditor";
 import ProfilePictureEdit from '../ProfilePictureEdit/ProfilePictureEdit';
 import Loader from "../Loader/Loader";
+import { ErrorMessage } from '../Messages/Messages';
 import { CATEGORIES, CATEGORY_STYLES } from '../../utils/constants';
 import './PersonalInfoForm.css';
 
@@ -38,7 +39,7 @@ const PersonalInfoForm = () => {
   const expenseRatio = monthlySalary > 0 ? Math.min((totalExpectedExpenses / monthlySalary) * 100, 100) : 0;
 
   if (loading) return <Loader />;
-  if (error) return <div>Error: {error.message}</div>;
+  if (error) return <ErrorMessage text={`Error: ${error.message}`} duration={null} />;
 
   // Always iterate over the fixed CATEGORIES list
   const expenseSource = isEditingProfile ? editedProfile.monthlyExpectedExpenses : expenses;

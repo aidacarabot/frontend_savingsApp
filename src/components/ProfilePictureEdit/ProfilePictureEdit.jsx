@@ -1,13 +1,16 @@
 import './ProfilePictureEdit.css';
 import useProfilePicChange from '../../hooks/useProfilePicChange';
 import Loader from '../Loader/Loader';
+import { SuccessMessage, ErrorMessage } from '../Messages/Messages';
 import { FaCamera } from 'react-icons/fa';
 
 const ProfilePictureEdit = () => {
-  const { imageSrc, handleImageChange, isLoading } = useProfilePicChange();
+  const { imageSrc, handleImageChange, isLoading, successMessage, errorMessage } = useProfilePicChange();
 
   return (
     <>
+      {successMessage && <SuccessMessage text={successMessage} />}
+      {errorMessage && <ErrorMessage text={errorMessage} />}
       {isLoading ? (
         <Loader />
       ) : (

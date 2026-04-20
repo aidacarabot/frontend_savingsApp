@@ -1,7 +1,8 @@
 import { useForm } from 'react-hook-form';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Goal } from 'lucide-react';
 import Button from '../Button/Button';
+import { ErrorMessage } from '../Messages/Messages';
 import { fetchData } from '../../utils/api/fetchData';
 import useApiFetch from '../../hooks/useApiFetch';
 import useCalculateAge from '../../hooks/useCalculateAge';
@@ -9,7 +10,7 @@ import { useGoalCalculations } from '../../hooks/useGoalCalculations';
 import './GoalForm.css';
 
 const GoalForm = ({ onClose, onGoalAdded, initialData = null, isEditing = false }) => {
-  const { register, handleSubmit, watch, setValue, reset } = useForm();
+  const { register, handleSubmit, watch, setValue, reset, formState: { errors } } = useForm();
   const isInitializedRef = useRef(false);
 
   const { responseData: userData } = useApiFetch('/users', 'GET');
@@ -34,6 +35,8 @@ const GoalForm = ({ onClose, onGoalAdded, initialData = null, isEditing = false 
     currentAge
   );
 
+  const [errorMessage, setErrorMessage] = useState('');
+
   useEffect(() => {
     if (isEditing && initialData && !isInitializedRef.current) {
       setValue('goalName', initialData.goalName);
@@ -55,6 +58,7 @@ const GoalForm = ({ onClose, onGoalAdded, initialData = null, isEditing = false 
   }, [isEditing, initialData, setValue]);
 
   const handleFormSubmit = async (data) => {
+    setErrorMessage('');
     try {
       const payload = {
         goalName: data.goalName,
@@ -79,6 +83,7 @@ const GoalForm = ({ onClose, onGoalAdded, initialData = null, isEditing = false 
       isInitializedRef.current = false;
     } catch (error) {
       console.error(`Error ${isEditing ? 'updating' : 'creating'} goal:`, error);
+      setErrorMessage(`Error ${isEditing ? 'updating' : 'creating'} goal. Please try again.`);
     }
   };
 
@@ -111,6 +116,7 @@ const GoalForm = ({ onClose, onGoalAdded, initialData = null, isEditing = false 
               placeholder="e.g., Vacation to Japan"
               className="gf-input"
             />
+            {errors.goalName && <p className="gf-field-error">{errors.goalName.message}</p>}
           </div>
 
           <div className="gf-group">
@@ -130,6 +136,7 @@ const GoalForm = ({ onClose, onGoalAdded, initialData = null, isEditing = false 
                 onChange={(e) => handleFieldChange('totalGoal', e)}
               />
             </div>
+            {errors.totalGoal && <p className="gf-field-error">{errors.totalGoal.message}</p>}
           </div>
 
           <div className="gf-grid-3">
@@ -214,6 +221,7 @@ const GoalForm = ({ onClose, onGoalAdded, initialData = null, isEditing = false 
             </div>
           </div>
 
+          {errorMessage && <ErrorMessage text={errorMessage} />}
           <button type="submit" className="gf-submit">
             {isEditing ? 'Update Goal' : 'Create Goal'}
           </button>

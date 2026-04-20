@@ -2,6 +2,7 @@ import { PiggyBank, TrendingDown, TrendingUp, Wallet } from 'lucide-react';
 import { useFinancialContext } from '../../context/FinancialContext';
 import { useFinancialData } from '../../hooks/useFinancialData';
 import Loader from '../Loader/Loader';
+import { ErrorMessage } from '../Messages/Messages';
 import './CurrentData.css';
 
 const CurrentData = () => {
@@ -65,7 +66,7 @@ const CurrentData = () => {
     return (
       <div className="current-data-container">
         <div className="financial-data">
-          <p className="error-message">Error loading financial data. Please try again.</p>
+          <ErrorMessage text="Error loading financial data. Please try again." duration={null} />
         </div>
       </div>
     );

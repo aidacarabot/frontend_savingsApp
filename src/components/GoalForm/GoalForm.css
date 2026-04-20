@@ -239,6 +239,13 @@
   font-family: var(--font-tertiary);
 }
 
+/* Field validation errors */
+.gf-field-error {
+  color: var(--color-error, #e74c3c);
+  font-size: var(--fs-12, 12px);
+  margin-top: 4px;
+}
+
 /* Submit */
 .gf-submit {
   padding: var(--sp-3-5);

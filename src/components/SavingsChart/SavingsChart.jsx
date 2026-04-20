@@ -2,6 +2,7 @@ import { BarChart, Bar, LabelList, XAxis, YAxis, CartesianGrid, Tooltip, Respons
 import { useFinancialContext } from '../../context/FinancialContext';
 import { useChartData } from '../../hooks/useChartData';
 import Loader from '../Loader/Loader';
+import { ErrorMessage } from '../Messages/Messages';
 import './SavingsChart.css';
 
 const SavingsChart = () => {
@@ -169,7 +170,7 @@ const SavingsChart = () => {
   if (error) {
     return (
       <div className="savings-chart-container">
-        <p className="error-message">Error loading chart data</p>
+        <ErrorMessage text="Error loading chart data" duration={null} />
       </div>
     );
   }

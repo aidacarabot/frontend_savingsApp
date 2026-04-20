@@ -1,12 +1,13 @@
 import { useForm } from 'react-hook-form';
 import './IncomeExpenseForm.css';
 import Button from '../Button/Button';
+import { ErrorMessage } from '../Messages/Messages';
 import { fetchData } from '../../utils/api/fetchData';
 import { CATEGORIES } from '../../utils/constants';
 import { useEffect, useState } from 'react';
 
 const IncomeExpenseForm = ({ onClose, onTransactionAdded, initialData = null, onTransactionUpdated }) => {
-  const { register, handleSubmit, watch, reset, setValue } = useForm({
+  const { register, handleSubmit, watch, reset, setValue, formState: { errors } } = useForm({
     defaultValues: initialData
       ? {
           type: initialData.type || '',
@@ -19,6 +20,7 @@ const IncomeExpenseForm = ({ onClose, onTransactionAdded, initialData = null, on
   });
 
   const [displayPrice, setDisplayPrice] = useState(initialData?.amount ? initialData.amount.toLocaleString('en-US') : '');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const type = watch('type'); // Observa el campo 'type' para cambios
 
@@ -59,6 +61,7 @@ const IncomeExpenseForm = ({ onClose, onTransactionAdded, initialData = null, on
   
   //? Función para manejar el envío del formulario
   const handleFormSubmit = async (data) => {
+    setErrorMessage('');
     try {
       // Ajustamos los datos para que coincidan con los requerimientos del backend
       const payload = {
@@ -86,6 +89,7 @@ const IncomeExpenseForm = ({ onClose, onTransactionAdded, initialData = null, on
       if (onClose) onClose();
     } catch (error) {
       console.error('Error saving transaction:', error);
+      setErrorMessage('Error saving transaction. Please try again.');
     }
   };
 
@@ -102,6 +106,7 @@ const IncomeExpenseForm = ({ onClose, onTransactionAdded, initialData = null, on
               <option value="Income">Income</option>
               <option value="Expense">Expense</option>
             </select>
+            {errors.type && <p className="ief-field-error">{errors.type.message}</p>}
           </div>
 
           <div className="form-group">
@@ -112,6 +117,7 @@ const IncomeExpenseForm = ({ onClose, onTransactionAdded, initialData = null, on
               {...register('title', { required: 'Title is required' })}
               placeholder="Enter title"
             />
+            {errors.title && <p className="ief-field-error">{errors.title.message}</p>}
           </div>
 
           <div className="form-group">
@@ -121,6 +127,7 @@ const IncomeExpenseForm = ({ onClose, onTransactionAdded, initialData = null, on
               type="date"
               {...register('date', { required: 'Date is required' })}
             />
+            {errors.date && <p className="ief-field-error">{errors.date.message}</p>}
           </div>
 
           {type === 'Expense' && (
@@ -134,6 +141,7 @@ const IncomeExpenseForm = ({ onClose, onTransactionAdded, initialData = null, on
                   </option>
                 ))}
               </select>
+              {errors.category && <p className="ief-field-error">{errors.category.message}</p>}
             </div>
           )}
 
@@ -158,7 +166,9 @@ const IncomeExpenseForm = ({ onClose, onTransactionAdded, initialData = null, on
               })}
             />
           </div>
+          {errors.price && <p className="ief-field-error">{errors.price.message}</p>}
 
+          {errorMessage && <ErrorMessage text={errorMessage} />}
           <Button text={initialData ? 'Save' : 'Submit'} type="submit" />
         </form>
       </div>

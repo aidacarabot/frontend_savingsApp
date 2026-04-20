@@ -4,6 +4,7 @@ import { LayoutDashboard, ChessQueen, CircleUserRound, LogOut, ArrowLeftRight } 
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import useApiFetch from '../../hooks/useApiFetch';
 import Loader from '../Loader/Loader';
+import { ErrorMessage } from '../Messages/Messages';
 import ProfilePicture from '../ProfilePicture/ProfilePicture';
 import Logo from '../Logo/Logo';
 import AreYouSure from '../AreYouSure/AreYouSure';
@@ -32,7 +33,7 @@ const Navbar = () => {
   }, [responseData, userName]);
 
    if (loading) return <Loader />;
-  if (error) return <div>Error: {error.message}</div>; //! Ver que hacer con esto
+  if (error) return <ErrorMessage text={`Error: ${error.message}`} duration={null} />;
 
   const handleLogout = () => {
     localStorage.clear();

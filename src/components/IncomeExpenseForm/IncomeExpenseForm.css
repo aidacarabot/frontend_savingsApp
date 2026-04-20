@@ -258,6 +258,13 @@
   padding: 0.5rem;
 }
 
+/* Field validation errors */
+.ief-field-error {
+  color: var(--color-error, #e74c3c);
+  font-size: 12px;
+  margin-top: 4px;
+}
+
 /* Submit Button */
 .form-container form > button[type='submit'] {
   margin-top: 0.5rem;

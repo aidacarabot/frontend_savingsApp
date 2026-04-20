@@ -4,11 +4,12 @@ const useMessageVisibility = (duration = 3000) => {
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
+    if (duration === null) return; // persistente, no ocultar
     const timer = setTimeout(() => {
       setVisible(false);
     }, duration);
 
-    return () => clearTimeout(timer); // Limpiar el temporizador al desmontar
+    return () => clearTimeout(timer);
   }, [duration]);
 
   return visible;

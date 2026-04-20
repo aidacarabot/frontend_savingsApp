@@ -3,7 +3,9 @@ import { fetchData } from '../utils/api/fetchData';
 
 const useProfilePicChange = () => {
   const [imageSrc, setImageSrc] = useState("../../assets/default-profile.png");
-  const [isLoading, setIsLoading] = useState(true); // Estado para controlar el loader
+  const [isLoading, setIsLoading] = useState(true);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const fetchProfilePicture = async () => {
     const userId = localStorage.getItem('user_id');
@@ -44,7 +46,7 @@ const useProfilePicChange = () => {
       const token = localStorage.getItem('token');
 
       if (!userId || !token) {
-        alert('User not authenticated');
+        setErrorMessage('User not authenticated');
         return;
       }
 
@@ -55,12 +57,12 @@ const useProfilePicChange = () => {
           'Authorization': `Bearer ${token}`,
         });
 
-        alert('Profile picture updated successfully!');
+        setSuccessMessage('Profile picture updated successfully!');
         // Volver a obtener la imagen actualizada desde el backend
         await fetchProfilePicture();
       } catch (err) {
         console.error('Error updating profile picture:', err);
-        alert('Failed to update profile picture. Please try again.');
+        setErrorMessage('Failed to update profile picture. Please try again.');
       } finally {
         setIsLoading(false); // Ocultar el loader después de la subida
       }
@@ -72,7 +74,7 @@ const useProfilePicChange = () => {
     fetchProfilePicture();
   }, []);
 
-  return { imageSrc, handleImageChange, isLoading };
+  return { imageSrc, handleImageChange, isLoading, successMessage, errorMessage };
 };
 
 export default useProfilePicChange;

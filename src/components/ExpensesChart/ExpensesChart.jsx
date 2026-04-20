@@ -3,6 +3,7 @@ import { ChartPie, House, Car, ShoppingCart, HeartPulse, Drama, Plane, ShoppingB
 import { useExpensesData } from '../../hooks/useExpensesData';
 import { CATEGORY_STYLES } from '../../utils/constants';
 import Loader from '../Loader/Loader';
+import { ErrorMessage } from '../Messages/Messages';
 import './ExpensesChart.css';
 
 const iconMap = { House, Car, ShoppingCart, HeartPulse, Drama, Plane, ShoppingBag, Landmark, Beer, Coins };
@@ -60,7 +61,7 @@ const ExpensesChart = () => {
   );
 
   if (loading) return <div className="expenses-chart-container"><Loader /></div>;
-  if (error) return <div className="expenses-chart-container"><p className="error-message">Error loading expenses data</p></div>;
+  if (error) return <div className="expenses-chart-container"><ErrorMessage text="Error loading expenses data" duration={null} /></div>;
 
   if (!expensesData || expensesData.length === 0) {
     return (
