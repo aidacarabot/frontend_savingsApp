@@ -8,23 +8,12 @@ export const useChartData = () => {
 
   const chartData = useMemo(() => {
     if (!userData || !userData.transactions) {
-      return { current: [], previous: [], loading, error };
+      return { current: [], loading, error };
     }
 
     const now = new Date();
     const currentYear = now.getFullYear();
     const currentMonth = now.getMonth();
-
-    // Calcular balance inicial (todas las transacciones antes del periodo)
-    const calculateInitialBalance = (beforeDate) => {
-      return userData.transactions
-        .filter((t) => new Date(t.date) < beforeDate)
-        .reduce((balance, t) => {
-          return t.type === 'Income' 
-            ? balance + t.amount 
-            : balance - t.amount;
-        }, 0);
-    };
 
     // Función para agrupar transacciones por fecha
     const groupByDate = (transactions, groupBy) => {
@@ -57,13 +46,10 @@ export const useChartData = () => {
     };
 
     let currentData = [];
-    let xAxisLabel = '';
 
     switch (viewBy) {
       case 'Month': {
         const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        xAxisLabel = monthNames[currentMonth];
-
         // Savings empieza desde 0 al inicio del mes
         let currentAccumulatedBalance = 0;
 
@@ -112,8 +98,6 @@ export const useChartData = () => {
       }
 
       case 'Year': {
-        xAxisLabel = currentYear.toString();
-
         // Savings empieza desde 0 al inicio del año
         let currentAccumulatedBalance = 0;
         let previousAccumulatedBalance = 0;
@@ -158,8 +142,6 @@ export const useChartData = () => {
       }
 
       case 'All-Time': {
-        xAxisLabel = 'All-Time';
-
         const grouped = groupByDate(userData.transactions, 'year');
         const years = Object.keys(grouped).map(Number).sort((a, b) => a - b);
 
@@ -187,7 +169,6 @@ export const useChartData = () => {
 
     return {
       current: currentData,
-      xAxisLabel,
       loading,
       error,
     };

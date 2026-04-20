@@ -38,7 +38,7 @@ const RegisterForm = ({ onToggleForm = null }) => {
       );
       setSuccessMessage('Registration successful. Please log in.');
       setTimeout(() => {
-        onToggleForm();
+        onToggleForm ? onToggleForm() : navigate('/login');
       }, 2000);
     } catch (error) {
       const errorMsg = error?.response?.error || 'There was an error during registration. Please try again.';

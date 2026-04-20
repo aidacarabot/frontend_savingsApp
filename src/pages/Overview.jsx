@@ -28,11 +28,9 @@ const OverviewContent = () => {
       />
       <CurrentData />
       <div className='charts-wrapper'>
-        <div className='charts-left-col'>
-          <SavingsChart />
-          <GoalsOverview />
-        </div>
+        <SavingsChart />
         <ExpensesChart />
+        <GoalsOverview />
       </div>
     </div>
   );

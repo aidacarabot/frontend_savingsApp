@@ -72,11 +72,6 @@
   font-family: var(--font-tertiary);
 }
 
-.filter-date-input {
-  width: 180px;
-  font-family: var(--font-tertiary);
-}
-
 .filter-select {
   width: 250px;
   max-width: 100%;

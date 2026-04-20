@@ -55,7 +55,6 @@ export const calculateGoalData = (
   // Si el usuario ingresa edad, calcular fecha y monthly
   if (ageAtCompletion && ageAtCompletion > currentAge && (lastUpdatedField === 'ageAtCompletion' || lastUpdatedField === 'totalGoal')) {
     if (userData?.birthDate) {
-      const birthDate = new Date(userData.birthDate);
       const yearsToAdd = parseInt(ageAtCompletion) - currentAge;
       const targetDate = new Date(currentDate);
       targetDate.setFullYear(targetDate.getFullYear() + yearsToAdd);

@@ -7,13 +7,6 @@
   padding: var(--sp-7);
 }
 
-.gd-loading {
-  text-align: center;
-  padding: var(--sp-5);
-  color: var(--color-text-tertiary);
-  font-size: var(--fs-14);
-}
-
 .gd-amounts {
   display: flex;
   align-items: baseline;

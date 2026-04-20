@@ -180,21 +180,6 @@
   outline: none !important;
 }
 
-.recharts-default-legend {
-  padding-top: 1.5rem !important;
-  display: flex !important;
-  justify-content: center !important;
-  gap: 2rem !important;
-}
-
-.recharts-legend-item {
-  display: flex !important;
-  align-items: center !important;
-  font-size: var(--fsr-875) !important;
-  color: var(--color-text-secondary) !important;
-  font-weight: var(--fw-medium) !important;
-}
-
 /* Responsive */
 @media (max-width: 480px) {
   .savings-chart-container {

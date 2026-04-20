@@ -57,9 +57,6 @@ const IncomeExpenseForm = ({ onClose, onTransactionAdded, initialData = null, on
     }
   };
   
-  // Definimos las categorías como un array
-  const categories = CATEGORIES;
-
   //? Función para manejar el envío del formulario
   const handleFormSubmit = async (data) => {
     try {
@@ -131,7 +128,7 @@ const IncomeExpenseForm = ({ onClose, onTransactionAdded, initialData = null, on
               <label htmlFor="category">Category:</label>
               <select id="category" {...register('category', { required: 'Category is required' })}>
                 <option value="">Select Category</option>
-                {categories.map((category) => (
+                {CATEGORIES.map((category) => (
                   <option key={category} value={category}>
                     {category}
                   </option>

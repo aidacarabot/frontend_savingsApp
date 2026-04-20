@@ -72,8 +72,6 @@ export const useGoalCalculations = (totalGoal, completionDate, monthlyContributi
   return {
     calculatedData,
     setLastUpdatedField,
-    isCalculating,
-    setIsCalculating,
     setCalculatedData
   };
 };

@@ -113,7 +113,7 @@
 }
 
 /* Mobile */
-@media (max-width: 480px) {
+@media (max-width: 580px) {
   .current-data-container {
     padding: 0.25rem 0.75rem 0.75rem;
   }

@@ -75,7 +75,6 @@
   justify-content: center;
 }
 
-/* Estilos para ViewBy en Overview - más compacto */
 .overview-container .view-by-container {
   margin-bottom: var(--sp-5);
   display: flex;

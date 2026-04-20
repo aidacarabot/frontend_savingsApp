@@ -21,19 +21,12 @@ const useApiFetch = (
     try {
       setLoading(true);
 
-      // Create a copy of headers to avoid mutation
-      const requestHeaders = {};
-
-      if (token && !endpoint.includes('/login') && !endpoint.includes('/register')) {
-        requestHeaders['Authorization'] = `Bearer ${token}`;
-      }
-
       let modifiedEndpoint = endpoint;
       if (endpoint.includes('/users') && userId) {
         modifiedEndpoint = `/users/${userId}`;
       }
 
-      const dataResponse = await fetchData(modifiedEndpoint, method, data, requestHeaders);
+      const dataResponse = await fetchData(modifiedEndpoint, method, data);
       setResponseData(dataResponse);
 
       if (storageKey && dataResponse && dataResponse.name && localStorage.getItem(storageKey) !== dataResponse.name) {

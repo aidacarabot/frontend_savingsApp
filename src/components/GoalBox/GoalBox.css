@@ -401,11 +401,6 @@
   color: var(--color-primary) !important;
 }
 
-.gb-ring-text-done {
-  fill: var(--color-primary);
-  font-size: var(--fs-18);
-}
-
 /* Add input over-limit state */
 .gb-add-over {
   border-color: var(--color-danger-muted-50);
