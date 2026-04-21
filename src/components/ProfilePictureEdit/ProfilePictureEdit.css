@@ -26,28 +26,39 @@
 
 .profile-pic .-label {
   cursor: pointer;
-  width: 90px;
-  height: 90px;
+  position: absolute;
+  inset: 0;
   border-radius: var(--radius-full);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  overflow: hidden;
   z-index: 1;
-  transition: background-color 0.2s ease;
 }
 
-.profile-pic:hover .-label {
-  background-color: var(--color-overlay-soft);
-}
-
-.icon-camera {
+.profile-pic .-label::after {
+  content: 'Change';
+  position: absolute;
+  width: 100%;
+  height: 40%;
+  bottom: 0;
+  left: 0;
+  background-image: linear-gradient(transparent 0%, rgba(0, 0, 0, 0.55) 100%);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  color: #fff;
+  font-size: var(--fs-12);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  padding-bottom: 8px;
   opacity: 0;
-  color: var(--color-text-primary);
-  font-size: var(--fs-20);
   transition: opacity 0.2s ease;
-  pointer-events: none;
 }
 
-.profile-pic:hover .icon-camera {
+.profile-pic:hover .-label::after,
+.profile-pic--editing .-label::after {
   opacity: 1;
+}
+
+.profile-pic img.default-avatar {
+  object-fit: contain;
+  padding: 16px;
 }

@@ -50,7 +50,7 @@ const PersonalInfoForm = () => {
 
       {}
       <div className='pif-top'>
-        <ProfilePictureEdit />
+        <ProfilePictureEdit isEditing={isEditingProfile} />
         <div className='pif-identity'>
           {isEditingProfile ? (
             <input
