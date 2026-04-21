@@ -1,5 +1,5 @@
 
-const BASE_URL = "http://localhost:3000/api/v1";
+const BASE_URL = "https://backend-savings-app.vercel.app/api/v1";
 
 export const fetchData = async (endpoint, method = "GET", data = null, headers = {}) => {
    try {
