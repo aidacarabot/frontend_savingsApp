@@ -104,11 +104,7 @@ const RegisterForm = ({ onToggleForm = null }) => {
               <input
                 {...register("birthDate", { required: "Birth Date is required" })}
                 type="text"
-                placeholder="Enter your birth date"
-                min="1900-01-01"
-                max={new Date().toISOString().split('T')[0]}
-                onFocus={(e) => { e.target.type = 'date'; }}
-                onBlur={(e) => { if (!e.target.value) e.target.type = 'text'; }}
+                placeholder="Enter your birth date (YYYY-MM-DD)"
                 className={errors.birthDate ? 'error' : ''}
               />
             </div>
