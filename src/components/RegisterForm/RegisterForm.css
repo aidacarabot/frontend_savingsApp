@@ -146,6 +146,66 @@
   box-shadow: 0 0 0 3px var(--color-danger-25);
 }
 
+/* Date three-segment input */
+.date-input-wrapper {
+  padding: 14px 16px 14px 48px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-pro);
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.date-input-wrapper:focus-within {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-10);
+}
+
+.date-input-wrapper.error {
+  border-color: var(--color-danger);
+  box-shadow: 0 0 0 3px var(--color-danger-15);
+}
+
+.date-segments {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  width: 100%;
+}
+
+.date-segment {
+  background: transparent;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none;
+  color: var(--color-text-primary);
+  font-size: var(--fs-16);
+  font-family: var(--font-primary);
+  padding: 0 !important;
+  width: auto;
+  text-align: center;
+}
+
+.date-segment:first-child {
+  width: 48px;
+  text-align: left;
+}
+
+.date-segment:not(:first-child) {
+  width: 28px;
+}
+
+.date-segment::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.date-sep {
+  color: var(--color-text-tertiary);
+  font-size: var(--fs-16);
+  user-select: none;
+  padding: 0 1px;
+}
+
 .auth-input-icon {
   position: absolute;
   left: 16px;
