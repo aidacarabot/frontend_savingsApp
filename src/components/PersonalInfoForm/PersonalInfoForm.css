@@ -1,4 +1,3 @@
-
 .pif-wrapper {
   width: 100%;
   max-width: 480px;
@@ -29,6 +28,20 @@
   font-family: var(--font-secondary);
   letter-spacing: -0.8px;
   margin: 0;
+}
+
+.pif-name-input {
+  font-size: var(--fs-24);
+  font-weight: var(--fw-extrabold);
+  font-family: var(--font-secondary);
+  letter-spacing: -0.8px;
+  color: var(--color-text-primary);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--color-primary);
+  outline: none;
+  padding: 0 0 2px 0;
+  width: 100%;
 }
 
 .pif-age-badge {
@@ -349,7 +362,6 @@
     grid-template-columns: 1fr;
   }
 
-  
   .pif-expense-item {
     border-right: none;
   }

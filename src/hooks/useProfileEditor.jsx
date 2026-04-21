@@ -4,6 +4,7 @@ import { fetchData } from "../utils/api/fetchData";
 const useProfileEditor = (responseData, refetch) => {
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [editedProfile, setEditedProfile] = useState({
+    name: '',
     monthlySalary: '',
     monthlyExpectedExpenses: {},
     profilePicture: ''
@@ -11,6 +12,7 @@ const useProfileEditor = (responseData, refetch) => {
 
   useEffect(() => {
     setEditedProfile({
+      name: responseData?.name || '',
       monthlySalary: responseData?.monthlySalary?.toString() || '',
       monthlyExpectedExpenses: responseData?.monthlyExpectedExpenses || {},
       profilePicture: responseData?.profilePicture || '/assets/default-profile.png'
@@ -39,6 +41,7 @@ const useProfileEditor = (responseData, refetch) => {
       const salaryToSend = editedProfile.monthlySalary === '' ? 0 : Number(editedProfile.monthlySalary);
 
       await fetchData(`/users/${responseData._id}`, 'PUT', {
+        name: editedProfile.name,
         monthlySalary: salaryToSend,
         monthlyExpectedExpenses: editedProfile.monthlyExpectedExpenses,
         profilePicture: editedProfile.profilePicture

@@ -52,7 +52,18 @@ const PersonalInfoForm = () => {
       <div className='pif-top'>
         <ProfilePictureEdit />
         <div className='pif-identity'>
-          <h2 className='pif-name'>{responseData?.name}</h2>
+          {isEditingProfile ? (
+            <input
+              type='text'
+              value={editedProfile.name}
+              onChange={(e) => handleProfileChange('name', e.target.value)}
+              placeholder='Full Name'
+              autoComplete='off'
+              className='pif-input pif-name-input'
+            />
+          ) : (
+            <h2 className='pif-name'>{responseData?.name}</h2>
+          )}
           <span className='pif-age-badge'>{age} yrs</span>
         </div>
       </div>
