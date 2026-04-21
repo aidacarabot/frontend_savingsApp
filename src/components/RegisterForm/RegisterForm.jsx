@@ -26,6 +26,13 @@ const RegisterForm = ({ onToggleForm = null }) => {
     return true;
   };
 
+  const formatBirthDate = (e) => {
+    let v = e.target.value.replace(/\D/g, '').slice(0, 8);
+    if (v.length >= 5) v = v.slice(0, 4) + '-' + v.slice(4, 6) + '-' + v.slice(6);
+    else if (v.length >= 3) v = v.slice(0, 4) + '-' + v.slice(4);
+    e.target.value = v;
+  };
+
   const onSubmit = async (formData) => {
     setIsLoading(true);
     setErrorMessage('');
@@ -104,7 +111,9 @@ const RegisterForm = ({ onToggleForm = null }) => {
               <input
                 {...register("birthDate", { required: "Birth Date is required" })}
                 type="text"
-                placeholder="Enter your birth date (YYYY-MM-DD)"
+                placeholder="YYYY-MM-DD"
+                maxLength={10}
+                onChange={formatBirthDate}
                 className={errors.birthDate ? 'error' : ''}
               />
             </div>
