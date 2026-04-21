@@ -1,5 +1,5 @@
 import './RegisterForm.css';
-import { LockKeyhole, UserRound, Calendar, Eye, EyeClosed, Mail } from 'lucide-react';
+import { LockKeyhole, UserRound, Calendar, Eye, EyeClosed, Mail, CircleAlert } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { fetchData } from '../../utils/api/fetchData';
 import { useState } from 'react';
@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import Logo from '../Logo/Logo';
 import Loader from '../Loader/Loader';
 import Button from '../Button/Button';
-import { SuccessMessage, ErrorMessage } from '../Messages/Messages';
+import { SuccessMessage } from '../Messages/Messages';
 
 const RegisterForm = ({ onToggleForm = null }) => {
   const { register, handleSubmit, formState: { errors }, getValues } = useForm();
@@ -57,7 +57,6 @@ const RegisterForm = ({ onToggleForm = null }) => {
   return (
     <div className="register-form-container">
       {successMessage && <SuccessMessage text={successMessage} />}
-      {errorMessage && <ErrorMessage text={errorMessage} />}
       <div className="register-form-header">
         <Logo />
       </div>
@@ -67,6 +66,12 @@ const RegisterForm = ({ onToggleForm = null }) => {
         <p className="register-subtitle">Enter your information to get started.</p>
 
         <form onSubmit={handleSubmit(onSubmit)} className="register-form">
+          {errorMessage && (
+            <div className="auth-form-error">
+              <CircleAlert size={18} />
+              <span>{errorMessage}</span>
+            </div>
+          )}
           <div className="auth-form-group">
             <div className="auth-input-wrapper">
               <span className="auth-input-icon">

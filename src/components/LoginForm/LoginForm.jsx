@@ -1,4 +1,4 @@
-import { Eye, EyeClosed, Mail, LockKeyhole } from 'lucide-react';
+import { Eye, EyeClosed, Mail, LockKeyhole, CircleAlert } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { fetchData } from '../../utils/api/fetchData';
 import { useNavigate } from 'react-router-dom';
@@ -7,7 +7,7 @@ import './LoginForm.css';
 import Logo from '../Logo/Logo';
 import Loader from '../Loader/Loader';
 import Button from '../Button/Button';
-import { SuccessMessage, ErrorMessage } from '../Messages/Messages';
+import { SuccessMessage } from '../Messages/Messages';
 
 const LoginForm = ({ onToggleForm = null }) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -54,7 +54,6 @@ const LoginForm = ({ onToggleForm = null }) => {
   return (
     <div className="login-form-container">
       {successMessage && <SuccessMessage text={successMessage} />}
-      {errorMessage && <ErrorMessage text={errorMessage} />}
       <div className="login-form-header">
         <Logo />
       </div>
@@ -64,6 +63,12 @@ const LoginForm = ({ onToggleForm = null }) => {
         <p className="login-subtitle">Enter your email address and password to log in.</p>
 
         <form onSubmit={handleSubmit(onSubmit)} className="login-form">
+          {errorMessage && (
+            <div className="auth-form-error">
+              <CircleAlert size={18} />
+              <span>{errorMessage}</span>
+            </div>
+          )}
           <div className="auth-form-group">
             <div className="auth-input-wrapper">
               <span className="auth-input-icon">

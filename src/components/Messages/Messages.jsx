@@ -1,3 +1,4 @@
+import { CircleCheck, CircleAlert } from 'lucide-react';
 import useMessageVisibility from '../../hooks/useMessageVisibility';
 import './Messages.css';
 
@@ -8,7 +9,8 @@ const SuccessMessage = ({ text, duration = 3000 }) => {
 
   return (
     <div className="success-message">
-      {text}
+      <CircleCheck size={18} className="message-icon" />
+      <span>{text}</span>
     </div>
   );
 };
@@ -20,7 +22,8 @@ const ErrorMessage = ({ text, duration = 3000 }) => {
 
   return (
     <div className="error-message">
-      {text}
+      <CircleAlert size={18} className="message-icon" />
+      <span>{text}</span>
     </div>
   );
 };
