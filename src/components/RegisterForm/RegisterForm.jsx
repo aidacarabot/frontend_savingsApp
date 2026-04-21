@@ -10,7 +10,8 @@ import Button from '../Button/Button';
 import { SuccessMessage } from '../Messages/Messages';
 
 const RegisterForm = ({ onToggleForm = null }) => {
-  const { register, handleSubmit, formState: { errors }, getValues, setError } = useForm();
+  const { register, handleSubmit, formState: { errors }, getValues, setError, watch } = useForm();
+  const birthDateValue = watch('birthDate');
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showRepeatPassword, setShowRepeatPassword] = useState(false);
@@ -103,11 +104,9 @@ const RegisterForm = ({ onToggleForm = null }) => {
               </span>
               <input
                 {...register("birthDate", { required: "Birth Date is required" })}
-                type="text"
-                placeholder="Enter your birth date"
-                onFocus={(e) => e.target.type = 'date'}
-                onBlur={(e) => !e.target.value && (e.target.type = 'text')}
-                className={errors.birthDate ? 'error' : ''}
+                type="date"
+                max={new Date().toISOString().split('T')[0]}
+                className={`${errors.birthDate ? 'error' : ''} ${!birthDateValue ? 'date-placeholder' : ''}`.trim()}
               />
             </div>
             {errors.birthDate && <p className="auth-error-message">{errors.birthDate.message}</p>}

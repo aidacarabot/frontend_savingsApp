@@ -146,6 +146,19 @@
   box-shadow: 0 0 0 3px var(--color-danger-25);
 }
 
+/* Date input placeholder styling */
+.auth-input-wrapper input[type="date"].date-placeholder::-webkit-datetime-edit-text,
+.auth-input-wrapper input[type="date"].date-placeholder::-webkit-datetime-edit-month-field,
+.auth-input-wrapper input[type="date"].date-placeholder::-webkit-datetime-edit-day-field,
+.auth-input-wrapper input[type="date"].date-placeholder::-webkit-datetime-edit-year-field {
+  color: var(--color-text-tertiary);
+}
+
+.auth-input-wrapper input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.5);
+  cursor: pointer;
+}
+
 .auth-input-icon {
   position: absolute;
   left: 16px;
