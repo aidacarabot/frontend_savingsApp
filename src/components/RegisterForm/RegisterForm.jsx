@@ -57,10 +57,10 @@ const RegisterForm = ({ onToggleForm = null }) => {
       const m = parseInt(val);
       if (m < 1) val = '01';
       else if (m > 12) val = '12';
+      dayRef.current?.focus();
     }
     setBirthMonth(val);
     updateBirthDate(birthYear, val, birthDay);
-    if (val.length === 2) dayRef.current?.focus();
   };
 
   const handleDayChange = (e) => {

@@ -169,7 +169,7 @@
 .date-segments {
   display: flex;
   align-items: center;
-  gap: 1px;
+  gap: 0;
   width: 100%;
 }
 
@@ -182,17 +182,16 @@
   font-size: var(--fs-16);
   font-family: var(--font-primary);
   padding: 0 !important;
-  width: auto;
   text-align: center;
 }
 
 .date-segment:first-child {
-  width: 48px;
+  width: 52px;
   text-align: left;
 }
 
 .date-segment:not(:first-child) {
-  width: 28px;
+  width: 26px;
 }
 
 .date-segment::placeholder {
@@ -203,7 +202,8 @@
   color: var(--color-text-tertiary);
   font-size: var(--fs-16);
   user-select: none;
-  padding: 0 1px;
+  padding: 0 2px;
+  line-height: 1;
 }
 
 .auth-input-icon {
