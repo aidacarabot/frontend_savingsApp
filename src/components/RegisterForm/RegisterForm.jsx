@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Logo from '../Logo/Logo';
 import Loader from '../Loader/Loader';
+import Button from '../Button/Button';
 import { SuccessMessage, ErrorMessage } from '../Messages/Messages';
 
 const RegisterForm = ({ onToggleForm = null }) => {
@@ -124,13 +125,11 @@ const RegisterForm = ({ onToggleForm = null }) => {
                 placeholder="Password"
                 className={errors.password ? 'error' : ''}
               />
-              <button
-                type="button"
+              <Button
                 className="auth-toggle-password"
                 onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? <Eye size={20} /> : <EyeClosed size={20} />}
-              </button>
+                text={showPassword ? <Eye size={20} /> : <EyeClosed size={20} />}
+              />
             </div>
             {errors.password && <p className="auth-error-message">{errors.password.message}</p>}
           </div>
@@ -149,22 +148,20 @@ const RegisterForm = ({ onToggleForm = null }) => {
                 placeholder="Repeat Password"
                 className={errors.repeatPassword ? 'error' : ''}
               />
-              <button
-                type="button"
+              <Button
                 className="auth-toggle-password"
                 onClick={() => setShowRepeatPassword(!showRepeatPassword)}
-              >
-                {showRepeatPassword ? <Eye size={20} /> : <EyeClosed size={20} />}
-              </button>
+                text={showRepeatPassword ? <Eye size={20} /> : <EyeClosed size={20} />}
+              />
             </div>
             {errors.repeatPassword && <p className="auth-error-message">{errors.repeatPassword.message}</p>}
           </div>
 
-          <button type="submit" className="register-button">Register</button>
+          <Button type="submit" className="register-button" text="Register" />
         </form>
 
         <p className="login-text">
-          Already have an account? <button type="button" onClick={() => onToggleForm ? onToggleForm() : navigate('/login')} className="login-link">Log in</button>
+          Already have an account? <Button onClick={() => onToggleForm ? onToggleForm() : navigate('/login')} className="login-link" text="Log in" />
         </p>
       </div>
     </div>

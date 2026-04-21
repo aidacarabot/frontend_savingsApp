@@ -6,6 +6,7 @@ import { useFinancialData } from '../../hooks/useFinancialData';
 import DropDown from '../DropDown/DropDown';
 import AreYouSure from '../AreYouSure/AreYouSure';
 import Loader from '../Loader/Loader';
+import Button from '../Button/Button';
 import { fetchData } from '../../utils/api/fetchData';
 import './GoalBox.css';
 
@@ -396,25 +397,23 @@ const GoalBox = ({ onGoalUpdated, onEditGoal, refreshTrigger }) => {
                       </div>
                     )}
                     {removeVal && parseFloat(removeVal) > 0 && !removeIsOver && (
-                      <button
+                      <Button
                         className="gb-action-confirm gb-confirm-remove"
                         onClick={() => handleRemoveFunds(goal._id, removeVal)}
-                      >
-                        OK
-                      </button>
+                        text="OK"
+                      />
                     )}
                   </div>
 
-                  <button
+                  <Button
                     className={`gb-monthly-btn${effectiveMonthly < (goal.monthlyContribution || 0) && effectiveMonthly > 0 ? ' gb-monthly-btn-partial' : ''}`}
                     onClick={() => handleAddFunds(goal._id, effectiveMonthly)}
                     disabled={maxAdd <= 0}
                     title={effectiveMonthly < (goal.monthlyContribution || 0) && effectiveMonthly > 0
                       ? `Only $${effectiveMonthly.toFixed(0)} available (monthly: $${(goal.monthlyContribution || 0).toFixed(0)})`
                       : undefined}
-                  >
-                    <Plus size={14} /> ${effectiveMonthly > 0 ? effectiveMonthly.toFixed(0) : (goal.monthlyContribution ? goal.monthlyContribution.toFixed(0) : '0')} monthly
-                  </button>
+                    text={<><Plus size={14} /> ${effectiveMonthly > 0 ? effectiveMonthly.toFixed(0) : (goal.monthlyContribution ? goal.monthlyContribution.toFixed(0) : '0')} monthly</>}
+                  />
 
                   <div className={`gb-input-action gb-add${maxAdd <= 0 ? ' gb-add-locked' : addIsOver ? ' gb-add-over' : ''}`}>
                     <Plus className="gb-action-symbol" size={14} />
@@ -440,12 +439,11 @@ const GoalBox = ({ onGoalUpdated, onEditGoal, refreshTrigger }) => {
                       </div>
                     )}
                     {addVal && parseFloat(addVal) > 0 && maxAdd > 0 && !addIsOver && (
-                      <button
+                      <Button
                         className="gb-action-confirm gb-confirm-add"
                         onClick={() => handleAddFunds(goal._id, addVal)}
-                      >
-                        OK
-                      </button>
+                        text="OK"
+                      />
                     )}
                   </div>
                 </div>

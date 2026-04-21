@@ -6,6 +6,7 @@ import { useState } from 'react';
 import './LoginForm.css';
 import Logo from '../Logo/Logo';
 import Loader from '../Loader/Loader';
+import Button from '../Button/Button';
 import { SuccessMessage, ErrorMessage } from '../Messages/Messages';
 
 const LoginForm = ({ onToggleForm = null }) => {
@@ -89,22 +90,20 @@ const LoginForm = ({ onToggleForm = null }) => {
                 placeholder="Password"
                 className={errors.password ? 'error' : ''}
               />
-              <button
-                type="button"
+              <Button
                 className="auth-toggle-password"
                 onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? <Eye size={20} /> : <EyeClosed size={20} />}
-              </button>
+                text={showPassword ? <Eye size={20} /> : <EyeClosed size={20} />}
+              />
             </div>
             {errors.password && <p className="auth-error-message">{errors.password.message}</p>}
           </div>
 
-          <button type="submit" className="login-button">Login</button>
+          <Button type="submit" className="login-button" text="Login" />
         </form>
 
         <p className="signup-text">
-          Don't you have an account? <button type="button" onClick={() => onToggleForm ? onToggleForm() : navigate('/register')} className="signup-link">Sign Up</button>
+          Don't you have an account? <Button onClick={() => onToggleForm ? onToggleForm() : navigate('/register')} className="signup-link" text="Sign Up" />
         </p>
       </div>
     </div>

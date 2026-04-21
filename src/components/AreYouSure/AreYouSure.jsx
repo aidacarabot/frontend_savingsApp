@@ -1,12 +1,13 @@
 import { TriangleAlert } from 'lucide-react';
 import { createPortal } from 'react-dom';
+import Button from '../Button/Button';
 import './AreYouSure.css'
 
 const AreYouSure = ({ message = 'Are you sure you want to proceed?', onConfirm = () => {}, onCancel = () => {} }) => {
   return createPortal(
     <div className='confirmation-overlay' onClick={onCancel}>
       <div className='confirmation-card' onClick={(e) => e.stopPropagation()}>
-        <button className="confirmation-close-btn" onClick={onCancel} type="button">&times;</button>
+        <Button className="confirmation-close-btn" onClick={onCancel} text="×" />
         
         <div className="confirmation-icon">
           <TriangleAlert size={28} color="var(--color-danger)" strokeWidth={1.8} />
@@ -16,8 +17,8 @@ const AreYouSure = ({ message = 'Are you sure you want to proceed?', onConfirm =
         <p className="confirmation-message">{message}</p>
         
         <div className='confirmation-buttons'>
-          <button className="conf-btn conf-btn-cancel" onClick={onCancel} type="button">Cancel</button>
-          <button className="conf-btn conf-btn-confirm" onClick={onConfirm} type="button">Confirm</button>
+          <Button className="conf-btn conf-btn-cancel" onClick={onCancel} text="Cancel" />
+          <Button className="conf-btn conf-btn-confirm" onClick={onConfirm} text="Confirm" />
         </div>
       </div>
     </div>,

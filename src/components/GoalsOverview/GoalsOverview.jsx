@@ -3,6 +3,7 @@ import { Trophy, ArrowRight, CalendarClock } from 'lucide-react';
 import useApiFetch from '../../hooks/useApiFetch';
 import { useFinancialData } from '../../hooks/useFinancialData';
 import Loader from '../Loader/Loader';
+import Button from '../Button/Button';
 import './GoalsOverview.css';
 
 const GoalsOverview = () => {
@@ -42,9 +43,7 @@ const GoalsOverview = () => {
       {/* Header */}
       <div className="go-header">
         <p className="go-label"> GOALS OVERVIEW</p>
-        <button className="go-view-all" onClick={() => navigate('/goals')}>
-          View all <ArrowRight size={12} />
-        </button>
+        <Button className="go-view-all" onClick={() => navigate('/goals')} text={<>View all <ArrowRight size={12} /></>} />
       </div>
 
       {/* Count chips */}

@@ -97,9 +97,7 @@ const GoalForm = ({ onClose, onGoalAdded, initialData = null, isEditing = false 
   return (
     <div className="gf-overlay">
       <div className="gf-card">
-        <button className="gf-close" onClick={onClose} type="button">
-          &times;
-        </button>
+        <Button className="gf-close" onClick={onClose} text="×" />
 
         <div className="gf-header">
           <h2><Goal size={22} color="var(--color-primary)" style={{ verticalAlign: 'middle', marginRight: 10, marginBottom: 6 }} />{isEditing ? 'Edit Goal' : 'New Goal'}</h2>
@@ -222,9 +220,7 @@ const GoalForm = ({ onClose, onGoalAdded, initialData = null, isEditing = false 
           </div>
 
           {errorMessage && <ErrorMessage text={errorMessage} />}
-          <button type="submit" className="gf-submit">
-            {isEditing ? 'Update Goal' : 'Create Goal'}
-          </button>
+          <Button type="submit" className="gf-submit" text={isEditing ? 'Update Goal' : 'Create Goal'} />
         </form>
       </div>
     </div>

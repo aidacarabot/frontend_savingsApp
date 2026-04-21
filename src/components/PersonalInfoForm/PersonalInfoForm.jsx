@@ -6,6 +6,7 @@ import ProfilePictureEdit from '../ProfilePictureEdit/ProfilePictureEdit';
 import Loader from "../Loader/Loader";
 import { ErrorMessage } from '../Messages/Messages';
 import { CATEGORIES, CATEGORY_STYLES } from '../../utils/constants';
+import Button from '../Button/Button';
 import './PersonalInfoForm.css';
 
 const LUCIDE_ICONS = { House, ShoppingCart, Beer, Car, ShoppingBag, Drama, HeartPulse, Plane, Landmark, Coins, ChartNoAxesCombined };
@@ -148,17 +149,11 @@ const PersonalInfoForm = () => {
       {/* ── Actions ── */}
       <div className='pif-actions'>
         {!isEditingProfile ? (
-          <button className='pif-btn pif-btn--outline' onClick={() => setIsEditingProfile(true)}>
-            Edit Profile
-          </button>
+          <Button className='pif-btn pif-btn--outline' onClick={() => setIsEditingProfile(true)} text="Edit Profile" />
         ) : (
           <>
-            <button className='pif-btn pif-btn--ghost' onClick={() => setIsEditingProfile(false)}>
-              Cancel
-            </button>
-            <button className='pif-btn pif-btn--primary' onClick={handleSave}>
-              Save Changes
-            </button>
+            <Button className='pif-btn pif-btn--ghost' onClick={() => setIsEditingProfile(false)} text="Cancel" />
+            <Button className='pif-btn pif-btn--primary' onClick={handleSave} text="Save Changes" />
           </>
         )}
       </div>

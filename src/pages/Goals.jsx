@@ -4,6 +4,7 @@ import GoalForm from "../components/GoalForm/GoalForm";
 import GoalsDistribution from "../components/GoalsDistribution/GoalsDistribution";
 import { FinancialProvider } from "../context/FinancialContext";
 import Title from "../components/Title/Title";
+import Button from "../components/Button/Button";
 import { ChessQueen } from 'lucide-react';
 
 
@@ -44,9 +45,7 @@ const Goals = () => {
       <div className="goals-page">
         <div className="goals-page-header">
           <Title icon={<ChessQueen size={30} color="#27ebc8" />} title="GOALS" className="title-transactions" />
-          <button className="goals-add-btn" onClick={handleAddNewGoal}>
-            + Add
-          </button>
+          <Button className="goals-add-btn" onClick={handleAddNewGoal} text="+ Add" />
         </div>
 
         <GoalsDistribution refreshTrigger={refreshDistribution} />

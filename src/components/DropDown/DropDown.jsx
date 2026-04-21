@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Ellipsis, Pencil, Trash2 } from 'lucide-react';
+import Button from '../Button/Button';
 import './DropDown.css';
 
 const DropDown = ({ transactionId, onDeleteRequest, onEditRequest }) => {
@@ -35,20 +36,12 @@ const DropDown = ({ transactionId, onDeleteRequest, onEditRequest }) => {
 
   return (
     <div className="dropdown-container" ref={rootRef}>
-      <button className="dropdown-trigger" onClick={toggle} aria-label="Options">
-        <Ellipsis size={20} />
-      </button>
+      <Button className="dropdown-trigger" onClick={toggle} aria-label="Options" text={<Ellipsis size={20} />} />
 
       {isOpen && (
         <div className="dropdown-menu">
-          <button className="dropdown-item edit" onClick={handleEdit}>
-            <Pencil size={16} />
-            <span>Edit</span>
-          </button>
-          <button className="dropdown-item delete" onClick={handleDeleteRequest}>
-            <Trash2 size={16} />
-            <span>Delete</span>
-          </button>
+          <Button className="dropdown-item edit" onClick={handleEdit} text={<><Pencil size={16} /><span>Edit</span></>} />
+          <Button className="dropdown-item delete" onClick={handleDeleteRequest} text={<><Trash2 size={16} /><span>Delete</span></>} />
         </div>
       )}
     </div>

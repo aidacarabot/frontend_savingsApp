@@ -8,6 +8,7 @@ import { ErrorMessage } from '../Messages/Messages';
 import ProfilePicture from '../ProfilePicture/ProfilePicture';
 import Logo from '../Logo/Logo';
 import AreYouSure from '../AreYouSure/AreYouSure';
+import Button from '../Button/Button';
 
 const Navbar = () => {
   const [userName, setUserName] = useState(localStorage.getItem('user_name') || '');
@@ -79,10 +80,7 @@ const Navbar = () => {
           </Link>
         </li>
       </ul>
-      <button className='logout-button' onClick={handleLogoutClick}>
-        <LogOut size={18} />
-        Logout
-      </button>
+      <Button className='logout-button' onClick={handleLogoutClick} text={<><LogOut size={18} />Logout</>} />
       {showLogoutConfirm && (
         <AreYouSure
           message='Are you sure you want to logout?'
