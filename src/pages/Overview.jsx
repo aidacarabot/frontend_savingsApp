@@ -20,12 +20,14 @@ const OverviewContent = () => {
 
   return (
     <div className='overview-container'>
-      <Title icon={<CalendarDays className="icon-overview-h1" />} title={`Today is ${currentDate}`} />
-      <ViewBy 
-        options={viewByOptions}
-        currentValue={viewBy}
-        onChange={setViewBy}
-      />
+      <div className='overview-sticky-header'>
+        <Title icon={<CalendarDays className="icon-overview-h1" />} title={`Today is ${currentDate}`} />
+        <ViewBy 
+          options={viewByOptions}
+          currentValue={viewBy}
+          onChange={setViewBy}
+        />
+      </div>
       <CurrentData />
       <div className='charts-wrapper'>
         <SavingsChart />

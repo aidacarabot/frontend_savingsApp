@@ -23,6 +23,10 @@
   gap: var(--sp-5);
 }
 
+.overview-sticky-header {
+  display: contents;
+}
+
 .charts-wrapper {
   display: grid;
   grid-template-columns: 1fr 0.6fr;
@@ -270,8 +274,8 @@
     padding: var(--sp-4);
   }
 
-  .overview-container .title-container,
-  .overview-container .view-by-container {
+  .overview-container .overview-sticky-header {
+    display: block;
     position: sticky;
     top: 0;
     z-index: 10;
