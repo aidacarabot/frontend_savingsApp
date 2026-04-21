@@ -10,7 +10,7 @@ import Button from '../Button/Button';
 import { SuccessMessage } from '../Messages/Messages';
 
 const RegisterForm = ({ onToggleForm = null }) => {
-  const { register, handleSubmit, formState: { errors }, getValues } = useForm();
+  const { register, handleSubmit, formState: { errors }, getValues, setError } = useForm();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showRepeatPassword, setShowRepeatPassword] = useState(false);
@@ -42,8 +42,17 @@ const RegisterForm = ({ onToggleForm = null }) => {
         onToggleForm ? onToggleForm() : navigate('/login');
       }, 2000);
     } catch (error) {
-      const errorMsg = error?.response?.error || 'There was an error during registration. Please try again.';
-      setErrorMessage(errorMsg);
+      const rawMsg = error?.error || error?.message || error?.response?.error || '';
+      const isDuplicateEmail = /email|already|duplicate|exists|registered/i.test(rawMsg);
+
+      if (isDuplicateEmail) {
+        setError('email', {
+          type: 'manual',
+          message: 'This email is already registered. Try logging in instead.',
+        });
+      } else {
+        setErrorMessage(rawMsg || 'There was an error during registration. Please try again.');
+      }
       console.error('Error during registration:', error);
     } finally {
       setIsLoading(false);
