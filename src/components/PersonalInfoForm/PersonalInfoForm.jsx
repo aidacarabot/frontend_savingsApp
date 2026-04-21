@@ -42,13 +42,13 @@ const PersonalInfoForm = () => {
   if (loading) return <Loader />;
   if (error) return <ErrorMessage text={`Error: ${error.message}`} duration={null} />;
 
-  // Always iterate over the fixed CATEGORIES list
+  
   const expenseSource = isEditingProfile ? editedProfile.monthlyExpectedExpenses : expenses;
 
   return (
     <div className='pif-wrapper'>
 
-      {/* ── Top: avatar + name/age ── */}
+      {}
       <div className='pif-top'>
         <ProfilePictureEdit />
         <div className='pif-identity'>
@@ -57,7 +57,7 @@ const PersonalInfoForm = () => {
         </div>
       </div>
 
-      {/* ── Monthly Income ── */}
+      {}
       <div className='pif-card'>
         <div className='pif-card-label'>
           <ChartNoAxesCombined size={14} />
@@ -83,7 +83,7 @@ const PersonalInfoForm = () => {
         )}
       </div>
 
-      {/* ── Expenses ── */}
+      {}
       <div className='pif-section-label'>
         <BarChart2 size={13} />
         Expected Monthly Expenses
@@ -125,7 +125,7 @@ const PersonalInfoForm = () => {
         })}
       </ul>
 
-      {/* ── Summary ── */}
+      {}
       <div className='pif-summary'>
         <div className='pif-summary-row'>
           <span className='pif-summary-label'>Total expenses</span>
@@ -146,7 +146,7 @@ const PersonalInfoForm = () => {
         )}
       </div>
 
-      {/* ── Actions ── */}
+      {}
       <div className='pif-actions'>
         {!isEditingProfile ? (
           <Button className='pif-btn pif-btn--outline' onClick={() => setIsEditingProfile(true)} text="Edit Profile" />

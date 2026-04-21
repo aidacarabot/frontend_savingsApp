@@ -16,7 +16,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Usamos el hook para obtener los datos del usuario y actualizar localStorage automáticamente
+  
   const { responseData, loading, error } = useApiFetch(
     '/users',
     'GET',
@@ -26,7 +26,7 @@ const Navbar = () => {
     'user_name'
   );
 
-  // Actualiza el estado local cuando cambia el nombre en localStorage
+  
   useEffect(() => {
     if (responseData && responseData.name !== userName) {
       setUserName(responseData.name);

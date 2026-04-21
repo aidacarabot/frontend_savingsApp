@@ -23,7 +23,6 @@
   text-transform: uppercase;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .title-section h1 {
     font-size: var(--fs-28);

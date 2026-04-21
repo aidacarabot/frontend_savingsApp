@@ -59,7 +59,6 @@
   fill: var(--color-text-secondary);
 }
 
-/* Tooltip */
 .expenses-tooltip {
   background: var(--color-pro);
   border: 1px solid var(--color-border);
@@ -101,7 +100,6 @@
   font-family: var(--font-secondary);
 }
 
-/* Legend */
 .expenses-legend {
   display: flex;
   flex-direction: column;

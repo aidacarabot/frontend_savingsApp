@@ -48,7 +48,6 @@
   font-family: var(--font-tertiary);
 }
 
-/* Specific classes for filter inputs */
 .filter-input,
 .filter-select {
   flex: 0 1 auto;

@@ -1,12 +1,13 @@
 import { useForm } from 'react-hook-form';
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import { Goal } from 'lucide-react';
 import Button from '../Button/Button';
 import { ErrorMessage } from '../Messages/Messages';
-import { fetchData } from '../../utils/api/fetchData';
 import useApiFetch from '../../hooks/useApiFetch';
 import useCalculateAge from '../../hooks/useCalculateAge';
 import { useGoalCalculations } from '../../hooks/useGoalCalculations';
+import GoalFormSummary from './GoalFormSummary';
+import useGoalForm from '../../hooks/useGoalForm';
 import './GoalForm.css';
 
 const GoalForm = ({ onClose, onGoalAdded, initialData = null, isEditing = false }) => {
@@ -21,11 +22,7 @@ const GoalForm = ({ onClose, onGoalAdded, initialData = null, isEditing = false 
   const monthlyContribution = watch('monthlyContribution');
   const ageAtCompletion = watch('ageAtCompletion');
 
-  const {
-    calculatedData,
-    setLastUpdatedField,
-    setCalculatedData
-  } = useGoalCalculations(
+  const { calculatedData, setLastUpdatedField, setCalculatedData } = useGoalCalculations(
     isInitializedRef.current ? totalGoal : null,
     isInitializedRef.current ? completionDate : null,
     isInitializedRef.current ? monthlyContribution : null,
@@ -35,64 +32,10 @@ const GoalForm = ({ onClose, onGoalAdded, initialData = null, isEditing = false 
     currentAge
   );
 
-  const [errorMessage, setErrorMessage] = useState('');
-
-  useEffect(() => {
-    if (isEditing && initialData && !isInitializedRef.current) {
-      setValue('goalName', initialData.goalName);
-      setValue('totalGoal', initialData.targetAmount);
-      setValue('monthlyContribution', initialData.monthlyContribution);
-
-      if (initialData.completionDate) {
-        const date = new Date(initialData.completionDate);
-        const formattedDate = date.toISOString().split('T')[0];
-        setValue('completionDate', formattedDate);
-      }
-
-      setTimeout(() => {
-        isInitializedRef.current = true;
-      }, 100);
-    } else if (!isEditing) {
-      isInitializedRef.current = true;
-    }
-  }, [isEditing, initialData, setValue]);
-
-  const handleFormSubmit = async (data) => {
-    setErrorMessage('');
-    try {
-      const payload = {
-        goalName: data.goalName,
-        targetAmount: parseFloat(data.totalGoal),
-        completionDate: data.completionDate || null,
-        monthlyContribution: data.monthlyContribution ? parseFloat(data.monthlyContribution) : null
-      };
-
-      if (isEditing) {
-        await fetchData(`/goals/${initialData._id}`, 'PUT', payload);
-      } else {
-        await fetchData('/goals', 'POST', payload);
-      }
-
-      if (onGoalAdded) onGoalAdded();
-      reset();
-      setCalculatedData({
-        monthlySavingsNeeded: 0,
-        calculatedCompletionDate: '',
-        ageAtCompletion: 0
-      });
-      isInitializedRef.current = false;
-    } catch (error) {
-      console.error(`Error ${isEditing ? 'updating' : 'creating'} goal:`, error);
-      setErrorMessage(`Error ${isEditing ? 'updating' : 'creating'} goal. Please try again.`);
-    }
-  };
-
-  const handleFieldChange = (fieldName, event) => {
-    if (isInitializedRef.current) {
-      setLastUpdatedField(fieldName);
-    }
-    register(fieldName).onChange(event);
-  };
+  const { errorMessage, handleFormSubmit, handleFieldChange } = useGoalForm({
+    isEditing, initialData, onGoalAdded, setValue, reset,
+    setCalculatedData, setLastUpdatedField, isInitializedRef, register,
+  });
 
   return (
     <div className="gf-overlay">
@@ -183,41 +126,7 @@ const GoalForm = ({ onClose, onGoalAdded, initialData = null, isEditing = false 
             </div>
           </div>
 
-          <div className="gf-summary">
-            <h3 className="gf-summary-title">Goal Summary</h3>
-            <div className="gf-summary-grid">
-              <div className="gf-summary-item">
-                <span className="gf-summary-label">Monthly Needed</span>
-                <span className="gf-summary-value">
-                  {totalGoal && totalGoal > 0 && calculatedData.monthlySavingsNeeded > 0
-                    ? `$${calculatedData.monthlySavingsNeeded.toFixed(2)}`
-                    : '\u2014'
-                  }
-                </span>
-              </div>
-              <div className="gf-summary-item">
-                <span className="gf-summary-label">Target Date</span>
-                <span className="gf-summary-value">
-                  {totalGoal && totalGoal > 0 && calculatedData.calculatedCompletionDate
-                    ? new Date(calculatedData.calculatedCompletionDate).toLocaleDateString('en-US', {
-                        month: 'short',
-                        year: 'numeric'
-                      })
-                    : '\u2014'
-                  }
-                </span>
-              </div>
-              <div className="gf-summary-item">
-                <span className="gf-summary-label">Your Age</span>
-                <span className="gf-summary-value">
-                  {totalGoal && totalGoal > 0 && calculatedData.ageAtCompletion > 0
-                    ? `${calculatedData.ageAtCompletion} years`
-                    : '\u2014'
-                  }
-                </span>
-              </div>
-            </div>
-          </div>
+          <GoalFormSummary totalGoal={totalGoal} calculatedData={calculatedData} />
 
           {errorMessage && <ErrorMessage text={errorMessage} />}
           <Button type="submit" className="gf-submit" text={isEditing ? 'Update Goal' : 'Create Goal'} />

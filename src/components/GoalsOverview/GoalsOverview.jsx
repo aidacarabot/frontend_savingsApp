@@ -40,13 +40,13 @@ const GoalsOverview = () => {
 
   return (
     <div className="go-container">
-      {/* Header */}
+      {}
       <div className="go-header">
         <p className="go-label"> GOALS OVERVIEW</p>
         <Button className="go-view-all" onClick={() => navigate('/goals')} text={<>View all <ArrowRight size={12} /></>} />
       </div>
 
-      {/* Count chips */}
+      {}
       <div className="go-counts">
         <span className="go-count-chip go-count-active">
           <span className="go-pulse-dot" />
@@ -58,7 +58,7 @@ const GoalsOverview = () => {
         </span>
       </div>
 
-      {/* Balance block */}
+      {}
       <div className="go-balance-block">
         <div className="go-balance-main">
           <p className="go-balance-label">Total balance</p>
@@ -79,7 +79,7 @@ const GoalsOverview = () => {
         </div>
       </div>
 
-      {/* Goal list */}
+      {}
       {activeGoals.length === 0 ? (
         <div className="go-empty">
           <Trophy size={24} strokeWidth={1.5} />

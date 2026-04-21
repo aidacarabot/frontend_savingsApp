@@ -2,9 +2,8 @@ import { useForm } from 'react-hook-form';
 import './IncomeExpenseForm.css';
 import Button from '../Button/Button';
 import { ErrorMessage } from '../Messages/Messages';
-import { fetchData } from '../../utils/api/fetchData';
 import { CATEGORIES } from '../../utils/constants';
-import { useEffect, useState } from 'react';
+import useIncomeExpenseForm from '../../hooks/useIncomeExpenseForm';
 
 const IncomeExpenseForm = ({ onClose, onTransactionAdded, initialData = null, onTransactionUpdated }) => {
   const { register, handleSubmit, watch, reset, setValue, formState: { errors } } = useForm({
@@ -13,85 +12,17 @@ const IncomeExpenseForm = ({ onClose, onTransactionAdded, initialData = null, on
           type: initialData.type || '',
           title: initialData.name || '',
           price: initialData.amount != null ? String(initialData.amount) : '',
-          date: initialData.date ? initialData.date.slice(0,10) : '', // YYYY-MM-DD
+          date: initialData.date ? initialData.date.slice(0, 10) : '',
           category: initialData.category || '',
         }
       : undefined,
   });
 
-  const [displayPrice, setDisplayPrice] = useState(initialData?.amount ? initialData.amount.toLocaleString('en-US') : '');
-  const [errorMessage, setErrorMessage] = useState('');
+  const type = watch('type');
 
-  const type = watch('type'); // Observa el campo 'type' para cambios
-
-  // Si initialData cambia después del montaje, reseteamos via useEffect (evita llamadas sincronas a setValue)
-  useEffect(() => {
-    if (initialData) {
-      setValue('type', initialData.type || '');
-      setValue('title', initialData.name || '');
-      setValue('price', initialData.amount != null ? String(initialData.amount) : '');
-      setValue('date', initialData.date ? initialData.date.slice(0,10) : '');
-      setValue('category', initialData.category || '');
-      setDisplayPrice(initialData.amount != null ? initialData.amount.toLocaleString('en-US') : '');
-    } else {
-      // si no hay initialData, limpiamos el formulario
-      reset();
-      setDisplayPrice('');
-    }
-  }, [initialData, setValue, reset]);
-
-  // Función para formatear el precio con separador de miles
-  const handlePriceChange = (e) => {
-    const value = e.target.value.replace(/,/g, ''); // Remover comas existentes
-    
-    if (value === '' || /^\d*\.?\d{0,2}$/.test(value)) {
-      setValue('price', value);
-      
-      // Formatear con separador de miles
-      if (value !== '') {
-        const [intPart, decPart] = value.split('.');
-        const formattedInt = parseInt(intPart || '0').toLocaleString('en-US');
-        const formatted = decPart !== undefined ? `${formattedInt}.${decPart}` : formattedInt;
-        setDisplayPrice(formatted);
-      } else {
-        setDisplayPrice('');
-      }
-    }
-  };
-  
-  //? Función para manejar el envío del formulario
-  const handleFormSubmit = async (data) => {
-    setErrorMessage('');
-    try {
-      // Ajustamos los datos para que coincidan con los requerimientos del backend
-      const payload = {
-        type: data.type,
-        name: data.title, // El backend espera "name" en lugar de "title"
-        amount: parseFloat(data.price), // Convertimos el precio a número
-        date: data.date,
-        category: data.category || null, // Si no hay categoría, enviamos null
-      };
-
-      if (initialData && initialData._id) {
-        // modo edición -> PUT
-        const response = await fetchData(`/transactions/${initialData._id}`, 'PUT', payload);
-        if (onTransactionUpdated) onTransactionUpdated(response);
-      } else {
-        // modo creación -> POST
-        await fetchData('/transactions', 'POST', payload); // no necesitamos la variable response aquí
-        if (onTransactionAdded) onTransactionAdded();
-      }
-
-      // Reseteamos el formulario después de enviarlo (solo si no es edición)
-      if (!initialData) reset();
-
-      // Opcional: Cierra el formulario después de guardar
-      if (onClose) onClose();
-    } catch (error) {
-      console.error('Error saving transaction:', error);
-      setErrorMessage('Error saving transaction. Please try again.');
-    }
-  };
+  const { displayPrice, errorMessage, handlePriceChange, handleFormSubmit } = useIncomeExpenseForm({
+    initialData, onClose, onTransactionAdded, onTransactionUpdated, setValue, reset,
+  });
 
   return (
     <div className="form-overlay">

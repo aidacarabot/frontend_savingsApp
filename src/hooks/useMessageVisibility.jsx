@@ -4,7 +4,7 @@ const useMessageVisibility = (duration = 3000) => {
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    if (duration === null) return; // persistente, no ocultar
+    if (duration === null) return; 
     const timer = setTimeout(() => {
       setVisible(false);
     }, duration);

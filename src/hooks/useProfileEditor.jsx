@@ -45,7 +45,7 @@ const useProfileEditor = (responseData, refetch) => {
       });
 
       setIsEditingProfile(false);
-      refetch(); // Refresca los datos del usuario sin recargar la página
+      refetch(); 
     } catch (err) {
       console.error('Error updating profile:', err);
     }

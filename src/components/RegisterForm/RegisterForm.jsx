@@ -18,7 +18,7 @@ const RegisterForm = ({ onToggleForm = null }) => {
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  // Manejo de la validación de contraseñas
+  
   const validatePasswordMatch = (value) => {
     if (value !== getValues('password')) {
       return "Passwords do not match";

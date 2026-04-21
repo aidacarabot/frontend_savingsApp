@@ -48,7 +48,6 @@
   }
 }
 
-/* Close */
 .gf-close {
   position: absolute;
   top: 20px;
@@ -78,7 +77,6 @@
   transform: rotate(90deg);
 }
 
-/* Header */
 .gf-header {
   margin-bottom: var(--sp-6);
 }
@@ -99,7 +97,6 @@
   font-weight: var(--fw-normal);
 }
 
-/* Form */
 .gf-form {
   display: flex;
   flex-direction: column;
@@ -120,7 +117,6 @@
   font-family: var(--font-primary);
 }
 
-/* Inputs */
 .gf-input {
   padding: 12px 14px;
   border: 1.5px solid var(--color-border);
@@ -150,7 +146,6 @@
   font-weight: var(--fw-normal);
 }
 
-/* Prefix ($) */
 .gf-input-prefix-wrap {
   position: relative;
   display: flex;
@@ -172,7 +167,6 @@
   padding-left: 30px;
 }
 
-/* Date */
 .gf-input-date {
   cursor: pointer;
   color-scheme: dark;
@@ -183,14 +177,12 @@
   filter: invert(0.7);
 }
 
-/* 3-column grid */
 .gf-grid-3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--sp-3);
 }
 
-/* Summary */
 .gf-summary {
   background: linear-gradient(
     135deg,
@@ -239,14 +231,12 @@
   font-family: var(--font-tertiary);
 }
 
-/* Field validation errors */
 .gf-field-error {
   color: var(--color-error, #e74c3c);
   font-size: var(--fs-12, 12px);
   margin-top: 4px;
 }
 
-/* Submit */
 .gf-submit {
   padding: var(--sp-3-5);
   background: var(--color-primary);
@@ -273,14 +263,12 @@
   transform: translateY(0);
 }
 
-/* Remove number spinners */
 .gf-input::-webkit-inner-spin-button,
 .gf-input::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-/* Responsive */
 @media (max-width: 650px) {
   .gf-grid-3 {
     grid-template-columns: 1fr;

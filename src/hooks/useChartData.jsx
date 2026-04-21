@@ -15,7 +15,7 @@ export const useChartData = () => {
     const currentYear = now.getFullYear();
     const currentMonth = now.getMonth();
 
-    // Función para agrupar transacciones por fecha
+    
     const groupByDate = (transactions, groupBy) => {
       const grouped = {};
 
@@ -50,20 +50,20 @@ export const useChartData = () => {
     switch (viewBy) {
       case 'Month': {
         const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        // Savings empieza desde 0 al inicio del mes
+        
         let currentAccumulatedBalance = 0;
 
         const previousMonth = currentMonth === 0 ? 11 : currentMonth - 1;
         const previousYear = currentMonth === 0 ? currentYear - 1 : currentYear;
         let previousAccumulatedBalance = 0;
 
-        // Transacciones del mes actual
+        
         const currentMonthTransactions = userData.transactions.filter((t) => {
           const date = new Date(t.date);
           return date.getFullYear() === currentYear && date.getMonth() === currentMonth;
         });
 
-        // Transacciones del mes anterior
+        
         const previousMonthTransactions = userData.transactions.filter((t) => {
           const date = new Date(t.date);
           return date.getFullYear() === previousYear && date.getMonth() === previousMonth;
@@ -81,7 +81,7 @@ export const useChartData = () => {
           const periodSavings = current.income - current.expenses;
           const previousPeriodSavings = previous.income - previous.expenses;
 
-          // Acumular para cada día
+          
           currentAccumulatedBalance += periodSavings;
           previousAccumulatedBalance += previousPeriodSavings;
 
@@ -98,17 +98,17 @@ export const useChartData = () => {
       }
 
       case 'Year': {
-        // Savings empieza desde 0 al inicio del año
+        
         let currentAccumulatedBalance = 0;
         let previousAccumulatedBalance = 0;
 
-        // Transacciones del año actual
+        
         const currentYearTransactions = userData.transactions.filter((t) => {
           const date = new Date(t.date);
           return date.getFullYear() === currentYear;
         });
 
-        // Transacciones del año anterior
+        
         const previousYearTransactions = userData.transactions.filter((t) => {
           const date = new Date(t.date);
           return date.getFullYear() === currentYear - 1;

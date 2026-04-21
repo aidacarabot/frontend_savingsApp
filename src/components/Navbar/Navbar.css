@@ -22,7 +22,6 @@ nav {
   flex-shrink: 0;
 }
 
-/* User section */
 .navbar-user-info {
   display: flex;
   flex-direction: column;
@@ -76,7 +75,6 @@ nav {
   letter-spacing: 0.01em;
 }
 
-/* Section label */
 .nav-section-label {
   font-size: var(--fs-10);
   font-weight: var(--fw-semibold);
@@ -88,7 +86,6 @@ nav {
   margin-bottom: var(--sp-2-5);
 }
 
-/* Main navigation */
 nav > ul {
   display: flex;
   flex-direction: column;
@@ -145,7 +142,6 @@ nav > ul > li > a:hover .nav-icon {
   display: none;
 }
 
-/* Logout button */
 .logout-button {
   display: flex;
   align-items: center;
@@ -173,7 +169,6 @@ nav > ul > li > a:hover .nav-icon {
   transform: translateX(4px);
 }
 
-/* Responsive — bottom tab bar on tablet/mobile */
 @media (max-width: 1024px) {
   nav {
     position: fixed;
@@ -199,14 +194,14 @@ nav > ul > li > a:hover .nav-icon {
     overflow: hidden;
   }
 
-  /* nav prefix for specificity — overrides Logo.css display:flex */
+  
   nav .nav-section-label,
   nav .navbar-user-info,
   nav .logo-text {
     display: none;
   }
 
-  /* Logo: solo el icono, sin flex-grow */
+  
   nav .logo {
     flex: 0 0 auto;
     gap: 0;
@@ -220,17 +215,17 @@ nav > ul > li > a:hover .nav-icon {
     font-size: var(--fs-14);
   }
 
-  /* Mobile-only items hidden on desktop */
+  
   .mobile-only {
     display: none;
   }
 
-  /* Show mobile-only items */
+  
   nav > ul > li.mobile-only {
     display: flex;
   }
 
-  /* Main nav list — flex:4 so each of the 4 items = same width as logout (flex:1) */
+  
   nav > ul {
     flex-direction: row;
     align-items: center;
@@ -272,7 +267,7 @@ nav > ul > li > a:hover .nav-icon {
     margin-right: 0;
   }
 
-  /* Logout — same size as nav tabs */
+  
   .logout-button {
     flex: 1;
     display: flex;

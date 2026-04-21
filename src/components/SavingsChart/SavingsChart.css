@@ -180,7 +180,6 @@
   outline: none !important;
 }
 
-/* Responsive */
 @media (max-width: 480px) {
   .savings-chart-container {
     padding: 1rem 1rem 0.75rem;

@@ -16,7 +16,7 @@ const useApiFetch = (
   const userId = localStorage.getItem('user_id'); 
   const token = localStorage.getItem('token');
 
-  // --- refetch function ---
+  
   const fetchDataFromApi = useCallback(async () => {
     try {
       setLoading(true);
@@ -38,13 +38,13 @@ const useApiFetch = (
       setLoading(false);
     }
   }, [endpoint, method, data, userId, token, storageKey]);
-  // ------------------------
+  
 
   useEffect(() => {
     fetchDataFromApi();
   }, [fetchDataFromApi]);
 
-  // Nuevo efecto para actualizar localStorage cuando el campo observado cambie
+  
   useEffect(() => {
     if (
       watchField &&
@@ -56,7 +56,7 @@ const useApiFetch = (
     }
   }, [responseData, watchField, localStorageKey]);
 
-  return { responseData, loading, error, refetch: fetchDataFromApi };  // Ahora devolvemos refetch también
+  return { responseData, loading, error, refetch: fetchDataFromApi };  
 };
 
 export default useApiFetch;

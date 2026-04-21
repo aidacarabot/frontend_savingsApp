@@ -43,7 +43,6 @@
   }
 }
 
-/* Responsive */
 @media (max-width: 480px) {
   .success-message,
   .error-message {

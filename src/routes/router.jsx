@@ -11,7 +11,7 @@ import PrivateRoute from "./PrivateRoute";
 const AppRouter = () => {
     const location = useLocation();
 
-  //? Condición para no mostrar el Navbar en Login, Register y '/'
+  
   const showNavbar = location.pathname !== '/login' && location.pathname !== '/register';
 
     return (
@@ -23,7 +23,7 @@ const AppRouter = () => {
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegisterForm />} />
 
-          {/* Rutas protegidas */}
+          {}
           <Route element={<PrivateRoute />}>
             <Route path="/overview" element={<Overview />} />
             <Route path="/user" element={<User />} />

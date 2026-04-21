@@ -20,33 +20,33 @@ const TransactionBox = ({ refresh, view = 'All', filters = {} }) => {
   const [displayCount, setDisplayCount] = useState(20);
   const observerRef = useRef();
 
-  //? estados para confirmación y edición
+  
   const [deleteCandidateId, setDeleteCandidateId] = useState(null);
   const [showAreYouSure, setShowAreYouSure] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState(null);
 
-  //? Función para obtener las transacciones
+  
   const fetchTransactions = async () => {
     try {
       const response = await fetchData('/transactions', 'GET');
-      setTransactions(response); // Actualiza el estado con las transacciones obtenidas
+      setTransactions(response); 
     } catch (err) {
       setError('Failed to fetch transactions');
       console.error('Error fetching transactions:', err);
     } finally {
-      setLoading(false); // Finaliza el estado de carga
+      setLoading(false); 
     }
   };
 
-  //? useEffect para cargar las transacciones al montar el componente
+  
   useEffect(() => {
-    // cada vez que cambia `refresh` (o al montar), volvemos a pedir las transacciones
+    
     setLoading(true);
     setDisplayCount(20);
     fetchTransactions();
   }, [refresh]);
 
-  //? peticiones de dropDown
+  
   const handleDeleteRequest = (transactionId) => {
     setDeleteCandidateId(transactionId);
     setShowAreYouSure(true);
@@ -85,14 +85,14 @@ const TransactionBox = ({ refresh, view = 'All', filters = {} }) => {
   };
 
   const handleTransactionUpdated = (updatedTx) => {
-    // actualizar en la lista local
+    
     setTransactions((prev) =>
       prev.map((t) => (t._id === updatedTx._id ? updatedTx : t))
     );
     setEditingTransaction(null);
   };
 
-  //? Filtrado aplicado en cliente
+  
   const applyFilters = (items) => {
     return items.filter((tx) => {
       if (view === 'Expenses' && tx.type !== 'Expense') return false;
@@ -126,10 +126,10 @@ const TransactionBox = ({ refresh, view = 'All', filters = {} }) => {
   };
 
   const filteredTransactions = applyFilters(transactions).sort((a, b) => {
-    return new Date(b.date) - new Date(a.date); // Más recientes primero
+    return new Date(b.date) - new Date(a.date); 
   });
 
-  //? Callback para el intersection observer
+  
   const lastTransactionElementRef = useCallback(
     (node) => {
       if (loading) return;
@@ -146,25 +146,25 @@ const TransactionBox = ({ refresh, view = 'All', filters = {} }) => {
     [loading, displayCount, filteredTransactions.length]
   );
 
-  //? Función para obtener el estilo de la categoría
+  
   const getCategoryStyle = (transaction) => {
     const key = transaction.category || transaction.type;
     return CATEGORY_STYLES[key] || CATEGORY_STYLES['Other'];
   };
 
-  //? Mapa de iconos
+  
   const iconMap = {
     House, Car, ShoppingCart, HeartPulse, Drama, Plane,
     ShoppingBag, Landmark, Beer,
     Coins, Wallet, ChartNoAxesCombined
   };
 
-  //? Función para obtener el componente de icono
+  
   const getIconComponent = (iconName) => {
     return iconMap[iconName] || Coins;
   };
 
-  //? Función para formatear el monto con centavos más pequeños
+  
   const formatAmount = (amount) => {
     const formatted = amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     const [integerPart, decimalPart] = formatted.split('.');
@@ -176,7 +176,7 @@ const TransactionBox = ({ refresh, view = 'All', filters = {} }) => {
     );
   };
 
-  //? Agrupar transacciones por fecha
+  
   const groupByDate = (items) => {
     const grouped = {};
     items.forEach((tx) => {

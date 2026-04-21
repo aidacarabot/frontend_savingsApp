@@ -94,7 +94,6 @@
   border-radius: var(--radius-base);
 }
 
-/* Responsive */
 @media (max-width: 1024px) {
   .overview-container .view-by-buttons {
     min-width: unset;

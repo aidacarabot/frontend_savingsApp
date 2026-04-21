@@ -109,7 +109,6 @@
   max-width: 300px;
 }
 
-/* Buttons */
 .confirmation-buttons {
   display: flex;
   gap: var(--sp-3);

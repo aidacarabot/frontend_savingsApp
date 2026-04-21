@@ -52,7 +52,7 @@ export const useExpensesData = () => {
         break;
     }
 
-    // Agrupar por categoría
+    
     const categoryTotals = {};
     filteredTransactions.forEach((transaction) => {
       const category = transaction.category || 'Other';
@@ -62,17 +62,17 @@ export const useExpensesData = () => {
       categoryTotals[category] += transaction.amount;
     });
 
-    // Calcular total
+    
     const totalExpenses = Object.values(categoryTotals).reduce((sum, amount) => sum + amount, 0);
 
-    // Convertir a array para el gráfico
+    
     const chartData = Object.entries(categoryTotals)
       .map(([category, amount]) => ({
         name: category,
         value: amount,
         percentage: totalExpenses > 0 ? ((amount / totalExpenses) * 100).toFixed(1) : 0
       }))
-      .sort((a, b) => b.value - a.value); // Ordenar de mayor a menor
+      .sort((a, b) => b.value - a.value); 
 
     return {
       expensesData: chartData,

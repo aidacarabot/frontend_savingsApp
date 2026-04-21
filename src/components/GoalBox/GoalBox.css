@@ -44,7 +44,6 @@
   color: var(--color-danger);
 }
 
-/* Card */
 .gb-card {
   background: var(--color-white-03);
   border: 1px solid var(--color-border);
@@ -53,7 +52,6 @@
   transition: var(--transition-fast);
 }
 
-/* Header */
 .gb-card-header {
   display: flex;
   justify-content: space-between;
@@ -73,7 +71,6 @@
   gap: var(--sp-2);
 }
 
-/* Body: ring + info */
 .gb-card-body {
   display: flex;
   align-items: center;
@@ -81,7 +78,6 @@
   margin-bottom: var(--sp-4-5);
 }
 
-/* Circular progress ring */
 .gb-ring {
   flex-shrink: 0;
   transform: rotate(-90deg);
@@ -100,7 +96,6 @@
   transform-origin: center;
 }
 
-/* Info column */
 .gb-card-info {
   flex: 1;
   min-width: 0;
@@ -135,7 +130,6 @@
   font-family: var(--font-secondary);
 }
 
-/* Stats */
 .gb-card-stats {
   display: flex;
   gap: 50px;
@@ -164,7 +158,6 @@
   font-family: var(--font-tertiary);
 }
 
-/* Actions row */
 .gb-actions {
   border-top: 1px solid var(--color-border);
   padding-top: var(--sp-3-5);
@@ -177,7 +170,6 @@
   gap: var(--sp-2);
 }
 
-/* Input action (add/remove) */
 .gb-input-action {
   display: flex;
   align-items: center;
@@ -229,7 +221,6 @@
   font-family: var(--font-tertiary);
 }
 
-/* Confirm button inside input */
 .gb-action-confirm {
   padding: 4px 8px;
   border-radius: var(--radius-6);
@@ -260,7 +251,6 @@
   background: var(--color-primary-25);
 }
 
-/* Monthly button */
 .gb-monthly-btn {
   display: flex;
   align-items: center;
@@ -297,7 +287,6 @@
   box-shadow: none;
 }
 
-/* Partial monthly (capped by remaining or available) */
 .gb-monthly-btn-partial {
   background: transparent;
   border: 1px solid var(--color-primary);
@@ -308,7 +297,6 @@
   background: var(--color-primary-10);
 }
 
-/* No free balance warning */
 .gb-no-balance {
   font-size: var(--fs-11);
   font-weight: var(--fw-semibold);
@@ -323,7 +311,6 @@
   letter-spacing: 0.2px;
 }
 
-/* Locked add input */
 .gb-add-locked {
   opacity: 0.45;
   cursor: not-allowed;
@@ -338,7 +325,6 @@
   color: var(--color-danger-muted);
 }
 
-/* Completed card */
 .gb-section-divider {
   display: flex;
   align-items: center;
@@ -364,7 +350,6 @@
   white-space: nowrap;
 }
 
-/* Completed card */
 .gb-card-completed {
   border-color: var(--color-primary-25);
   background: linear-gradient(
@@ -401,7 +386,6 @@
   color: var(--color-primary) !important;
 }
 
-/* Add input over-limit state */
 .gb-add-over {
   border-color: var(--color-danger-muted-50);
 }
@@ -410,7 +394,6 @@
   color: var(--color-danger-muted);
 }
 
-/* Remove input over-limit state */
 .gb-remove-over {
   border-color: var(--color-danger-muted-50);
 }
@@ -477,7 +460,6 @@
   border-top-color: var(--color-danger-muted-35);
 }
 
-/* Collapsible completed card */
 .gb-card-collapsed {
   padding-bottom: var(--sp-3-5);
 }
@@ -506,7 +488,6 @@
   transform: rotate(180deg);
 }
 
-/* Responsive */
 @media (max-width: 600px) {
   .gb-card-body {
     flex-direction: column;

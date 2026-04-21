@@ -7,7 +7,6 @@ import TransactionBox from "../components/TransactionBox/TransactionBox";
 import ViewBy from "../components/ViewBy/ViewBy";
 import { Banknote, Search, SearchX, Plus, ChartPie, BanknoteArrowDown, BanknoteArrowUp } from 'lucide-react';
 
-
 const Transactions = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
   const [refresh, setRefresh] = useState(false);

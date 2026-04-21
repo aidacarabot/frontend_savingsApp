@@ -122,7 +122,7 @@ export const useFinancialData = () => {
       .filter((t) => t.type === 'Expense')
       .reduce((sum, t) => sum + t.amount, 0);
 
-    // Calcular el dinero total que está asignado a goals (currentAmount de cada goal)
+    
     const completedGoalsAmount = userData.goals
       ? userData.goals
           .filter(g => (g.currentAmount || 0) >= g.targetAmount)

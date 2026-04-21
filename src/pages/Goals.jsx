@@ -7,7 +7,6 @@ import Title from "../components/Title/Title";
 import Button from "../components/Button/Button";
 import { ChessQueen } from 'lucide-react';
 
-
 const Goals = () => {
   const [showGoalForm, setShowGoalForm] = useState(false);
   const [refreshGoals, setRefreshGoals] = useState(0);

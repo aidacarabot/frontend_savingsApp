@@ -10,7 +10,7 @@ const TransactionsFilter = ({ view = 'All', onChange = () => {} }) => {
   const [priceMax, setPriceMax] = useState('');
   const [category, setCategory] = useState('');
 
-  // Format number with commas
+  
   const formatNumber = (value) => {
     if (!value) return '';
     const num = value.replace(/[^\d.]/g, '');
@@ -19,7 +19,7 @@ const TransactionsFilter = ({ view = 'All', onChange = () => {} }) => {
     return parts.join('.');
   };
 
-  // Parse formatted number to float
+  
   const parseFormattedNumber = (value) => {
     if (!value) return '';
     return value.replace(/,/g, '');
