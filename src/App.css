@@ -73,7 +73,7 @@ a {
   }
 }
 
-/* Variables globales */
+/*! Variables globales */
 #root {
   display: flex;
   height: 100vh;
@@ -116,6 +116,8 @@ a {
   --color-primary-40: rgba(43, 235, 200, 0.4);
   --color-primary-45: rgba(43, 235, 200, 0.45);
   --color-primary-50: rgba(43, 235, 200, 0.5);
+  --color-primary-55: rgba(43, 235, 200, 0.55);
+  --color-primary-85: rgba(43, 235, 200, 0.85);
   --color-primary-90: rgba(43, 235, 200, 0.9);
 
   /* ─── Colores: texto ─── */

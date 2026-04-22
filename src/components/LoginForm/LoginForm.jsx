@@ -1,29 +1,29 @@
 import { Eye, EyeClosed, Mail, LockKeyhole, CircleAlert } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { fetchData } from '../../utils/api/fetchData';
+import { setCache } from '../../utils/api/prefetchCache';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import './LoginForm.css';
 import Logo from '../Logo/Logo';
 import Loader from '../Loader/Loader';
 import Button from '../Button/Button';
-import { SuccessMessage } from '../Messages/Messages';
+import LoginTransition from '../LoginTransition/LoginTransition';
 
 const LoginForm = ({ onToggleForm = null }) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   const onSubmit = async (formData) => {
     setIsLoading(true);
     setErrorMessage('');
-    setSuccessMessage('');
-    
+
     try {
-     const response = await fetchData(
+      const response = await fetchData(
         '/users/login',
         'POST',
         formData
@@ -31,11 +31,12 @@ const LoginForm = ({ onToggleForm = null }) => {
 
       if (response && response.token) {
         localStorage.setItem('token', response.token);
-        localStorage.setItem('user_id', response.user._id); 
-        setSuccessMessage('Login successful!');
-        setTimeout(() => {
-          navigate('/overview');
-        }, 1500);
+        localStorage.setItem('user_id', response.user._id);
+        // Prefetch user data during the transition so components load instantly
+        fetchData(`/users/${response.user._id}`, 'GET')
+          .then(userData => setCache(`/users/${response.user._id}`, userData))
+          .catch(() => {});
+        setIsTransitioning(true);
       } else {
         setErrorMessage('Login failed. Invalid credentials.');
       }
@@ -47,13 +48,16 @@ const LoginForm = ({ onToggleForm = null }) => {
     }
   };
 
+  if (isTransitioning) {
+    return <LoginTransition onComplete={() => navigate('/overview')} />;
+  }
+
   if (isLoading) {
     return <Loader />;
   }
 
   return (
     <div className="login-form-container">
-      {successMessage && <SuccessMessage text={successMessage} />}
       <div className="login-form-header">
         <Logo />
       </div>

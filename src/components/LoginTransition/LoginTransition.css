@@ -1,0 +1,227 @@
+/* ── Overlay ── */
+.lt-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--color-navbar-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: lt-fade-in 0.35s ease forwards;
+}
+
+.lt-overlay--exit {
+  animation: lt-fade-out 0.5s ease forwards;
+}
+
+/* ── Grid background ── */
+.lt-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--color-primary-04) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-primary-04) 1px, transparent 1px);
+  background-size: 44px 44px;
+  pointer-events: none;
+}
+
+/* ── Moving scan line ── */
+.lt-scanline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(43, 235, 200, 0) 10%,
+    var(--color-primary-55) 50%,
+    rgba(43, 235, 200, 0) 90%,
+    transparent 100%
+  );
+  animation: lt-scan 2.2s linear infinite;
+  pointer-events: none;
+}
+
+/* ── Center content ── */
+.lt-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-6);
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Logo ring assembly ── */
+.lt-logo-ring {
+  position: relative;
+  width: 108px;
+  height: 108px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lt-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1.5px solid transparent;
+}
+
+.lt-ring--outer {
+  width: 108px;
+  height: 108px;
+  border-top-color: var(--color-primary);
+  border-right-color: var(--color-primary-25);
+  animation: lt-spin-cw 1.3s linear infinite;
+}
+
+.lt-ring--inner {
+  width: 80px;
+  height: 80px;
+  border-bottom-color: var(--color-primary);
+  border-left-color: var(--color-primary-25);
+  animation: lt-spin-ccw 1.9s linear infinite;
+}
+
+.lt-logo-icon {
+  width: 52px;
+  height: 52px;
+  background-color: var(--color-primary);
+  color: var(--color-navbar-bg);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-24);
+  font-weight: var(--fw-bold);
+  font-family: var(--font-primary, 'Tomorrow', sans-serif);
+  box-shadow:
+    0 0 22px var(--color-primary-55),
+    0 0 60px var(--color-primary-20);
+  animation: lt-pulse 2s ease-in-out infinite;
+}
+
+/* ── Logo wordmark ── */
+.lt-logo-text {
+  font-size: var(--fs-22);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.22em;
+  color: var(--color-text-primary);
+  font-family: var(--font-primary, 'Tomorrow', sans-serif);
+  text-transform: uppercase;
+}
+
+/* ── Status text ── */
+.lt-status {
+  font-size: var(--fs-11);
+  letter-spacing: 0.28em;
+  color: var(--color-primary);
+  font-family: var(--font-tertiary, 'Roboto Mono', monospace);
+  text-transform: uppercase;
+  min-height: 16px;
+  animation: lt-appear 0.25s ease forwards;
+}
+
+/* ── Progress bar ── */
+.lt-progress-track {
+  width: 220px;
+  height: 2px;
+  background: var(--color-primary-12);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.lt-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: var(--color-primary);
+  border-radius: 99px;
+  box-shadow: 0 0 10px var(--color-primary);
+  animation: lt-progress 2.1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* ── Keyframes ── */
+@keyframes lt-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes lt-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes lt-scan {
+  0% {
+    top: -2px;
+  }
+  100% {
+    top: 100%;
+  }
+}
+
+@keyframes lt-spin-cw {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes lt-spin-ccw {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes lt-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 22px var(--color-primary-55),
+      0 0 60px var(--color-primary-20);
+  }
+  50% {
+    box-shadow:
+      0 0 34px var(--color-primary-85),
+      0 0 80px var(--color-primary-35);
+  }
+}
+
+@keyframes lt-appear {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes lt-progress {
+  0% {
+    width: 0%;
+  }
+  40% {
+    width: 55%;
+  }
+  75% {
+    width: 82%;
+  }
+  92% {
+    width: 95%;
+  }
+  100% {
+    width: 100%;
+  }
+}
