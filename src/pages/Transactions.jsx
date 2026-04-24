@@ -6,7 +6,7 @@ import TransactionsFilter from "../components/TransactionsFilter/TransactionsFil
 import TransactionBox from "../components/TransactionBox/TransactionBox";
 import ViewBy from "../components/ViewBy/ViewBy";
 import BulkImport from "../components/BulkImport/BulkImport";
-import { Banknote, Search, SearchX, Plus, ChartPie, BanknoteArrowDown, BanknoteArrowUp } from 'lucide-react';
+import { Banknote, Search, SearchX, Plus, ChartPie, BanknoteArrowDown, BanknoteArrowUp, FileUp, X } from 'lucide-react';
 
 const Transactions = () => {
   const [isFormVisible, setIsFormVisible] = useState(false);
@@ -14,6 +14,7 @@ const Transactions = () => {
   const [view, setView] = useState('All');
   const [filters, setFilters] = useState({});
   const [showFilters, setShowFilters] = useState(false);
+  const [showBulkImport, setShowBulkImport] = useState(false);
 
   const viewOptions = [
     { value: 'All', label: 'ALL', icon: <Banknote /> },
@@ -64,6 +65,15 @@ const Transactions = () => {
             className="transactions-filter-toggle"
           />
           <Button text={<Plus size={20} />} onClick={handleOpenForm} className="btn-add-transaction" />
+          <Button
+            text={
+              showBulkImport
+                ? <X size={20} />
+                : <span className="transactions-filter-content"><FileUp size={18} /><span className="transactions-filter-label">Add in Bulk</span></span>
+            }
+            onClick={() => setShowBulkImport((prev) => !prev)}
+            className="btn-bulk-import"
+          />
         </div>
       </div>
 
@@ -71,7 +81,7 @@ const Transactions = () => {
         <TransactionsFilter view={view} onChange={setFilters} />
       )}
 
-      <BulkImport onImported={handleTransactionAdded} />
+      {showBulkImport && <BulkImport onImported={handleTransactionAdded} />}
 
       {isFormVisible && (
         <IncomeExpenseForm

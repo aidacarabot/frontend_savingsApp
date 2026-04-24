@@ -106,6 +106,32 @@
   font-family: var(--font-tertiary);
 }
 
+.btn-bulk-import {
+  height: 48px;
+  border-radius: var(--radius-md);
+  padding: var(--sp-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2);
+  background: var(--color-primary);
+  color: var(--color-navbar-bg);
+  border: none;
+  box-shadow: var(--shadow-primary-sm);
+  font-size: var(--fs-14);
+  font-weight: var(--fw-semibold);
+  white-space: nowrap;
+  transition: var(--transition-bounce);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.btn-bulk-import:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 24px var(--color-primary-50);
+  background: var(--color-primary-light);
+}
+
 .transactions-filter-toggle {
   display: flex;
   align-items: center;

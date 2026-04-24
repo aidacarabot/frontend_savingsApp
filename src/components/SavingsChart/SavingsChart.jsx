@@ -26,17 +26,9 @@ const SavingsChart = () => {
     );
   }
 
-  if (!current || current.length === 0) {
-    return (
-      <div className="savings-chart-container">
-        <h2 className="chart-title">📊 SAVINGS OVER TIME</h2>
-        <p className="no-data-message">No data available for this period</p>
-      </div>
-    );
-  }
-
   const legendNames = getLegendNames(viewBy);
-  const currentTotal = current[current.length - 1].balance;
+  const isEmpty = !current || current.length === 0;
+  const currentTotal = isEmpty ? 0 : current[current.length - 1].balance;
 
   return (
     <div className="savings-chart-container">
@@ -57,7 +49,11 @@ const SavingsChart = () => {
         </div>
       </div>
 
-      <SavingsChartGraphs data={current} viewBy={viewBy} />
+      {isEmpty ? (
+        <p className="no-data-message">No data available for this period</p>
+      ) : (
+        <SavingsChartGraphs data={current} viewBy={viewBy} />
+      )}
     </div>
   );
 };

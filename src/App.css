@@ -165,8 +165,10 @@ a {
   --color-white-80: rgba(255, 255, 255, 0.8);
 
   /* ─── Colores: peligro (alphas) ─── */
+  --color-danger-08: rgba(255, 71, 87, 0.08);
   --color-danger-15: rgba(255, 71, 87, 0.15);
   --color-danger-25: rgba(255, 71, 87, 0.25);
+  --color-danger-30: rgba(255, 71, 87, 0.3);
   --color-danger-35: rgba(255, 71, 87, 0.35);
   --color-danger-muted-08: rgba(255, 107, 107, 0.08);
   --color-danger-muted-15: rgba(255, 107, 107, 0.15);

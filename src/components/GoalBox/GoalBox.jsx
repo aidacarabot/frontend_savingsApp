@@ -33,7 +33,7 @@ const GoalBox = ({ onGoalUpdated, onEditGoal, refreshTrigger }) => {
   if (error && !displayGoals) return <div className="gb-status gb-error">Error loading goals</div>;
   if (!displayGoals || displayGoals.length === 0) return (
     <div className="gb-empty">
-      <Target size={40} color="var(--color-text-tertiary)" strokeWidth={1.5} />
+      <Target size={40} color="var(--color-primary)" strokeWidth={1.5} />
       <p className="gb-empty-title">No goals yet</p>
       <p className="gb-empty-subtitle">Create your first goal and start saving towards it</p>
     </div>

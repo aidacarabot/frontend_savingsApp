@@ -223,7 +223,7 @@ const TransactionBox = ({ refresh, view = 'All', filters = {} }) => {
 
       {filteredTransactions.length === 0 ? (
         <div className="transaction-empty">
-          <ArrowRightLeft size={40} color="var(--color-text-tertiary)" strokeWidth={1.5} />
+          <ArrowRightLeft size={40} color="var(--color-primary)" strokeWidth={1.5} />
           <p className="transaction-empty-title">No transactions yet</p>
           <p className="transaction-empty-subtitle">Add your first transaction to start tracking your finances</p>
         </div>
