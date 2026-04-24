@@ -1,0 +1,102 @@
+.bulk-import {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--color-primary-10);
+  border: 1px solid var(--color-primary-25);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--sp-5);
+  justify-content: center;
+  align-items: center;
+}
+
+.bulk-import-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  text-align: center;
+}
+
+.bulk-import-title {
+  margin: 0;
+  font-size: var(--fs-15);
+  font-family: var(--font-secondary);
+  font-weight: var(--fw-semibold);
+  color: var(--color-text-primary);
+}
+
+.bulk-import-description {
+  margin: 0;
+  font-size: var(--fs-13);
+  font-family: var(--font-secondary);
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+.bulk-import-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+}
+
+.bulk-import-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1.5px solid var(--color-primary-25);
+  border-radius: var(--radius-md);
+  padding: var(--sp-2) var(--sp-4);
+  font-size: var(--fs-13);
+  font-weight: var(--fw-semibold);
+  color: var(--color-primary);
+  cursor: pointer;
+  transition: var(--transition-bounce);
+  font-family: var(--font-secondary);
+  height: 40px;
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+
+.bulk-import-btn--primary {
+  background: var(--color-primary-15);
+  border-color: var(--color-primary-50);
+}
+
+.bulk-import-btn:hover,
+.bulk-import-btn--primary:hover {
+  background: var(--color-primary-25);
+  border-color: var(--color-primary);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px var(--color-primary-20);
+}
+
+.bulk-import-btn-content {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.bulk-feedback {
+  margin: 0;
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-14);
+  font-family: var(--font-secondary);
+  font-weight: var(--fw-medium);
+  text-align: center;
+}
+
+.bulk-feedback--success {
+  background: var(--color-primary-10);
+  border: 1px solid var(--color-primary-25);
+  color: var(--color-primary);
+}
+
+.bulk-feedback--error {
+  background: rgba(255, 71, 87, 0.08);
+  border: 1px solid rgba(255, 71, 87, 0.3);
+  color: var(--color-danger);
+}
