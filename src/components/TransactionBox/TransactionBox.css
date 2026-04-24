@@ -30,6 +30,32 @@
   background: var(--color-primary-50);
 }
 
+.transaction-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2-5);
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.transaction-empty-title {
+  margin: 0;
+  font-size: var(--fs-17);
+  font-weight: var(--fw-bold);
+  color: var(--color-text-secondary);
+  font-family: var(--font-tertiary);
+}
+
+.transaction-empty-subtitle {
+  margin: 0;
+  font-size: var(--fs-13);
+  color: var(--color-text-tertiary);
+  font-family: var(--font-secondary);
+  max-width: 260px;
+}
+
 .transaction-group {
   display: flex;
   flex-direction: column;

@@ -249,18 +249,17 @@
 @media (max-width: 1024px) {
   .user-container {
     height: 100svh;
+    overflow-y: auto;
+    overflow-x: hidden;
     padding: var(--sp-4);
     padding-bottom: calc(60px + var(--sp-4));
-    overflow-y: auto;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
   }
 }
 
 @media (max-width: 480px) {
   .user-container {
-    align-items: center;
-    justify-content: center;
     padding: var(--sp-3);
     padding-top: var(--sp-4);
     padding-bottom: calc(60px + var(--sp-3));

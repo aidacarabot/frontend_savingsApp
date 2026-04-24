@@ -221,7 +221,13 @@ const TransactionBox = ({ refresh, view = 'All', filters = {} }) => {
         />
       )}
 
-      {filteredTransactions.length > 0 ? (
+      {filteredTransactions.length === 0 ? (
+        <div className="transaction-empty">
+          <ArrowRightLeft size={40} color="var(--color-text-tertiary)" strokeWidth={1.5} />
+          <p className="transaction-empty-title">No transactions yet</p>
+          <p className="transaction-empty-subtitle">Add your first transaction to start tracking your finances</p>
+        </div>
+      ) : (
         Object.keys(groupedTransactions).map((date, dateIndex) => (
           <div key={date} className="transaction-group">
             <div className="transaction-date-header">{date}</div>
@@ -265,8 +271,6 @@ const TransactionBox = ({ refresh, view = 'All', filters = {} }) => {
             })}
           </div>
         ))
-      ) : (
-        <ErrorMessage text="No transactions yet." duration={5000} />
       )}
     </div>
   );

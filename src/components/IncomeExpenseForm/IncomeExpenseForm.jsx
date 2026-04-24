@@ -77,7 +77,7 @@ const IncomeExpenseForm = ({ onClose, onTransactionAdded, initialData = null, on
           )}
 
           <div className="form-group form-price-input-group">
-            <label htmlFor="price">Price ($):</label>
+            <label htmlFor="price">Amount ($):</label>
             <input
               id="price"
               type="text"
